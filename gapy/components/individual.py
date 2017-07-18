@@ -14,7 +14,7 @@ class GAIndividual(object):
         :param ranges: value ranges for all entries in variants.
         :type ranges: list of range tuples. e.g. [(0, 1), (-1, 1)]
 
-        :param encoding: gene encoding, 'decimal' or 'binary', default is 'binary'.
+        :param encoding: gene encoding, 'decimal' or 'binary', default is binary.
         :param eps: decrete precision for binary encoding, default is 0.001.
 
         :param variants: the variable vector of the target function.
