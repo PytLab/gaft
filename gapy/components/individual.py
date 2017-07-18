@@ -5,6 +5,7 @@ from math import log2
 from itertools import accumulate
 from random import uniform
 
+
 class GAIndividual(object):
     def __init__(self, ranges, encoding='binary', eps=0.001, variants=None):
         '''
@@ -25,10 +26,16 @@ class GAIndividual(object):
         self.eps = eps
         self.encoding = encoding
 
+        # Lengths for all binary sequence in chromsome.
         self.lengths = [int(log2((b-a)/self.eps) + 1) for a, b in ranges]
+
+        # The start and end indices for each gene segment for entries in variants.
         self.gene_indices = self._get_gene_indices()
 
+        # Generate randomly if no variants provided.
         self.variants = self._init_variants() if variants is None else variants
+
+        # Gene encoding.
         self.chromsome = self.encode()
 
     def _check_parameters(self):
@@ -71,7 +78,6 @@ class GAIndividual(object):
         end_indices = list(accumulate(self.lengths))
         start_indices = [0] + end_indices[: -1]
         return list(zip(start_indices, end_indices))
-
 
     @staticmethod
     def binarize(decimal, eps, length):
