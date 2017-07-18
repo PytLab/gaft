@@ -3,72 +3,62 @@
 
 from math import log2
 from itertools import accumulate
+from random import uniform
 
 class GAIndividual(object):
-    def __init__(self, variants, ranges, encoding='binary', eps=None):
+    def __init__(self, ranges, encoding='binary', eps=0.001, variants=None):
         '''
         Class for individual in population.
-
-        :param variants: the variable vector of the target function.
-        :type variants: list of float.
 
         :param ranges: value ranges for all entries in variants.
         :type ranges: list of range tuples. e.g. [(0, 1), (-1, 1)]
 
         :param encoding: gene encoding, 'decimal' or 'binary', default is 'binary'.
-        :param eps: decrete precision for binary encoding, default is 0.01.
+        :param eps: decrete precision for binary encoding, default is 0.001.
+
+        :param variants: the variable vector of the target function.
+        :type variants: list of float.
         '''
         self._check_parameters()
 
-        self.variants = variants
         self.ranges = ranges
-        self.eps = 0.01 if encoding == 'binary' and eps is None else eps
+        self.eps = eps
         self.encoding = encoding
 
         self.lengths = [int(log2((b-a)/self.eps) + 1) for a, b in ranges]
         self.gene_indices = self._get_gene_indices()
+
+        self.variants = self._init_variants() if variants is None else variants
         self.chromsome = self.encode()
 
     def _check_parameters(self):
         # Need implementation.
         pass
 
-    def encode(self, variants=None, encoding=None):
+    def _init_variants(self):
+        '''
+        Initialize individual variants randomly.
+        '''
+        return [uniform(a, b) for a, b in self.ranges]
+
+    def encode(self):
         '''
         Encode variant to gene sequence in individual using different encoding.
-
-        :param variants: the variable vector of the target function.
-        :type variants: list of float.
-
-        :param encoding: gene encoding, 'binary' or 'decimal',
-                         default is the same with that of individual.
         '''
-        variants = self.variants if variants is None else variants
-        encoding = self.encoding if encoding is None else encoding
-
-        if encoding == 'decimal':
-            return variants
+        if self.encoding == 'decimal':
+            return self.variants
 
         chromsome = []
-        for var, (a, _), length in zip(variants, self.ranges, self.lengths):
+        for var, (a, _), length in zip(self.variants, self.ranges, self.lengths):
             chromsome.extend(self.binarize(var-a, self.eps, length))
 
         return chromsome
 
-    def decode(self, chromsome=None, encoding=None):
+    def decode(self):
         ''' 
         Decode gene sequence to variants of target function.
-
-        :param chromsome: chromsome (gene sequence).
-        :type chromsome: list of int/float
-
-        :param encoding: gene encoding, 'binary' or 'decimal',
-                         default is the same with that of individual.
         '''
-        chromsome = self.chromsome if chromsome is None else chromsome
-        encoding = self.encoding if encoding is None else encoding
-
-        if encoding == 'decimal':
+        if self.encoding == 'decimal':
             return self.variants
 
         return [self.decimalize(self.chromsome[start: end], self.eps, lower_bound)
@@ -103,4 +93,5 @@ class GAIndividual(object):
         '''
         bin_str = ''.join([str(bit) for bit in binary])
         return lower_bound + int(bin_str, 2)*eps
+        return self.decode()
 
