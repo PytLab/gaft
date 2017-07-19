@@ -9,11 +9,15 @@ class GACrossover(object):
     Class for providing an interface to easily extend the behavior of crossover
     operation between two individuals.
     '''
-    def __init__(self):
+    def __init__(self, pc):
         '''
         The constructor of the base-class.
+
+        :param pc: The probability of crossover (usaully between 0.25 ~ 1.0)
+        :type pc: float in (0.0, 1.0]
         '''
-        pass
+        if pc <= 0.0 or pc > 1.0:
+            raise ValueError('Invalid crossover probability')
 
     def cross(self, father, mother):
         '''
