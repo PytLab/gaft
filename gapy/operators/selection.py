@@ -18,7 +18,7 @@ class GASelection(object):
 
     def select(self, population):
         '''
-        Called when we need to select parents from a population.
+        Called when we need to select parents from a population to later breeding.
 
         :param population: The current population.
         :type population: GAPopulation

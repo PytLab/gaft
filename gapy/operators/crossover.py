@@ -7,7 +7,7 @@
 class GACrossover(object):
     '''
     Class for providing an interface to easily extend the behavior of crossover
-    operation between two individuals.
+    operation between two individuals for children breeding.
     '''
     def __init__(self, pc):
         '''
