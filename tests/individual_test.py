@@ -65,6 +65,18 @@ class IndividualTest(unittest.TestCase):
         self.assertListEqual(indv.variants, ref_variants)
         self.assertListEqual(indv.chromsome, ref_chromsome)
 
+    def test_clone(self):
+        ''' Make sure individual can be cloned correctly.
+        '''
+        indv = GAIndividual(ranges=[(0, 1)], encoding='binary', eps=0.001)
+        indv_clone = indv.clone()
+
+        self.assertListEqual(indv.chromsome, indv_clone.chromsome)
+        self.assertAlmostEqual(indv.variants[0], indv_clone.variants[0], places=3)
+        self.assertEqual(indv.ranges, indv_clone.ranges)
+        self.assertEqual(indv.eps, indv_clone.eps)
+        self.assertEqual(indv.encoding, indv_clone.encoding)
+
 if '__main__' == __name__:
     suite = unittest.TestLoader().loadTestsFromTestCase(IndividualTest)
     unittest.TextTestRunner(verbosity=2).run(suite)

@@ -59,6 +59,14 @@ class GAIndividual(object):
             self.variants = variants
             self.chromsome = self.encode()
 
+    def clone(self):
+        '''
+        Clone a new individual from current one.
+        '''
+        indv = self.__class__(self.ranges, encoding=self.encoding, eps=self.eps)
+        indv.init(chromsome=self.chromsome)
+        return indv
+
     def _check_parameters(self):
         # Need implementation.
         pass
