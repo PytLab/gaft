@@ -16,33 +16,54 @@ class IndividualTest(unittest.TestCase):
     def test_binary_encoding(self):
         ''' Make sure individual can decode and encode binary gene correctly.
         '''
-        indiv = GAIndividual(variants=[0.398], ranges=[(0, 1)],
-                             encoding='binary', eps=0.001)
+        indv = GAIndividual(ranges=[(0, 1)], encoding='binary', eps=0.001)
+        indv.init(variants=[0.398])
 
         # Test binary chromsome.
         ref_chromsome = [0, 1, 1, 0, 0, 0, 1, 1, 1, 0]
-        self.assertListEqual(indiv.chromsome, ref_chromsome)
+        self.assertListEqual(indv.chromsome, ref_chromsome)
 
         # Test decode.
-        self.assertListEqual(indiv.decode(), [0.398])
+        self.assertListEqual(indv.decode(), [0.398])
 
-        indiv = GAIndividual(variants=[0.398, 0.66], ranges=[(0, 1), (-1, 1)],
-                             encoding='binary', eps=0.001)
+        indv = GAIndividual(ranges=[(0, 1), (-1, 1)], encoding='binary', eps=0.001)
+        indv.init(variants=[0.398, 0.66])
 
         # Test binary chromsome.
         ref_chromsome = [0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0]
-        self.assertListEqual(indiv.chromsome, ref_chromsome)
+        self.assertListEqual(indv.chromsome, ref_chromsome)
 
         # Test decode.
-        self.assertListEqual(indiv.decode(), [0.398, 0.6600000000000001])
+        self.assertListEqual(indv.decode(), [0.398, 0.6600000000000001])
 
     def test_decimal_construction(self):
         ''' Make sure individual can decode and encode decimal gene correctly.
         '''
-        indiv = GAIndividual(variants=[0.398], ranges=[(0, 1)],
-                             encoding='decimal', eps=0.001)
-        self.assertListEqual(indiv.encode(), [0.398])
-        self.assertListEqual(indiv.decode(), [0.398])
+        indv = GAIndividual(ranges=[(0, 1)], encoding='decimal', eps=0.001)
+
+        indv.init(variants=[0.398])
+        self.assertListEqual(indv.encode(), [0.398])
+        self.assertListEqual(indv.decode(), [0.398])
+
+    def test_init(self):
+        ''' Make sure the individual can be initialized correctly.
+        '''
+        indv = GAIndividual(ranges=[(0, 1)], encoding='binary', eps=0.001)
+
+        ref_chromsome = [0, 1, 1, 0, 0, 0, 1, 1, 1, 0]
+        ref_variants = [0.398]
+
+        # Check chromsome initialization.
+        indv.init(chromsome=ref_chromsome)
+        
+        self.assertListEqual(ref_chromsome, indv.chromsome)
+        self.assertListEqual(ref_variants, indv.variants)
+
+        # Check variants initialization.
+        indv.init(variants=ref_variants)
+        
+        self.assertListEqual(indv.variants, ref_variants)
+        self.assertListEqual(indv.chromsome, ref_chromsome)
 
 if '__main__' == __name__:
     suite = unittest.TestLoader().loadTestsFromTestCase(IndividualTest)

@@ -7,7 +7,7 @@ from random import uniform
 
 
 class GAIndividual(object):
-    def __init__(self, ranges, encoding='binary', eps=0.001, variants=None):
+    def __init__(self, ranges, encoding='binary', eps=0.001):
         '''
         Class for individual in population.
 
@@ -17,8 +17,6 @@ class GAIndividual(object):
         :param encoding: gene encoding, 'decimal' or 'binary', default is binary.
         :param eps: decrete precision for binary encoding, default is 0.001.
 
-        :param variants: the variable vector of the target function.
-        :type variants: list of float.
         '''
         self._check_parameters()
 
@@ -32,11 +30,34 @@ class GAIndividual(object):
         # The start and end indices for each gene segment for entries in variants.
         self.gene_indices = self._get_gene_indices()
 
-        # Generate randomly if no variants provided.
-        self.variants = self._init_variants() if variants is None else variants
+        # Generate randomly.
+        self.variants = self._init_variants()
 
         # Gene encoding.
         self.chromsome = self.encode()
+
+    def init(self, chromsome=None, variants=None):
+        '''
+        Initialize the individual by providing chromsome or variants.
+        If both chromsome and variants are provided, only the chromsome would
+        be used.
+
+        :param chromsome: chromesome sequence for the individual
+        :type chromsome: list of float/int.
+
+        :param variants: the variable vector of the target function.
+        :type variants: list of float.
+        '''
+        if not any([chromsome, variants]):
+            msg = 'Chromsome or variants must be supplied for individual initialization'
+            raise ValueError(msg)
+
+        if chromsome:
+            self.chromsome = chromsome
+            self.variants = self.decode()
+        else:
+            self.variants = variants
+            self.chromsome = self.encode()
 
     def _check_parameters(self):
         # Need implementation.
