@@ -59,6 +59,8 @@ class GAIndividual(object):
             self.variants = variants
             self.chromsome = self.encode()
 
+        return self
+
     def clone(self):
         '''
         Clone a new individual from current one.
