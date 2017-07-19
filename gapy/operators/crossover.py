@@ -18,6 +18,7 @@ class GACrossover(object):
         '''
         if pc <= 0.0 or pc > 1.0:
             raise ValueError('Invalid crossover probability')
+        self.pc = pc
 
     def cross(self, father, mother):
         '''

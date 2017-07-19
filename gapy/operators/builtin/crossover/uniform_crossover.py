@@ -15,14 +15,14 @@ class UniformCrossover(GACrossover):
         :param pc: Crossover probability.
         :param pe: Gene exchange probability.
         '''
-        super(self.__class__, self).__init__(fitness)
+        super(self.__class__, self).__init__(pc=pc)
         self.pe = pe
 
     def cross(self, father, mother):
         '''
         Cross chromsomes of parent using uniform crossover method.
         '''
-        do_cross = True if random() < self.pc else False
+        do_cross = True if random() <= self.pc else False
 
         if not do_cross:
             return father, mother
