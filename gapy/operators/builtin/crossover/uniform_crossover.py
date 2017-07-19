@@ -36,4 +36,9 @@ class UniformCrossover(GACrossover):
             if do_exchange:
                 chrom1[i], chrom2[i] = g2, g1
 
+        child1, child2 = father.clone(), father.clone()
+        child1.init(chromsome=chrom1)
+        child2.init(chromsome=chrom2)
+
+        return child1, child2
 
