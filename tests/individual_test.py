@@ -68,11 +68,13 @@ class IndividualTest(unittest.TestCase):
     def test_clone(self):
         ''' Make sure individual can be cloned correctly.
         '''
-        indv = GAIndividual(ranges=[(0, 1)], encoding='binary', eps=0.001)
+        indv = GAIndividual(ranges=[(0, 1)],
+                            encoding='binary',
+                            eps=0.001).init(variants=[0.398])
         indv_clone = indv.clone()
 
         self.assertListEqual(indv.chromsome, indv_clone.chromsome)
-        self.assertAlmostEqual(indv.variants[0], indv_clone.variants[0], places=3)
+        self.assertAlmostEqual(indv.variants[0], indv_clone.variants[0], places=2)
         self.assertEqual(indv.ranges, indv_clone.ranges)
         self.assertEqual(indv.eps, indv_clone.eps)
         self.assertEqual(indv.encoding, indv_clone.encoding)

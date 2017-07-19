@@ -9,12 +9,14 @@ import unittest
 from individual_test import IndividualTest
 from population_test import PopulationTest
 from roulette_wheel_selection_test import RouletteWheelSelectionTest
+from uniform_crossover_test import UniformCrossoverTest
 
 def suite():
     test_suite = unittest.TestSuite([
         unittest.TestLoader().loadTestsFromTestCase(IndividualTest),
         unittest.TestLoader().loadTestsFromTestCase(PopulationTest),
         unittest.TestLoader().loadTestsFromTestCase(RouletteWheelSelectionTest),
+        unittest.TestLoader().loadTestsFromTestCase(UniformCrossoverTest),
     ])
 
     return test_suite
