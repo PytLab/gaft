@@ -4,7 +4,7 @@
 ''' Module for Genetic Algorithm mutation operator class '''
 
 
-class GASelection(object):
+class GAMutation(object):
     '''
     Class for providing an interface to easily extend the behavior of selection
     operation.
@@ -15,11 +15,12 @@ class GASelection(object):
         The constructor of the base-class.
 
         :param pm: The probability of mutation (usually between 0.001 ~ 0.1)
-        :type pm: flaot in (0.0, 1.0]
+        :type pm: float in (0.0, 1.0]
         '''
         if pm <= 0.0 or pm > 1.0:
             raise ValueError('Invalid mutation probability')
 
+        self.pm = pm
 
     def mutate(self, individual):
         '''

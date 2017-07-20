@@ -10,6 +10,7 @@ from individual_test import IndividualTest
 from population_test import PopulationTest
 from roulette_wheel_selection_test import RouletteWheelSelectionTest
 from uniform_crossover_test import UniformCrossoverTest
+from flip_bit_mutation_test import FlipBitMutationTest
 
 def suite():
     test_suite = unittest.TestSuite([
@@ -17,6 +18,7 @@ def suite():
         unittest.TestLoader().loadTestsFromTestCase(PopulationTest),
         unittest.TestLoader().loadTestsFromTestCase(RouletteWheelSelectionTest),
         unittest.TestLoader().loadTestsFromTestCase(UniformCrossoverTest),
+        unittest.TestLoader().loadTestsFromTestCase(FlipBitMutationTest),
     ])
 
     return test_suite
