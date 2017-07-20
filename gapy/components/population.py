@@ -20,7 +20,7 @@ class GAPopulation(object):
 
         '''
         # Population size.
-        self._size = size
+        self.size = size
 
         # Template individual.
         self.indv_template = indv_template
@@ -35,7 +35,7 @@ class GAPopulation(object):
         '''
         Initialize current population with individuals.
         '''
-        for i in range(self._size):
+        for i in range(self.size):
             indv = GAIndividual(ranges=self.indv_template.ranges,
                                 encoding=self.indv_template.encoding,
                                 eps=self.indv_template.eps)
@@ -47,17 +47,17 @@ class GAPopulation(object):
         '''
         return self.__class__(indv_template=self.indv_template,
                               fitness=self.fitness,
-                              size=self._size)
+                              size=self.size)
 
     def __getitem__(self, key):
         '''
         Get individual by index.
         '''
-        if key < 0 or key >= self._size:
+        if key < 0 or key >= self.size:
             raise IndexError('Individual index out of range')
         return self.individuals[key]
 
-    def best_individual(self):
+    def best_indv(self):
         '''
         The individual with the best fitness.
 

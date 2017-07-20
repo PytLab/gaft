@@ -38,7 +38,7 @@ class PopulationTest(unittest.TestCase):
                                   fitness=self.fitness, size=10)
         population.init()
         new_population = population.new()
-        self.assertEqual(new_population._size, 10)
+        self.assertEqual(new_population.size, 10)
         self.assertListEqual(new_population.individuals, [])
 
 if '__main__' == __name__:

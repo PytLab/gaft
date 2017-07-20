@@ -3,6 +3,8 @@
 
 ''' Genetic Algorithm engine definition '''
 
+import logging
+
 class GAEngine(object):
     '''
     Class for representing a Genetic Algorithm engine.
@@ -21,11 +23,32 @@ class GAEngine(object):
         # Check parameters validity.
         self._check_parameters()
 
+        # Set logger.
+        self._set_logger()
+
         # Attributes assignment.
+        self.population = population
         self.fitness = fitness
         self.selection= selection
         self.crossover= crossover
         self.mutation= mutation
+
+        # The best individual in each generation.
+        self.best_indvs = []
+
+    def _set_logger(self):
+        '''
+        Helper function to set logger for engine.
+        '''
+        logger = logging.getLogger('GAEngine')
+        logger.setLevel(logging.INFO)
+        console_hdlr = logging.StreamHandler()
+        console_hdlr.setLevel(logging.INFO)
+        formatter = logging.Formatter('%(name)s   %(levelname)-8s %(message)s')
+        console_hdlr.setFormatter(formatter)
+        logger.addHandler(console_hdlr)
+
+        self._logger = logger
 
     def run(self, ng=100):
         '''
@@ -53,9 +76,12 @@ class GAEngine(object):
                 # Add to population.
                 new_population.individuals.extend(children)
 
+            best_indv = new_population.best_indv()
+            self._logger.info('Generation: {}, best fitness: {}'.format(g, self.fitness(best_indv)))
+
             self.population = new_population
 
-    def _check_parameters():
+    def _check_parameters(self):
         '''
         Helper function to check parameters of engine.
         '''
