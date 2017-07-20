@@ -25,7 +25,10 @@ class GAIndividual(object):
         self.encoding = encoding
 
         # Lengths for all binary sequence in chromsome.
-        self.lengths = [int(log2((b-a)/self.eps) + 1) for a, b in ranges]
+        self.lengths = [int(log2((b-a)/eps)) for a, b in ranges]
+
+        # Correct decrete precision according to binary sequence length.
+        self.precisions = [(b - a)/(2**l - 1) for l, (a, b) in zip(self.lengths, self.ranges)]
 
         # The start and end indices for each gene segment for entries in variants.
         self.gene_indices = self._get_gene_indices()
@@ -87,8 +90,9 @@ class GAIndividual(object):
             return self.variants
 
         chromsome = []
-        for var, (a, _), length in zip(self.variants, self.ranges, self.lengths):
-            chromsome.extend(self.binarize(var-a, self.eps, length))
+        for var, (a, _), length, eps in zip(self.variants, self.ranges,
+                                            self.lengths, self.precisions):
+            chromsome.extend(self.binarize(var-a, eps, length))
 
         return chromsome
 
@@ -99,8 +103,10 @@ class GAIndividual(object):
         if self.encoding == 'decimal':
             return self.variants
 
-        return [self.decimalize(self.chromsome[start: end], self.eps, lower_bound)
-                for (start, end), (lower_bound, _) in zip(self.gene_indices, self.ranges)]
+        variants =  [self.decimalize(self.chromsome[start: end], eps, lower_bound)
+                     for (start, end), (lower_bound, _), eps in
+                     zip(self.gene_indices, self.ranges, self.precisions)]
+        return variants
 
     def _get_gene_indices(self):
         '''
