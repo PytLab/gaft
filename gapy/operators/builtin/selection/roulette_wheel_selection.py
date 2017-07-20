@@ -24,12 +24,16 @@ class RouletteWheelSelection(GASelection):
         # Normalize fitness values for all individuals.
         fit = [population.fitness(indv) for indv in population.individuals]
         min_fit, max_fit = min(fit), max(fit)
-        fit = list(accumulate([(i - min_fit)/(max_fit - min_fit) for i in fit]))
+        fit = [(i - min_fit) for i in fit]
+
+        # Create roulette wheel.
+        sum_fit = sum(fit)
+        wheel = list(accumulate([i/sum_fit for i in fit]))
 
         # Select a father and a mother.
-        father_idx = bisect_right(fit, random())
+        father_idx = bisect_right(wheel, random())
         father = population[father_idx]
-        mother_idx = (father_idx + 1) % len(fit)
+        mother_idx = (father_idx + 1) % len(wheel)
         mother = population[mother_idx]
 
         return father, mother
