@@ -1,2 +1,3 @@
-# ga.py
-A Genetic Algorithm Package in Python
+# GAPy
+A **G**enetic **A**lgorithm **P**ackage in P**y**thon
+
