@@ -6,7 +6,6 @@
 
 import unittest
 
-from gapy.components.population import GAPopulation
 from gapy.components.individual import GAIndividual
 from gapy.operators.builtin.crossover.uniform_crossover import UniformCrossover
 

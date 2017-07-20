@@ -8,7 +8,7 @@ import unittest
 
 from gapy.components.population import GAPopulation
 from gapy.components.individual import GAIndividual
-from gapy.operators.builtin.selection.roulette_wheel import RouletteWheelSelection
+from gapy.operators.builtin.selection.roulette_wheel_selection import RouletteWheelSelection
 
 class RouletteWheelSelectionTest(unittest.TestCase):
 
@@ -21,10 +21,10 @@ class RouletteWheelSelectionTest(unittest.TestCase):
 
     def test_selection(self):
         indv = GAIndividual(ranges=[(0, 30)])
-        p = GAPopulation(indv)
+        p = GAPopulation(indv, fitness=self.fitness)
         p.init()
 
-        selection = RouletteWheelSelection(self.fitness)
+        selection = RouletteWheelSelection()
         father, mother = selection.select(p)
 
         self.assertTrue(isinstance(father, GAIndividual))

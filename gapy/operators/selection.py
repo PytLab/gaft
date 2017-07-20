@@ -10,11 +10,11 @@ class GASelection(object):
     operation.
     '''
 
-    def __init__(self, fitness):
+    def __init__(self):
         '''
         The constructor of the base-class.
         '''
-        self.fitness = fitness
+        pass
 
     def select(self, population):
         '''

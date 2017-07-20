@@ -14,10 +14,15 @@ class PopulationTest(unittest.TestCase):
     def setUp(self):
         self.maxDiff = True
         self.indv_template = GAIndividual(ranges=[(0, 1), (-1, 1)])
+        def fitness(indv):
+            x, = indv.variants
+            return x**3 - 60*x**2 + 900*x + 100
+        self.fitness = fitness
 
     def test_initialization(self):
         ''' Make sure a population can be initialized correctly. '''
-        population = GAPopulation(indv_template=self.indv_template, size=10)
+        population = GAPopulation(indv_template=self.indv_template,
+                                  fitness=self.fitness, size=10)
 
         self.assertListEqual(population.individuals, [])
 
@@ -29,7 +34,8 @@ class PopulationTest(unittest.TestCase):
 
     def test_new_population(self):
         ''' Make sure population can clone a new population. '''
-        population = GAPopulation(indv_template=self.indv_template, size=10)
+        population = GAPopulation(indv_template=self.indv_template,
+                                  fitness=self.fitness, size=10)
         population.init()
         new_population = population.new()
         self.assertEqual(new_population._size, 10)
