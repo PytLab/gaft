@@ -48,9 +48,9 @@ class GAEngine(object):
         console_hdlr.setFormatter(formatter)
         logger.addHandler(console_hdlr)
 
-        self._logger = logger
+        self.logger = logger
 
-    def run(self, ng=100):
+    def run(self, ng=100, analysis=None):
         '''
         Run the Genetic Algorithm optimization iteration with specified parameters.
 
@@ -60,8 +60,14 @@ class GAEngine(object):
         if self.fitness is None:
             raise AttributeError('No fitness function in GA engine')
 
+        analysis = [] if analysis is None else analysis
+
         # Initialize a population.
         self.population.init()
+
+        # Setup analysis objects.
+        for a in analysis:
+            a.setup()
 
         # Enter evolution iteration.
         for g in range(ng):
@@ -80,9 +86,18 @@ class GAEngine(object):
                 new_population.individuals.extend(children)
 
             best_indv = new_population.best_indv(self.fitness)
-            self._logger.info('Generation: {}, best fitness: {}'.format(g, self.fitness(best_indv)))
+            self.logger.info('Generation: {}, best fitness: {:.3f}'.format(g, self.fitness(best_indv)))
 
             self.population = new_population
+
+            # Run all analysis if needed.
+            for a in analysis:
+                if g % a.interval == 0:
+                    a.register_step(ng=g, population=new_population, engine=self)
+
+        # Perform the analysis post processing.
+        for a in analysis:
+            a.finalize()
 
     def _check_parameters(self):
         '''
