@@ -57,6 +57,7 @@ class GAPopulation(object):
             raise IndexError('Individual index out of range')
         return self.individuals[key]
 
+    @property
     def best_indv(self):
         '''
         The individual with the best fitness.
