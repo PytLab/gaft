@@ -70,7 +70,7 @@ class GAEngine(object):
                 # Select father and mother.
                 parents = self.selection.select(self.population)
                 # Crossover.
-                children = self.crossover.cross(parents)
+                children = self.crossover.cross(*parents)
                 # Mutation.
                 children = [self.mutation.mutate(child) for child in children]
                 # Add to population.

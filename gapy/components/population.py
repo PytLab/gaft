@@ -62,5 +62,5 @@ class GAPopulation(object):
         The individual with the best fitness.
 
         '''
-        return self.individuals[max(self.individuals, key=self.fitness)]
+        return max(self.individuals, key=self.fitness)
 
