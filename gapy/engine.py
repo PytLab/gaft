@@ -27,7 +27,7 @@ class GAEngine(object):
         self.crossover= crossover
         self.mutation= mutation
 
-    def run(self, control_parameters):
+    def run(self, ng=100):
         '''
         Run the Genetic Algorithm optimization iteration with specified parameters.
 
@@ -38,9 +38,9 @@ class GAEngine(object):
         self.population.init()
 
         # Enter evolution iteration.
-        for g in range(control_parameters.generation_number):
+        for g in range(ng):
             # Next generation population.
-            new_population = self.population.clone()
+            new_population = self.population.new()
 
             # Fill the new population.
             for i in range(0, new_population.size, 2):
@@ -51,7 +51,7 @@ class GAEngine(object):
                 # Mutation.
                 children = [self.mutation.mutate(child) for child in children]
                 # Add to population.
-                new_population[i], new_population[i+1] = children
+                new_population.individuals.extend(children)
 
             self.population = new_population
 
