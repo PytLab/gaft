@@ -10,7 +10,8 @@ from gapy.operators.crossover import GACrossover
 class UniformCrossover(GACrossover):
     def __init__(self, pc, pe=0.5):
         '''
-        Crossover operator with uniform crossover algorithm.
+        Crossover operator with uniform crossover algorithm,
+        see https://en.wikipedia.org/wiki/Crossover_(genetic_algorithm)
 
         :param pc: Crossover probability.
         :param pe: Gene exchange probability.
