@@ -21,8 +21,7 @@ class PopulationTest(unittest.TestCase):
 
     def test_initialization(self):
         ''' Make sure a population can be initialized correctly. '''
-        population = GAPopulation(indv_template=self.indv_template,
-                                  fitness=self.fitness, size=10)
+        population = GAPopulation(indv_template=self.indv_template, size=10)
 
         self.assertListEqual(population.individuals, [])
 
@@ -34,8 +33,7 @@ class PopulationTest(unittest.TestCase):
 
     def test_new_population(self):
         ''' Make sure population can clone a new population. '''
-        population = GAPopulation(indv_template=self.indv_template,
-                                  fitness=self.fitness, size=10)
+        population = GAPopulation(indv_template=self.indv_template, size=10)
         population.init()
         new_population = population.new()
         self.assertEqual(new_population.size, 10)

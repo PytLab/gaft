@@ -21,11 +21,11 @@ class RouletteWheelSelectionTest(unittest.TestCase):
 
     def test_selection(self):
         indv = GAIndividual(ranges=[(0, 30)])
-        p = GAPopulation(indv, fitness=self.fitness)
+        p = GAPopulation(indv)
         p.init()
 
         selection = RouletteWheelSelection()
-        father, mother = selection.select(p)
+        father, mother = selection.select(p, fitness=self.fitness)
 
         self.assertTrue(isinstance(father, GAIndividual))
         self.assertTrue(isinstance(mother, GAIndividual))

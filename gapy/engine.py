@@ -9,7 +9,7 @@ class GAEngine(object):
     '''
     Class for representing a Genetic Algorithm engine.
     '''
-    def __init__(self, population, fitness, selection, crossover, mutation):
+    def __init__(self, population, selection, crossover, mutation, fitness=None):
         '''
         The Genetic Algorithm engine class is the central object in GAPY framework
         for running a genetic algorithm optimization. Once the population with
@@ -57,6 +57,9 @@ class GAEngine(object):
         :param control_parameters: An instance of GAControlParamters specifying
                                    number of evolution generations etc.
         '''
+        if self.fitness is None:
+            raise AttributeError('No fitness function in GA engine')
+
         # Initialize a population.
         self.population.init()
 
@@ -68,7 +71,7 @@ class GAEngine(object):
             # Fill the new population.
             for i in range(0, new_population.size, 2):
                 # Select father and mother.
-                parents = self.selection.select(self.population)
+                parents = self.selection.select(self.population, fitness=self.fitness)
                 # Crossover.
                 children = self.crossover.cross(*parents)
                 # Mutation.
@@ -76,7 +79,7 @@ class GAEngine(object):
                 # Add to population.
                 new_population.individuals.extend(children)
 
-            best_indv = new_population.best_indv()
+            best_indv = new_population.best_indv(self.fitness)
             self._logger.info('Generation: {}, best fitness: {}'.format(g, self.fitness(best_indv)))
 
             self.population = new_population
@@ -86,4 +89,10 @@ class GAEngine(object):
         Helper function to check parameters of engine.
         '''
         pass
+
+    def fitness_register(self, fn):
+        '''
+        A decorator for fitness function register.
+        '''
+        self.fitness = fn
 
