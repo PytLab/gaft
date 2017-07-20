@@ -20,7 +20,7 @@ def fitness(indv):
     return x + 10*sin(5*x) + 7*cos(4*x)
 
 # Define population.
-indv_template = GAIndividual(ranges=[(0, 10)], encoding='binary', eps=0.01)
+indv_template = GAIndividual(ranges=[(0, 10)], encoding='binary', eps=0.001)
 population = GAPopulation(indv_template=indv_template, fitness=fitness, size=50)
 
 # Create genetic operators.
