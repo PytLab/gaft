@@ -19,8 +19,8 @@ class FlipBitMutationTest(unittest.TestCase):
         '''
         indv = GAIndividual(ranges=[(0, 1)]).init(variants=[0.398])
         mutation = FlipBitMutation(pm=1.0)
-        chromsome_before = [0, 1, 1, 0, 0, 0, 1, 1, 1, 0]
-        chromsome_after = [1, 0, 0, 1, 1, 1, 0, 0, 0, 1]
+        chromsome_before = [0, 1, 1, 0, 0, 1, 0, 1, 1]
+        chromsome_after = [1, 0, 0, 1, 1, 0, 1, 0, 0]
         self.assertListEqual(indv.chromsome, chromsome_before)
         mutation.mutate(indv)
         self.assertListEqual(indv.chromsome, chromsome_after)

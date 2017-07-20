@@ -20,21 +20,21 @@ class IndividualTest(unittest.TestCase):
         indv.init(variants=[0.398])
 
         # Test binary chromsome.
-        ref_chromsome = [0, 1, 1, 0, 0, 0, 1, 1, 1, 0]
+        ref_chromsome = [0, 1, 1, 0, 0, 1, 0, 1, 1]
         self.assertListEqual(indv.chromsome, ref_chromsome)
 
         # Test decode.
-        self.assertListEqual(indv.decode(), [0.398])
+        self.assertListEqual(indv.decode(), [0.3972602739726027])
 
         indv = GAIndividual(ranges=[(0, 1), (-1, 1)], encoding='binary', eps=0.001)
         indv.init(variants=[0.398, 0.66])
 
         # Test binary chromsome.
-        ref_chromsome = [0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0]
+        ref_chromsome = [0, 1, 1, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 0, 1, 0, 0, 0, 1]
         self.assertListEqual(indv.chromsome, ref_chromsome)
 
         # Test decode.
-        self.assertListEqual(indv.decode(), [0.398, 0.6600000000000001])
+        self.assertListEqual(indv.decode(), [0.3972602739726027, 0.6598240469208212])
 
     def test_decimal_construction(self):
         ''' Make sure individual can decode and encode decimal gene correctly.
@@ -50,20 +50,17 @@ class IndividualTest(unittest.TestCase):
         '''
         indv = GAIndividual(ranges=[(0, 1)], encoding='binary', eps=0.001)
 
-        ref_chromsome = [0, 1, 1, 0, 0, 0, 1, 1, 1, 0]
-        ref_variants = [0.398]
-
         # Check chromsome initialization.
-        indv.init(chromsome=ref_chromsome)
+        indv.init(chromsome=[0, 1, 1, 0, 0, 0, 1, 1, 1, 0])
         
-        self.assertListEqual(ref_chromsome, indv.chromsome)
-        self.assertListEqual(ref_variants, indv.variants)
+        self.assertListEqual([0, 1, 1, 0, 0, 0, 1, 1, 1, 0], indv.chromsome)
+        self.assertListEqual(indv.variants, [0.38943248532289626])
 
         # Check variants initialization.
-        indv.init(variants=ref_variants)
+        indv.init(variants=[0.398])
         
-        self.assertListEqual(indv.variants, ref_variants)
-        self.assertListEqual(indv.chromsome, ref_chromsome)
+        self.assertListEqual(indv.variants, [0.398])
+        self.assertListEqual(indv.chromsome, [0, 1, 1, 0, 0, 1, 0, 1, 1])
 
     def test_clone(self):
         ''' Make sure individual can be cloned correctly.
