@@ -7,7 +7,7 @@
 import unittest
 
 from gapy.components.individual import GAIndividual
-from gapy.operators.builtin.crossover.uniform_crossover import UniformCrossover
+from gapy.operators.crossover.uniform_crossover import UniformCrossover
 
 class UniformCrossoverTest(unittest.TestCase):
 

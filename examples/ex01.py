@@ -9,9 +9,9 @@ from math import sin, cos
 
 from gapy.components import GAIndividual
 from gapy.components import GAPopulation
-from gapy.operators.builtin import RouletteWheelSelection
-from gapy.operators.builtin import UniformCrossover
-from gapy.operators.builtin import FlipBitMutation
+from gapy.operators import RouletteWheelSelection
+from gapy.operators import UniformCrossover
+from gapy.operators import FlipBitMutation
 from gapy import GAEngine
 
 # Define population.

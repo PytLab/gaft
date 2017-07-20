@@ -4,7 +4,7 @@
 from copy import copy
 from random import random
 
-from gapy.operators.crossover import GACrossover
+from gapy.plugin_interfaces.operators.crossover import GACrossover
 
 
 class UniformCrossover(GACrossover):
