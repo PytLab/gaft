@@ -23,8 +23,8 @@ class RouletteWheelSelection(GASelection):
         '''
         # Normalize fitness values for all individuals.
         fit = [self.fitness(indv) for indv in population.individuals]
-        fit_sum = sum(fit)
-        fit = list(accumulate([i/fit_sum for i in fit]))
+        min_fit, max_fit = min(fit), max(fit)
+        fit = list(accumulate([(i - min_fit)/(max_fit - min_fit) for i in fit]))
 
         # Select a father and a mother.
         father_idx = bisect_right(fit, random())
