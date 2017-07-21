@@ -108,9 +108,9 @@ Example:
 
 8. Evolution curve
 
-.. image:: https://github.com/PytLab/gaft/blob/master/examples/envolution_curve.png
+.. image:: https://github.com/PytLab/gaft/blob/master/examples/ex01/envolution_curve.png
 
-See `example 01 <https://github.com/PytLab/gaft/blob/master/examples/ex01.py>`_ for a one-dimension search for the global maximum of function `f(x) = x + 10sin(5x) + 7cos(4x)`
+See `example 01 <https://github.com/PytLab/gaft/blob/master/examples/ex01/ex01.py>`_ for a one-dimension search for the global maximum of function `f(x) = x + 10sin(5x) + 7cos(4x)`
 
 Plugins
 -------

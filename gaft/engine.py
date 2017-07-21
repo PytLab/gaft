@@ -107,7 +107,10 @@ class GAEngine(object):
         '''
         Helper function to check parameters of engine.
         '''
+        # Need implementation.
         pass
+
+    # Decorators.
 
     def fitness_register(self, fn):
         '''
