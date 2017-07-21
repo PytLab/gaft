@@ -22,7 +22,13 @@ class GAEngine(object):
         a genetic algorthm optimization.
 
         :param population: The GAPopulation to be reproduced in evolution iteration.
+        :param selection: The GASelection to be used for individual seleciton.
+        :param crossover: The GACrossover to be used for individual crossover.
+        :param mutation: The GAMutation to be used for individual mutation.
         :param fitness: The fitness calculation function for an individual in population.
+
+        :param analysis: All analysis class for on-the-fly analysis.
+        :type analysis: list of OnTheFlyAnalysis subclasses.
         '''
         # Check parameters validity.
         self._check_parameters()
