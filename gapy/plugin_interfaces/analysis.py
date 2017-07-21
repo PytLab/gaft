@@ -28,7 +28,7 @@ class AnalysisMeta(type):
                 elif method_name == 'register_step':
                     attrs[method_name] = lambda self, ng, population, engine: None
                 elif method_name == 'finalize':
-                    attrs[method_name] = lambda self: None
+                    attrs[method_name] = lambda self, population, engine: None
 
         return type.__new__(cls, name, bases, attrs)
 
@@ -70,10 +70,16 @@ class OnTheFlyAnalysis(metaclass=AnalysisMeta):
         '''
         raise NotImplementedError
 
-    def finalize(self):
+    def finalize(self, population, engine):
         '''
         Called after the iteration to allow for custom finalization and
         post-processing of the collected data.
+
+        :param population: The up to date population of the iteration.
+        :type population: GAPopulation
+
+        :param engine: The current GAEngine where the analysis is running.
+        :type engine: GAEngine
         '''
         raise NotImplementedError
 

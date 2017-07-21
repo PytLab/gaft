@@ -101,7 +101,7 @@ class GAEngine(object):
 
         # Perform the analysis post processing.
         for a in self.analysis:
-            a.finalize()
+            a.finalize(population=self.population, engine=self)
 
     def _check_parameters(self):
         '''
