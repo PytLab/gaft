@@ -8,6 +8,10 @@ A Genetic Algorithm Framework in PyThon
     :target: https://travis-ci.org/PytLab/gaft
     :alt: Build Status
 
+.. image:: https://landscape.io/github/PytLab/gaft/master/landscape.svg?style=flat
+    :target: https://landscape.io/github/PytLab/gaft/master
+    :alt: Code Health
+
 .. image:: https://img.shields.io/badge/python-3.5, 2.7-green.svg
     :target: https://www.python.org/downloads/release/python-351/
     :alt: platform
