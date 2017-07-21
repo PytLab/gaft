@@ -40,8 +40,6 @@ Example:
 
 .. code-block:: python
     
-    from gaft.components import GAIndividual
-    from gaft.components import GAPopulation
     indv_template = GAIndividual(ranges=[(0, 10)], encoding='binary', eps=0.001)
     population = GAPopulation(indv_template=indv_template, size=50)
 
@@ -50,9 +48,6 @@ Example:
 .. code-block:: python
 
     # Use built-in operators here.
-    from gaft.operators import RouletteWheelSelection
-    from gaft.operators import UniformCrossover
-    from gaft.operators import FlipBitMutation
     selection = RouletteWheelSelection()
     crossover = UniformCrossover(pc=0.8, pe=0.5)
     mutation = FlipBitMutation(pm=0.1)
@@ -61,7 +56,6 @@ Example:
 
 .. code-block:: python
 
-    from gaft import GAEngine
     engine = GAEngine(population=population, selection=selection,
                   crossover=crossover, mutation=mutation,
                   analysis=[FitnessStoreAnalysis])
@@ -78,8 +72,6 @@ Example:
 5. Define and register an on-the-fly analysis (optional)
 
 .. code-block:: python
-
-    from gaft.plugin_interfaces.analysis import OnTheFlyAnalysis
 
     @engine.analysis_register
     class ConsoleOutputAnalysis(OnTheFlyAnalysis):
