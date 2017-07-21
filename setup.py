@@ -14,7 +14,7 @@ long_description = '''
 gaft
 ====
 
-A Genetic Algorithm Framework in PyThon
+A Genetic Algorithm Framework in pyThon
 
 .. image:: https://travis-ci.org/PytLab/gaft.svg?branch=master
     :target: https://travis-ci.org/PytLab/gaft
@@ -66,8 +66,6 @@ classifiers = [
     'Development Status :: 3 - Alpha',
     'Topic :: Utilities',
     'License :: OSI Approved :: MIT License',
-    'Programming Language :: Python :: 2',
-    'Programming Language :: Python :: 2.7',
     'Programming Language :: Python :: 3',
     'Programming Language :: Python :: 3.5',
 ]

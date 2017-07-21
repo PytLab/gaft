@@ -2,7 +2,7 @@
 gaft
 ====
 
-A Genetic Algorithm Framework in PyThon
+A Genetic Algorithm Framework in pyThon
 
 .. image:: https://travis-ci.org/PytLab/gaft.svg?branch=master
     :target: https://travis-ci.org/PytLab/gaft
@@ -118,4 +118,10 @@ Plugins
 You can define your own genetic operators for GAFT and run your algorithm test.
 
 The plugin interfaces are defined in `/gaft/plugin_interfaces/ <https://github.com/PytLab/gaft/tree/master/gaft/plugin_interfaces>`_, you can extend the interface class and define your own analysis class or genetic operator class. The `built-in operators <https://github.com/PytLab/gaft/tree/master/gaft/operators>`_ and `built-in on-the-fly analysis <https://github.com/PytLab/gaft/tree/master/gaft/analysis>`_ can be treated as an official example for plugins development.
+
+TODO
+----
+1. Add more built-in genetic operators with different algorithms
+2. Add C++ backend
+3. Parallelization
 
