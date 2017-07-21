@@ -20,11 +20,15 @@ A Genetic Algorithm Framework in PyThon
     :target: https://travis-ci.org/PytLab/gaft
     :alt: Build Status
 
-.. image:: https://img.shields.io/badge/python-3.5, 2.7-green.svg
+.. image:: https://landscape.io/github/PytLab/gaft/master/landscape.svg?style=flat
+    :target: https://landscape.io/github/PytLab/gaft/master
+    :alt: Code Health
+
+.. image:: https://img.shields.io/badge/python-3.5-green.svg
     :target: https://www.python.org/downloads/release/python-351/
     :alt: platform
 
-.. image:: https://img.shields.io/badge/pypi-v0.1.1-blue.svg
+.. image:: https://img.shields.io/badge/pypi-v0.1.2-blue.svg
     :target: https://pypi.python.org/pypi/gaft/
     :alt: versions
 
@@ -37,11 +41,11 @@ Introduction
 Installation:
 -------------
 
-1. Via pip (not uploaded to PyPi yet):
+1. Via pip::
 
     pip install gaft
 
-2. From source:
+2. From source::
 
     python setup.py install
 

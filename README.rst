@@ -12,11 +12,11 @@ A Genetic Algorithm Framework in PyThon
     :target: https://landscape.io/github/PytLab/gaft/master
     :alt: Code Health
 
-.. image:: https://img.shields.io/badge/python-3.5, 2.7-green.svg
+.. image:: https://img.shields.io/badge/python-3.5-green.svg
     :target: https://www.python.org/downloads/release/python-351/
     :alt: platform
 
-.. image:: https://img.shields.io/badge/pypi-v0.1.0-blue.svg
+.. image:: https://img.shields.io/badge/pypi-v0.1.2-blue.svg
     :target: https://pypi.python.org/pypi/gaft/
     :alt: versions
 
