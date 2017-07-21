@@ -36,14 +36,28 @@ Installation:
 Example:
 --------
 
-1. Define population
+1. Importing
+
+.. code-block:: python
+
+    from gaft import GAEngine
+    from gaft.components import GAIndividual
+    from gaft.components import GAPopulation
+    from gaft.operators import RouletteWheelSelection
+    from gaft.operators import UniformCrossover
+    from gaft.operators import FlipBitMutation
+
+    # Analysis plugin base class.
+    from gaft.plugin_interfaces.analysis import OnTheFlyAnalysis
+
+2. Define population
 
 .. code-block:: python
     
     indv_template = GAIndividual(ranges=[(0, 10)], encoding='binary', eps=0.001)
     population = GAPopulation(indv_template=indv_template, size=50)
 
-2. Create genetic operators
+3. Create genetic operators
 
 .. code-block:: python
 
@@ -52,7 +66,7 @@ Example:
     crossover = UniformCrossover(pc=0.8, pe=0.5)
     mutation = FlipBitMutation(pm=0.1)
 
-3. Create genetic algorithm engine to run optimization.
+4. Create genetic algorithm engine to run optimization.
 
 .. code-block:: python
 
@@ -60,7 +74,7 @@ Example:
                   crossover=crossover, mutation=mutation,
                   analysis=[FitnessStoreAnalysis])
 
-4. Define and register fitness function
+5. Define and register fitness function
 
 .. code-block:: python
 
@@ -69,7 +83,7 @@ Example:
         x, = indv.variants
         return x + 10*sin(5*x) + 7*cos(4*x)
 
-5. Define and register an on-the-fly analysis (optional)
+6. Define and register an on-the-fly analysis (optional)
 
 .. code-block:: python
 
@@ -81,14 +95,14 @@ Example:
             msg = 'Generation: {}, best fitness: {:.3f}'.format(ng, engine.fitness(best_indv))
             engine.logger.info(msg)
 
-6. Run
+7. Run
 
 .. code-block:: python
 
     if '__main__' == __name__:
         engine.run(ng=100)
 
-7. Evolution curve
+8. Evolution curve
 
 .. image:: https://github.com/PytLab/gaft/blob/master/examples/envolution_curve.png
 
