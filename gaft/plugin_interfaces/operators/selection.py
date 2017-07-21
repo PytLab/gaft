@@ -3,20 +3,7 @@
 
 ''' Module for Genetic Algorithm selection operator class '''
 
-class SelectionMeta(type):
-    '''
-    Metaclass for selection operator class.
-    '''
-    @classmethod
-    def __prepare__(cls, name, bases, **kwargs):
-        return {}
-
-    def __new__(cls, name, bases, attrs):
-        if 'select' not in attrs:
-            raise AttributeError('selection operator class must have select method')
-
-        return type.__new__(cls, name, bases, attrs)
-
+from ..metaclasses import SelectionMeta
 
 class GASelection(metaclass=SelectionMeta):
     '''

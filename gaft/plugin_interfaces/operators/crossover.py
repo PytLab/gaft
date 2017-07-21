@@ -3,22 +3,7 @@
 
 ''' Module for Genetic Algorithm crossover operator class '''
 
-class CrossoverMeta(type):
-    '''
-    Metaclass for crossover operator class.
-    '''
-    @classmethod
-    def __prepare__(cls, name, bases, **kwargs):
-        return {}
-
-    def __new__(cls, name, bases, attrs):
-        if 'cross' not in attrs:
-            raise AttributeError('crossover operator class must have cross method')
-
-        if 'pc' in attrs and (attrs['pc'] <= 0.0 or attrs['pc'] > 1.0):
-            raise ValueError('Invalid crossover probability')
-
-        return type.__new__(cls, name, bases, attrs)
+from ..metaclasses import CrossoverMeta
 
 
 class GACrossover(metaclass=CrossoverMeta):
