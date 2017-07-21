@@ -5,11 +5,15 @@
 
 import logging
 
+from gapy.plugin_interfaces.analysis import OnTheFlyAnalysis
+
+
 class GAEngine(object):
     '''
     Class for representing a Genetic Algorithm engine.
     '''
-    def __init__(self, population, selection, crossover, mutation, fitness=None):
+    def __init__(self, population, selection, crossover, mutation,
+                 fitness=None, analysis=None):
         '''
         The Genetic Algorithm engine class is the central object in GAPY framework
         for running a genetic algorithm optimization. Once the population with
@@ -33,8 +37,7 @@ class GAEngine(object):
         self.crossover= crossover
         self.mutation= mutation
 
-        # The best individual in each generation.
-        self.best_indvs = []
+        self.analysis = [] if analysis is None else [a() for a in analysis]
 
     def _set_logger(self):
         '''
@@ -50,7 +53,7 @@ class GAEngine(object):
 
         self.logger = logger
 
-    def run(self, ng=100, analysis=None):
+    def run(self, ng=100):
         '''
         Run the Genetic Algorithm optimization iteration with specified parameters.
 
@@ -60,14 +63,12 @@ class GAEngine(object):
         if self.fitness is None:
             raise AttributeError('No fitness function in GA engine')
 
-        analysis = [] if analysis is None else analysis
-
         # Initialize a population.
         self.population.init()
 
         # Setup analysis objects.
-        for a in analysis:
-            a.setup()
+        for a in self.analysis:
+            a.setup(self.population, self)
 
         # Enter evolution iteration.
         for g in range(ng):
@@ -85,18 +86,15 @@ class GAEngine(object):
                 # Add to population.
                 new_population.individuals.extend(children)
 
-            best_indv = new_population.best_indv(self.fitness)
-            self.logger.info('Generation: {}, best fitness: {:.3f}'.format(g, self.fitness(best_indv)))
-
             self.population = new_population
 
             # Run all analysis if needed.
-            for a in analysis:
+            for a in self.analysis:
                 if g % a.interval == 0:
                     a.register_step(ng=g, population=new_population, engine=self)
 
         # Perform the analysis post processing.
-        for a in analysis:
+        for a in self.analysis:
             a.finalize()
 
     def _check_parameters(self):
@@ -110,4 +108,15 @@ class GAEngine(object):
         A decorator for fitness function register.
         '''
         self.fitness = fn
+
+    def analysis_register(self, analysis_cls):
+        '''
+        A decorator for analysis regsiter.
+        '''
+        if not issubclass(analysis_cls, OnTheFlyAnalysis):
+            raise TypeError('analysis class must be subclass of OnTheFlyAnalysis')
+
+        # Add analysis instance to engine.
+        analysis = analysis_cls()
+        self.analysis.append(analysis)
 

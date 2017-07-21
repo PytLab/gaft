@@ -7,12 +7,13 @@ Find the global maximum for function: f(x) = x + 10sin(5x) + 7cos(4x)
 
 from math import sin, cos
 
+from gapy import GAEngine
 from gapy.components import GAIndividual
 from gapy.components import GAPopulation
 from gapy.operators import RouletteWheelSelection
 from gapy.operators import UniformCrossover
 from gapy.operators import FlipBitMutation
-from gapy import GAEngine
+from gapy.analysis import ConsoleOutputAnalysis
 
 # Define population.
 indv_template = GAIndividual(ranges=[(0, 10)], encoding='binary', eps=0.001)
@@ -25,7 +26,7 @@ mutation = FlipBitMutation(pm=0.1)
 
 # Create genetic algorithm engine.
 engine = GAEngine(population=population, selection=selection,
-                  crossover=crossover, mutation=mutation)
+                  crossover=crossover, mutation=mutation, analysis=[ConsoleOutputAnalysis])
 
 # Define fitness function.
 @engine.fitness_register
