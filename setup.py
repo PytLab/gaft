@@ -24,7 +24,7 @@ A Genetic Algorithm Framework in PyThon
     :target: https://www.python.org/downloads/release/python-351/
     :alt: platform
 
-.. image:: https://img.shields.io/badge/pypi-v0.1.0-blue.svg
+.. image:: https://img.shields.io/badge/pypi-v0.1.1-blue.svg
     :target: https://pypi.python.org/pypi/gaft/
     :alt: versions
 
