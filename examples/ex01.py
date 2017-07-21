@@ -17,6 +17,9 @@ from gapy.operators import FlipBitMutation
 # Analysis plugin base class.
 from gapy.plugin_interfaces.analysis import OnTheFlyAnalysis
 
+# Built-in best fitness analysis.
+from gapy.analysis.fitness_store import FitnessStoreAnalysis
+
 # Define population.
 indv_template = GAIndividual(ranges=[(0, 10)], encoding='binary', eps=0.001)
 population = GAPopulation(indv_template=indv_template, size=50)
@@ -28,7 +31,8 @@ mutation = FlipBitMutation(pm=0.1)
 
 # Create genetic algorithm engine.
 engine = GAEngine(population=population, selection=selection,
-                  crossover=crossover, mutation=mutation)
+                  crossover=crossover, mutation=mutation,
+                  analysis=[FitnessStoreAnalysis])
 
 # Define fitness function.
 @engine.fitness_register
