@@ -2,7 +2,7 @@
 gaft
 ====
 
-A **G**enetic **A**lgorithm **F**ramework in Py**T**hon
+A Genetic Algorithm Framework in PyThon
 
 .. image:: https://travis-ci.org/PytLab/gaft.svg?branch=master
     :target: https://travis-ci.org/PytLab/gaft
