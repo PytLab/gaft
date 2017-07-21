@@ -25,11 +25,11 @@ Introduction
 Installation:
 -------------
 
-1. Via pip::
+1. Via pip:
 
     pip install gaft
 
-2. From source::
+2. From source:
 
     python setup.py install
 
@@ -69,13 +69,12 @@ Example:
 4. Define and register fitness function
 
 .. code-block:: python
-
     @engine.fitness_register
     def fitness(indv):
         x, = indv.variants
         return x + 10*sin(5*x) + 7*cos(4*x)
 
-5. Define and register an on-the-fly analysis (optional)
+5. Define and register an on-the-fly analysis
 
 .. code-block:: python
 
