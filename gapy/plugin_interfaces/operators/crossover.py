@@ -15,6 +15,9 @@ class CrossoverMeta(type):
         if 'cross' not in attrs:
             raise AttributeError('crossover operator class must have cross method')
 
+        if 'pc' in attrs and (attrs['pc'] <= 0.0 or attrs['pc'] > 1.0):
+            raise ValueError('Invalid crossover probability')
+
         return type.__new__(cls, name, bases, attrs)
 
 
@@ -23,6 +26,9 @@ class GACrossover(metaclass=CrossoverMeta):
     Class for providing an interface to easily extend the behavior of crossover
     operation between two individuals for children breeding.
     '''
+
+    pc = 0.8
+
     def __init__(self, pc):
         '''
         The constructor of the base-class.

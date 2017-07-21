@@ -15,7 +15,7 @@ class RouletteWheelSelection(GASelection):
         Selection operator with fitness proportionate selection(FPS) or
         so-called roulette-wheel selection implementation.
         '''
-        super(self.__class__, self).__init__()
+        pass
 
     def select(self, population, fitness):
         '''
