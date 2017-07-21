@@ -18,9 +18,17 @@ class AnalysisMeta(type):
 
         for method_name in ['setup', 'register_step', 'finalize']:
             method = attrs.get(method_name, None)
-            if not callable(method):
-                msg = "'setup', 'register_step' and 'finalize' must be defiend as method"
+            if method is not None and not callable(method):
+                msg = "{} must be a callable object".format(method)
                 raise AttributeError(msg)
+            # Set default interface methods.
+            elif method is None:
+                if method_name == 'setup':
+                    attrs[method_name] = lambda self, population, engine: None
+                elif method_name == 'register_step':
+                    attrs[method_name] = lambda self, ng, population, engine: None
+                elif method_name == 'finalize':
+                    attrs[method_name] = lambda self: None
 
         return type.__new__(cls, name, bases, attrs)
 
