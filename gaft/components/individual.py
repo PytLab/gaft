@@ -136,5 +136,4 @@ class GAIndividual(object):
         '''
         bin_str = ''.join([str(bit) for bit in binary])
         return lower_bound + int(bin_str, 2)*eps
-        return self.decode()
 
