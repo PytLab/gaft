@@ -7,18 +7,18 @@ Find the global maximum for function: f(x) = x + 10sin(5x) + 7cos(4x)
 
 from math import sin, cos
 
-from gapy import GAEngine
-from gapy.components import GAIndividual
-from gapy.components import GAPopulation
-from gapy.operators import RouletteWheelSelection
-from gapy.operators import UniformCrossover
-from gapy.operators import FlipBitMutation
+from gaft import GAEngine
+from gaft.components import GAIndividual
+from gaft.components import GAPopulation
+from gaft.operators import RouletteWheelSelection
+from gaft.operators import UniformCrossover
+from gaft.operators import FlipBitMutation
 
 # Analysis plugin base class.
-from gapy.plugin_interfaces.analysis import OnTheFlyAnalysis
+from gaft.plugin_interfaces.analysis import OnTheFlyAnalysis
 
 # Built-in best fitness analysis.
-from gapy.analysis.fitness_store import FitnessStoreAnalysis
+from gaft.analysis.fitness_store import FitnessStoreAnalysis
 
 # Define population.
 indv_template = GAIndividual(ranges=[(0, 10)], encoding='binary', eps=0.001)

@@ -6,9 +6,9 @@
 
 import unittest
 
-from gapy.components.population import GAPopulation
-from gapy.components.individual import GAIndividual
-from gapy.operators.selection.roulette_wheel_selection import RouletteWheelSelection
+from gaft.components.population import GAPopulation
+from gaft.components.individual import GAIndividual
+from gaft.operators.selection.roulette_wheel_selection import RouletteWheelSelection
 
 class RouletteWheelSelectionTest(unittest.TestCase):
 

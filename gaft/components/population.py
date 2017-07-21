@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from gapy.components.individual import GAIndividual
+from .individual import GAIndividual
 
 
 class GAPopulation(object):

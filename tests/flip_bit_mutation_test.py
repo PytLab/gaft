@@ -6,8 +6,8 @@
 
 import unittest
 
-from gapy.components.individual import GAIndividual
-from gapy.operators.mutation.flip_bit_mutation import FlipBitMutation
+from gaft.components.individual import GAIndividual
+from gaft.operators.mutation.flip_bit_mutation import FlipBitMutation
 
 class FlipBitMutationTest(unittest.TestCase):
 

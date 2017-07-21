@@ -6,7 +6,7 @@
 
 import unittest
 
-from gapy.components.individual import GAIndividual
+from gaft.components.individual import GAIndividual
 
 class IndividualTest(unittest.TestCase):
 

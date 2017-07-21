@@ -1,3 +1,3 @@
-# gapy
-A **G**enetic **A**lgorithm **P**ackage in P**y**thon
+# gaft
+A **G**enetic **A**lgorithm **F**ramework in Py**T**hon
 

@@ -16,7 +16,7 @@ ax.set_ylabel('fitness')
 # Plot the maximum.
 x, y = steps[-1], fits[-1]
 ax.scatter([x], [y], facecolor='r')
-ax.annotate(s='x: {}\ny:{:.2f}'.format(x, y), xy=(x, y), xytext=(x+0.3, y+0.3))
+ax.annotate(s='x: {}\ny:{:.2f}'.format(x, y), xy=(x, y), xytext=(x-0.3, y-0.3))
 
 plt.show()
 

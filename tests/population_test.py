@@ -6,8 +6,8 @@
 
 import unittest
 
-from gapy.components.population import GAPopulation
-from gapy.components.individual import GAIndividual
+from gaft.components.population import GAPopulation
+from gaft.components.individual import GAIndividual
 
 class PopulationTest(unittest.TestCase):
 
