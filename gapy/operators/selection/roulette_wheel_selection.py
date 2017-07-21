@@ -7,7 +7,7 @@ from random import random
 from bisect import bisect_right
 from itertools import accumulate
 
-from gapy.plugin_interfaces.operators.selection import GASelection
+from ...plugin_interfaces.operators.selection import GASelection
 
 class RouletteWheelSelection(GASelection):
     def __init__(self):

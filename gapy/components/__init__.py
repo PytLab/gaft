@@ -1,3 +1,3 @@
-from gapy.components.individual import GAIndividual
-from gapy.components.population import GAPopulation
+from .individual import GAIndividual
+from .population import GAPopulation
 

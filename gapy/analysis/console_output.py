@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from gapy.plugin_interfaces.analysis import OnTheFlyAnalysis
+from ..plugin_interfaces.analysis import OnTheFlyAnalysis
 
 class ConsoleOutputAnalysis(OnTheFlyAnalysis):
 

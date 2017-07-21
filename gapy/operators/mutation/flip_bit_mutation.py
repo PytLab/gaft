@@ -3,7 +3,7 @@
 
 from random import random
 
-from gapy.plugin_interfaces.operators.mutation import GAMutation
+from ...plugin_interfaces.operators.mutation import GAMutation
 
 
 class FlipBitMutation(GAMutation):

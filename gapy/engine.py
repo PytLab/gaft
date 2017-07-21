@@ -5,7 +5,7 @@
 
 import logging
 
-from gapy.plugin_interfaces.analysis import OnTheFlyAnalysis
+from .plugin_interfaces.analysis import OnTheFlyAnalysis
 
 
 class GAEngine(object):

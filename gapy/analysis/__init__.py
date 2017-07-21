@@ -1,2 +1,3 @@
-from gapy.analysis.console_output import ConsoleOutputAnalysis
+from .console_output import ConsoleOutputAnalysis
+from .fitness_store import FitnessStoreAnalysis
 
