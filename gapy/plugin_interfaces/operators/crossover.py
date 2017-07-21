@@ -3,8 +3,22 @@
 
 ''' Module for Genetic Algorithm crossover operator class '''
 
+class CrossoverMeta(type):
+    '''
+    Metaclass for crossover operator class.
+    '''
+    @classmethod
+    def __prepare__(cls, name, bases, **kwargs):
+        return {}
 
-class GACrossover(object):
+    def __new__(cls, name, bases, attrs):
+        if 'cross' not in attrs:
+            raise AttributeError('crossover operator class must have cross method')
+
+        return type.__new__(cls, name, bases, attrs)
+
+
+class GACrossover(metaclass=CrossoverMeta):
     '''
     Class for providing an interface to easily extend the behavior of crossover
     operation between two individuals for children breeding.

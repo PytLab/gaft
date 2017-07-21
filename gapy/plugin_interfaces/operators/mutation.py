@@ -3,8 +3,22 @@
 
 ''' Module for Genetic Algorithm mutation operator class '''
 
+class MutationMeta(type):
+    '''
+    Metaclass for mutation operator class.
+    '''
+    @classmethod
+    def __prepare__(cls, name, bases, **kwargs):
+        return {}
 
-class GAMutation(object):
+    def __new__(cls, name, bases, attrs):
+        if 'mutate' not in attrs:
+            raise AttributeError('mutation operator class must have mutate method')
+
+        return type.__new__(cls, name, bases, attrs)
+
+
+class GAMutation(metaclass=MutationMeta):
     '''
     Class for providing an interface to easily extend the behavior of selection
     operation.
