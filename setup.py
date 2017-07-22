@@ -14,7 +14,7 @@ long_description = '''
 gaft
 ====
 
-A Genetic Algorithm Framework in pyThon
+A **G**\ enetic **A**\ lgorithm **F**\ ramework in py\ **T**\ hon
 
 .. image:: https://travis-ci.org/PytLab/gaft.svg?branch=master
     :target: https://travis-ci.org/PytLab/gaft
@@ -28,7 +28,7 @@ A Genetic Algorithm Framework in pyThon
     :target: https://www.python.org/downloads/release/python-351/
     :alt: platform
 
-.. image:: https://img.shields.io/badge/pypi-v0.1.2-blue.svg
+.. image:: https://img.shields.io/badge/pypi-v0.1.3-blue.svg
     :target: https://pypi.python.org/pypi/gaft/
     :alt: versions
 
