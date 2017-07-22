@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import os
+
 import numpy as np
 import mpl_toolkits.mplot3d
 import matplotlib.pyplot as plt
@@ -21,7 +23,9 @@ for i, (x, y), z in best_fit:
     ax.set_ylabel('Y')
     ax.set_zlabel('Z')
 
-    fig.savefig('{}.png'.format(i))
-    print('save {}.png'.format(i))
+    if not os.path.exists('./surfaces'):
+        os.mkdir('./surfaces')
+    fig.savefig('./surfaces/{}.png'.format(i))
+    print('save ./surfaces/{}.png'.format(i))
     plt.close(fig)
 
