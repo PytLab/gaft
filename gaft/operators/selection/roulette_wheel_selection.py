@@ -23,7 +23,7 @@ class RouletteWheelSelection(GASelection):
         '''
         # Normalize fitness values for all individuals.
         fit = [fitness(indv) for indv in population.individuals]
-        min_fit, max_fit = min(fit), max(fit)
+        min_fit = min(fit)
         fit = [(i - min_fit) for i in fit]
 
         # Create roulette wheel.

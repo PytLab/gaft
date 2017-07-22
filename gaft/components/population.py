@@ -29,7 +29,7 @@ class GAPopulation(object):
         '''
         Initialize current population with individuals.
         '''
-        for i in range(self.size):
+        for _ in range(self.size):
             indv = GAIndividual(ranges=self.indv_template.ranges,
                                 encoding=self.indv_template.encoding,
                                 eps=self.indv_template.eps)

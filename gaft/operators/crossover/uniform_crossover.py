@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from copy import copy
 from random import random
 
 from ...plugin_interfaces.operators.crossover import GACrossover

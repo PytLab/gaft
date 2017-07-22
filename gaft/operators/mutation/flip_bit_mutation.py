@@ -26,7 +26,7 @@ class FlipBitMutation(GAMutation):
             for i, genome in enumerate(individual.chromsome):
                 do_flip = True if random() <= self.pm else False
                 if do_flip:
-                    individual.chromsome[i] ^= 1
+                    individual.chromsome[i] = genome^1
 
             # Update variants.
             individual.variants = individual.decode()
