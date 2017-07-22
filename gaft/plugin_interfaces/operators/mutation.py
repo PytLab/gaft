@@ -11,21 +11,8 @@ class GAMutation(metaclass=MutationMeta):
     Class for providing an interface to easily extend the behavior of selection
     operation.
     '''
-
     # Default mutation probability.
     pm = 0.1
-
-    def __init__(self, pm):
-        '''
-        The constructor of the base-class.
-
-        :param pm: The probability of mutation (usually between 0.001 ~ 0.1)
-        :type pm: float in (0.0, 1.0]
-        '''
-        if pm <= 0.0 or pm > 1.0:
-            raise ValueError('Invalid mutation probability')
-
-        self.pm = pm
 
     def mutate(self, individual):
         '''

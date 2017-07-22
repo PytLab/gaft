@@ -12,10 +12,17 @@ class UniformCrossover(GACrossover):
         Crossover operator with uniform crossover algorithm,
         see https://en.wikipedia.org/wiki/Crossover_(genetic_algorithm)
 
-        :param pc: Crossover probability.
+        :param pc: The probability of crossover (usaully between 0.25 ~ 1.0)
+        :type pc: float in (0.0, 1.0]
+
         :param pe: Gene exchange probability.
         '''
-        super(self.__class__, self).__init__(pc=pc)
+        if pc <= 0.0 or pc > 1.0:
+            raise ValueError('Invalid crossover probability')
+        self.pc = pc
+
+        if pe <= 0.0 or pe > 1.0:
+            raise ValueError('Invalid genome exchange probability')
         self.pe = pe
 
     def cross(self, father, mother):

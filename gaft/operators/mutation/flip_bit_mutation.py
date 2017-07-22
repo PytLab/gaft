@@ -14,7 +14,10 @@ class FlipBitMutation(GAMutation):
         :param pm: The probability of mutation (usually between 0.001 ~ 0.1)
         :type pm: float in (0.0, 1.0]
         '''
-        super(self.__class__, self).__init__(pm=pm)
+        if pm <= 0.0 or pm > 1.0:
+            raise ValueError('Invalid mutation probability')
+
+        self.pm = pm
 
     def mutate(self, individual):
         '''

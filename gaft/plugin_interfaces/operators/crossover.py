@@ -12,18 +12,8 @@ class GACrossover(metaclass=CrossoverMeta):
     operation between two individuals for children breeding.
     '''
 
+    # The probability of crossover (usaully between 0.25 ~ 1.0)
     pc = 0.8
-
-    def __init__(self, pc):
-        '''
-        The constructor of the base-class.
-
-        :param pc: The probability of crossover (usaully between 0.25 ~ 1.0)
-        :type pc: float in (0.0, 1.0]
-        '''
-        if pc <= 0.0 or pc > 1.0:
-            raise ValueError('Invalid crossover probability')
-        self.pc = pc
 
     def cross(self, father, mother):
         '''
