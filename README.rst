@@ -41,6 +41,7 @@ Example:
 --------
 
 1. Importing
+````````````
 
 .. code-block:: python
 
@@ -55,6 +56,7 @@ Example:
     from gaft.plugin_interfaces.analysis import OnTheFlyAnalysis
 
 2. Define population
+````````````````````
 
 .. code-block:: python
     
@@ -62,6 +64,7 @@ Example:
     population = GAPopulation(indv_template=indv_template, size=50)
 
 3. Create genetic operators
+```````````````````````````
 
 .. code-block:: python
 
@@ -70,7 +73,8 @@ Example:
     crossover = UniformCrossover(pc=0.8, pe=0.5)
     mutation = FlipBitMutation(pm=0.1)
 
-4. Create genetic algorithm engine to run optimization.
+4. Create genetic algorithm engine to run optimization
+``````````````````````````````````````````````````````
 
 .. code-block:: python
 
@@ -79,6 +83,7 @@ Example:
                   analysis=[FitnessStoreAnalysis])
 
 5. Define and register fitness function
+```````````````````````````````````````
 
 .. code-block:: python
 
@@ -88,6 +93,7 @@ Example:
         return x + 10*sin(5*x) + 7*cos(4*x)
 
 6. Define and register an on-the-fly analysis (optional)
+````````````````````````````````````````````````````````
 
 .. code-block:: python
 
@@ -100,6 +106,7 @@ Example:
             engine.logger.info(msg)
 
 7. Run
+``````
 
 .. code-block:: python
 
@@ -110,7 +117,19 @@ Example:
 
 .. image:: https://github.com/PytLab/gaft/blob/master/examples/ex01/envolution_curve.png
 
+9. Optimization animation
+`````````````````````````
+
+.. image:: https://github.com/PytLab/gaft/blob/master/examples/ex01/animation.gif
+
 See `example 01 <https://github.com/PytLab/gaft/blob/master/examples/ex01/ex01.py>`_ for a one-dimension search for the global maximum of function `f(x) = x + 10sin(5x) + 7cos(4x)`
+
+Global maximum search for binary function
+-----------------------------------------
+
+.. image:: https://github.com/PytLab/gaft/blob/master/examples/ex02/surface_animation.gif
+
+See `example 02 <https://github.com/PytLab/gaft/blob/master/examples/ex02/ex02.py>`_ for a two-dimension search for the global maximum of function `f(x) = y*sin(2*pi*x) + x*cos(2*pi*y)`
 
 Plugins
 -------
