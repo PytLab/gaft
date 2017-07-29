@@ -7,7 +7,7 @@ class FitnessStoreAnalysis(OnTheFlyAnalysis):
 
     interval = 1
 
-    def setup(self, population, engine):
+    def setup(self, ng, engine):
         # Generation numbers.
         self.ngs = []
 
@@ -17,12 +17,12 @@ class FitnessStoreAnalysis(OnTheFlyAnalysis):
         # Best variants.
         self.variants = []
 
-    def register_step(self, ng, population, engine):
+    def register_step(self, g, population, engine):
         # Collect data.
         best_indv = population.best_indv(engine.fitness)
         best_fit = engine.fitness(best_indv)
 
-        self.ngs.append(ng)
+        self.ngs.append(g)
         self.variants.append(best_indv.variants)
         self.fitness_values.append(best_fit)
 

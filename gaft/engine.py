@@ -74,7 +74,7 @@ class GAEngine(object):
 
         # Setup analysis objects.
         for a in self.analysis:
-            a.setup(self.population, self)
+            a.setup(ng=ng, engine=self)
 
         # Enter evolution iteration.
         for g in range(ng):
@@ -97,7 +97,7 @@ class GAEngine(object):
             # Run all analysis if needed.
             for a in self.analysis:
                 if g % a.interval == 0:
-                    a.register_step(ng=g, population=new_population, engine=self)
+                    a.register_step(g=g, population=new_population, engine=self)
 
         # Perform the analysis post processing.
         for a in self.analysis:

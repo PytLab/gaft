@@ -7,9 +7,16 @@ class ConsoleOutputAnalysis(OnTheFlyAnalysis):
 
     interval = 1
 
-    def register_step(self, ng, population, engine):
+    def setup(self, ng, engine):
+        generation_info = 'Generation number: {}'.format(ng)
+        population_info = 'Population number: {}'.format(engine.population.size)
+        engine.logger.info('{} {}'.format(generation_info, population_info))
+
+    def register_step(self, g, population, engine):
         best_indv = population.best_indv(engine.fitness)
-        msg = 'Generation: {}, best fitness: {:.3f}'.format(ng, engine.fitness(best_indv))
+        ng_info = 'Generation: {}, '.format(g)
+        fit_info = 'best fitness: {:.3f}'.format(engine.fitness(best_indv))
+        msg = ng_info + fit_info
         engine.logger.info(msg)
 
     def finalize(self, population, engine):
