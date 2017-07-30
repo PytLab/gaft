@@ -47,7 +47,7 @@ class GAPopulation(object):
         Get individual by index.
         '''
         if key < 0 or key >= self.size:
-            raise IndexError('Individual index out of range')
+            raise IndexError('Individual index({}) out of range'.format(key))
         return self.individuals[key]
 
     def best_indv(self, fitness):
