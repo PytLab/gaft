@@ -46,7 +46,7 @@ class MPIUtil(object):
         return self.rank == 0
 
     # Utility methods.
-    def split(self, sequence):
+    def split_seq(self, sequence):
         '''
         Split the sequence according to rank and processor number.
         '''
@@ -56,16 +56,27 @@ class MPIUtil(object):
 
         return sequence[start: end]
 
-    def merge_indvs(self, indvs):
+    def split_size(self, size):
+        '''
+        Split a size number(int) to sub-size number.
+        '''
+        if size % self.size != 0:
+            splited_sizes = [size // self.size]*self.size + [size % self.size]
+        else:
+            splited_sizes = [size // self.size]*self.size
+
+        return splited_sizes[self.rank]
+
+    def merge_seq(self, seq):
         '''
         Gather data in sub-process to root process.
         '''
         if self.size == 1:
-            return indvs
+            return seq
 
         mpi_comm = MPI.COMM_WORLD
-        merged_indvs= mpi_comm.allgather(indvs)
-        return list(chain(*merged_indvs))
+        merged_seq= mpi_comm.allgather(seq)
+        return list(chain(*merged_seq))
 
 
 mpi = MPIUtil()
