@@ -4,6 +4,7 @@
 ''' Genetic Algorithm engine definition '''
 
 import logging
+import sys
 
 from .plugin_interfaces.analysis import OnTheFlyAnalysis
 
@@ -51,7 +52,7 @@ class GAEngine(object):
         '''
         logger = logging.getLogger('GAEngine')
         logger.setLevel(logging.INFO)
-        console_hdlr = logging.StreamHandler()
+        console_hdlr = logging.StreamHandler(sys.stdout)
         console_hdlr.setLevel(logging.INFO)
         formatter = logging.Formatter('%(name)s   %(levelname)-8s %(message)s')
         console_hdlr.setFormatter(formatter)
