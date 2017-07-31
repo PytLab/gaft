@@ -7,6 +7,7 @@ import logging
 import sys
 
 from .plugin_interfaces.analysis import OnTheFlyAnalysis
+from .mpiutil import mpi
 
 
 class GAEngine(object):
@@ -79,26 +80,30 @@ class GAEngine(object):
 
         # Enter evolution iteration.
         for g in range(ng):
-            # Next generation population.
-            new_population = self.population.new()
+            # Scatter jobs to all processes.
+            local_indvs = []
+            local_size = mpi.split_size(self.population.size // 2)
 
             # Fill the new population.
-            for _ in range(new_population.size // 2):
+            for _ in range(local_size):
                 # Select father and mother.
                 parents = self.selection.select(self.population, fitness=self.fitness)
                 # Crossover.
                 children = self.crossover.cross(*parents)
                 # Mutation.
                 children = [self.mutation.mutate(child) for child in children]
-                # Add to population.
-                new_population.individuals.extend(children)
+                # Collect children.
+                local_indvs.extend(children)
 
-            self.population = new_population
+            # Gather individuals from all processes.
+            indvs = mpi.merge_seq(local_indvs)
+            # The next generation.
+            self.population.individuals = indvs
 
             # Run all analysis if needed.
             for a in self.analysis:
                 if g % a.interval == 0:
-                    a.register_step(g=g, population=new_population, engine=self)
+                    a.register_step(g=g, population=self.population, engine=self)
 
         # Perform the analysis post processing.
         for a in self.analysis:
