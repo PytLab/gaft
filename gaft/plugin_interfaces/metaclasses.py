@@ -24,9 +24,9 @@ class AnalysisMeta(type):
             # Set default interface methods.
             elif method is None:
                 if method_name == 'setup':
-                    attrs[method_name] = lambda self, population, engine: None
+                    attrs[method_name] = lambda self, ng, engine: None
                 elif method_name == 'register_step':
-                    attrs[method_name] = lambda self, ng, population, engine: None
+                    attrs[method_name] = lambda self, g, population, engine: None
                 elif method_name == 'finalize':
                     attrs[method_name] = lambda self, population, engine: None
 
