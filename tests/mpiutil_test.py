@@ -15,6 +15,9 @@ class MPIUtilTest(unittest.TestCase):
         self.maxDiff = True
 
     def test_split_seq(self):
+        '''
+        Make sure sequence can be splited according to process number correctly.
+        '''
         seq = list(range(10))
 
         if mpi.size == 1:
@@ -26,6 +29,9 @@ class MPIUtilTest(unittest.TestCase):
                 self.assertListEqual(mpi.split_seq(seq), [5, 6, 7, 8, 9])
 
     def test_merge_seq(self):
+        '''
+        Make sure sequence in different processes can be merged correctly.
+        '''
         if mpi.size == 1:
             self.assertListEqual(mpi.merge_seq([1, 2, 3]), [1, 2, 3])
         if mpi.size == 2:
@@ -34,6 +40,18 @@ class MPIUtilTest(unittest.TestCase):
             elif mpi.rank == 1:
                 recv_data = mpi.merge_seq([2, 3, 4])
             self.assertListEqual(recv_data, [1, 2, 3, 2, 3, 4])
+
+    def test_split_size(self):
+        '''
+        Make sure a size number can be splited correctly.
+        '''
+        if mpi.size == 1:
+            self.assertEqual(mpi.split_size(50), 50)
+        if mpi.size == 2:
+            if mpi.rank == 0:
+                self.assertEqual(mpi.split_size(49), 24)
+            elif mpi.rank == 1:
+                self.assertEqual(mpi.split_size(49), 25)
 
 if '__main__' == __name__:
     suite = unittest.TestLoader().loadTestsFromTestCase(MPIUtilTest)
