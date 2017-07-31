@@ -14,6 +14,9 @@ from gaft.operators import RouletteWheelSelection
 from gaft.operators import UniformCrossover
 from gaft.operators import FlipBitMutation
 
+# Decorator for analysis interfaces.
+from gaft.mpiutil import master_only
+
 # Analysis plugin base class.
 from gaft.plugin_interfaces.analysis import OnTheFlyAnalysis
 
@@ -45,11 +48,13 @@ def fitness(indv):
 class ConsoleOutputAnalysis(OnTheFlyAnalysis):
     interval = 1
 
+    @master_only
     def register_step(self, g, population, engine):
         best_indv = population.best_indv(engine.fitness)
         msg = 'Generation: {}, best fitness: {:.3f}'.format(g, engine.fitness(best_indv))
         engine.logger.info(msg)
 
+    @master_only
     def finalize(self, population, engine):
         best_indv = population.best_indv(engine.fitness)
         x = best_indv.variants

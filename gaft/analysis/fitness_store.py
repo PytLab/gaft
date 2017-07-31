@@ -2,11 +2,13 @@
 # -*- coding: utf-8 -*-
 
 from ..plugin_interfaces.analysis import OnTheFlyAnalysis
+from ..mpiutil import master_only
 
 class FitnessStoreAnalysis(OnTheFlyAnalysis):
 
     interval = 1
 
+    @master_only
     def setup(self, ng, engine):
         # Generation numbers.
         self.ngs = []
@@ -17,6 +19,7 @@ class FitnessStoreAnalysis(OnTheFlyAnalysis):
         # Best variants.
         self.variants = []
 
+    @master_only
     def register_step(self, g, population, engine):
         # Collect data.
         best_indv = population.best_indv(engine.fitness)
@@ -26,6 +29,7 @@ class FitnessStoreAnalysis(OnTheFlyAnalysis):
         self.variants.append(best_indv.variants)
         self.fitness_values.append(best_fit)
 
+    @master_only
     def finalize(self, population, engine):
         with open('best_fit.py', 'w', encoding='utf-8') as f:
             f.write('best_fit = [\n')
