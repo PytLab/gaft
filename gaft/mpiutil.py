@@ -6,6 +6,7 @@ in distributed MPI environment.
 '''
 
 from itertools import chain
+from functools import wraps
 
 try:
     from mpi4py import MPI
@@ -80,4 +81,17 @@ class MPIUtil(object):
 
 
 mpi = MPIUtil()
+
+
+def master_only(func):
+    '''
+    Decorator to limit a function to be called
+    only in master process in MPI env.
+    '''
+    @wraps(func)
+    def _call_in_master_proc(*args, **kwargs):
+        if mpi.is_master:
+            return func(*args, **kwargs)
+
+    return _call_in_master_proc
 
