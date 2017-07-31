@@ -5,6 +5,8 @@ Utitlities for parallelize Genetic Algorithm by using MPI interfaces
 in distributed MPI environment.
 '''
 
+from itertools import chain
+
 try:
     from mpi4py import MPI
     MPI_INSTALLED = True
@@ -53,6 +55,17 @@ class MPIUtil(object):
         start, end = list(zip(starts, ends))[self.rank]
 
         return sequence[start: end]
+
+    def merge_indvs(self, indvs):
+        '''
+        Gather data in sub-process to root process.
+        '''
+        if self.size == 1:
+            return indvs
+
+        mpi_comm = MPI.COMM_WORLD
+        merged_indvs= mpi_comm.allgather(indvs)
+        return list(chain(*merged_indvs))
 
 
 mpi = MPIUtil()
