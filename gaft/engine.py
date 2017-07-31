@@ -83,7 +83,7 @@ class GAEngine(object):
             new_population = self.population.new()
 
             # Fill the new population.
-            for _ in range(0, new_population.size, 2):
+            for _ in range(new_population.size // 2):
                 # Select father and mother.
                 parents = self.selection.select(self.population, fitness=self.fitness)
                 # Crossover.

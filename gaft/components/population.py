@@ -17,6 +17,8 @@ class GAPopulation(object):
 
         '''
         # Population size.
+        if size % 2 != 0:
+            raise ValueError('Population size must be an even number')
         self.size = size
 
         # Template individual.
