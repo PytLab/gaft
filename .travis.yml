@@ -6,6 +6,8 @@ notifications:
   email: false
 
 install:
+  - sudo apt-get update
+  - sudo apt-get install mpich
   - python setup.py install
 
 script:
