@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-from math import sin, cos
-import numpy as np
 import matplotlib.pyplot as plt
+
 from best_fit import best_fit
 
 steps, variants, fits = list(zip(*best_fit))
