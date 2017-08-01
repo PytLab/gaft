@@ -49,9 +49,9 @@ class MPIUtilTest(unittest.TestCase):
             self.assertEqual(mpi.split_size(50), 50)
         if mpi.size == 2:
             if mpi.rank == 0:
-                self.assertEqual(mpi.split_size(49), 24)
-            elif mpi.rank == 1:
                 self.assertEqual(mpi.split_size(49), 25)
+            elif mpi.rank == 1:
+                self.assertEqual(mpi.split_size(49), 24)
 
 if '__main__' == __name__:
     suite = unittest.TestLoader().loadTestsFromTestCase(MPIUtilTest)
