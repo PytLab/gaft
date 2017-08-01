@@ -12,4 +12,6 @@ install:
 
 script:
   - python tests/gaft_test.py
+  # Test parallel running.
+  - mpirun -np 2 python tests/gaft_test.py
 
