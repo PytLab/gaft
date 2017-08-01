@@ -61,7 +61,9 @@ class MPIUtil(object):
         '''
         Split a size number(int) to sub-size number.
         '''
-        if size % self.size != 0:
+        if size < self.size:
+            splited_sizes = [1]*size + [0]*(self.size - size)
+        elif size % self.size != 0:
             residual = size % self.size
             splited_sizes = [size // self.size]*self.size
             for i in range(residual):
