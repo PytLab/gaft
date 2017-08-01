@@ -55,7 +55,9 @@ Installation:
     python setup.py install
 
 '''
-install_requires = []
+install_requires = [
+    'mpi4py',
+]
 
 license = 'LICENSE'
 
