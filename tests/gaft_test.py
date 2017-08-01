@@ -12,6 +12,7 @@ from roulette_wheel_selection_test import RouletteWheelSelectionTest
 from uniform_crossover_test import UniformCrossoverTest
 from flip_bit_mutation_test import FlipBitMutationTest
 from mpiutil_test import MPIUtilTest
+from engine_test import GAEngineTest
 
 def suite():
     test_suite = unittest.TestSuite([
@@ -21,6 +22,7 @@ def suite():
         unittest.TestLoader().loadTestsFromTestCase(UniformCrossoverTest),
         unittest.TestLoader().loadTestsFromTestCase(FlipBitMutationTest),
         unittest.TestLoader().loadTestsFromTestCase(MPIUtilTest),
+        unittest.TestLoader().loadTestsFromTestCase(GAEngineTest)
     ])
 
     return test_suite
