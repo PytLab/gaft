@@ -146,7 +146,7 @@ The plugin interfaces are defined in `/gaft/plugin_interfaces/ <https://github.c
 
 TODO
 ----
-1. Add more built-in genetic operators with different algorithms (-)
-2. Add C++ backend (-)
-3. Parallelization (√)
+1. Parallelization (✅)
+2. Add more built-in genetic operators with different algorithms (-)
+3. Add C++ backend (-)
 
