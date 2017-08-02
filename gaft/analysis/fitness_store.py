@@ -37,5 +37,5 @@ class FitnessStoreAnalysis(OnTheFlyAnalysis):
                 f.write('    ({}, {}, {}),\n'.format(ng, x, y))
             f.write(']\n\n')
 
-        engine.logger.info('Best fitness values are written to best_fit.py')
+        self.logger.info('Best fitness values are written to best_fit.py')
 

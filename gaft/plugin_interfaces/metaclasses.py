@@ -1,7 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import logging
+
 from ..mpiutil import master_only
+
 
 class AnalysisMeta(type):
     '''
@@ -32,13 +35,17 @@ class AnalysisMeta(type):
                 elif method_name == 'finalize':
                     attrs[method_name] = lambda self, population, engine: None
 
-        # Check if the pluging is only used in master process.
+        # Check if the plugin is only used in master process.
         called_in_master = attrs['master_only'] if 'master_only' in attrs else False
 
         # Wrap all interfaces.
         if called_in_master:
             for method_name in ['setup', 'register_step', 'finalize']:
                 attrs[method_name] = master_only(attrs[method_name])
+
+        # Set logger.
+        logger_name = 'gaft.{}'.format(name)
+        attrs['logger'] = logging.getLogger(logger_name)
 
         return type.__new__(cls, name, bases, attrs)
 

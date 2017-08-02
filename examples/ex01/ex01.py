@@ -52,14 +52,14 @@ class ConsoleOutputAnalysis(OnTheFlyAnalysis):
     def register_step(self, g, population, engine):
         best_indv = population.best_indv(engine.fitness)
         msg = 'Generation: {}, best fitness: {:.3f}'.format(g, engine.fitness(best_indv))
-        engine.logger.info(msg)
+        self.logger.info(msg)
 
     def finalize(self, population, engine):
         best_indv = population.best_indv(engine.fitness)
         x = best_indv.variants
         y = engine.fitness(best_indv)
         msg = 'Optimal solution: ({}, {})'.format(x, y)
-        engine.logger.info(msg)
+        self.logger.info(msg)
 
 if '__main__' == __name__:
     # Run the GA engine.
