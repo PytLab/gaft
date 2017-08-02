@@ -4,7 +4,6 @@
 ''' Genetic Algorithm engine definition '''
 
 import logging
-import sys
 
 from .plugin_interfaces.analysis import OnTheFlyAnalysis
 from .mpiutil import mpi
@@ -36,7 +35,8 @@ class GAEngine(object):
         self._check_parameters()
 
         # Set logger.
-        self._set_logger()
+        logger_name = 'gaft.{}'.format(self.__class__.__name__)
+        self.logger = logging.getLogger(logger_name)
 
         # Attributes assignment.
         self.population = population
@@ -46,20 +46,6 @@ class GAEngine(object):
         self.mutation= mutation
 
         self.analysis = [] if analysis is None else [a() for a in analysis]
-
-    def _set_logger(self):
-        '''
-        Helper function to set logger for engine.
-        '''
-        logger = logging.getLogger('GAEngine')
-        logger.setLevel(logging.INFO)
-        console_hdlr = logging.StreamHandler(sys.stdout)
-        console_hdlr.setLevel(logging.INFO)
-        formatter = logging.Formatter('%(name)s   %(levelname)-8s %(message)s')
-        console_hdlr.setFormatter(formatter)
-        logger.addHandler(console_hdlr)
-
-        self.logger = logger
 
     def run(self, ng=100):
         '''

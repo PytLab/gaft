@@ -5,6 +5,7 @@ Utitlities for parallelize Genetic Algorithm by using MPI interfaces
 in distributed MPI environment.
 '''
 
+import logging
 from itertools import chain
 from functools import wraps
 
@@ -17,8 +18,8 @@ except ImportError:
 
 class MPIUtil(object):
     def __init__(self):
-        # Nothing here.
-        pass
+        logger_name = 'gaft.{}'.format(self.__class__.__name__)
+        self._logger = logging.getLogger(logger_name)
 
     # Wrapper for common MPI interfaces.
     def barrier(self):
@@ -62,6 +63,10 @@ class MPIUtil(object):
         Split a size number(int) to sub-size number.
         '''
         if size < self.size:
+            warn_msg = ('Splitting size({}) is smaller than process ' +
+                        'number({}), more processor would be ' +
+                        'superflous').format(size, self.size)
+            self._logger.warning(warn_msg)
             splited_sizes = [1]*size + [0]*(self.size - size)
         elif size % self.size != 0:
             residual = size % self.size
