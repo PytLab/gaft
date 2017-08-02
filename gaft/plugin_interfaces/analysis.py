@@ -9,6 +9,8 @@ class OnTheFlyAnalysis(metaclass=AnalysisMeta):
     Class for providing an interface to easily extend and customize the behavior
     of the on-the-fly analysis functionality of gapy.
     '''
+    # Only used in master process?
+    master_only = False
 
     # Analysis interval.
     interval = 1

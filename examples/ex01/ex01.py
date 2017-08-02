@@ -47,14 +47,13 @@ def fitness(indv):
 @engine.analysis_register
 class ConsoleOutputAnalysis(OnTheFlyAnalysis):
     interval = 1
+    master_only = True
 
-    @master_only
     def register_step(self, g, population, engine):
         best_indv = population.best_indv(engine.fitness)
         msg = 'Generation: {}, best fitness: {:.3f}'.format(g, engine.fitness(best_indv))
         engine.logger.info(msg)
 
-    @master_only
     def finalize(self, population, engine):
         best_indv = population.best_indv(engine.fitness)
         x = best_indv.variants
