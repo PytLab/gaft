@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+from ..mpiutil import master_only
+
 class AnalysisMeta(type):
     '''
     Metaclass for analysis plugin class
@@ -29,6 +31,14 @@ class AnalysisMeta(type):
                     attrs[method_name] = lambda self, g, population, engine: None
                 elif method_name == 'finalize':
                     attrs[method_name] = lambda self, population, engine: None
+
+        # Check if the pluging is only used in master process.
+        called_in_master = attrs['master_only'] if 'master_only' in attrs else False
+
+        # Wrap all interfaces.
+        if called_in_master:
+            for method_name in ['setup', 'register_step', 'finalize']:
+                attrs[method_name] = master_only(attrs[method_name])
 
         return type.__new__(cls, name, bases, attrs)
 
