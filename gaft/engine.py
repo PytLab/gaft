@@ -57,9 +57,6 @@ class GAEngine(object):
         if self.fitness is None:
             raise AttributeError('No fitness function in GA engine')
 
-        # Initialize a population.
-        self.population.init()
-
         # Setup analysis objects.
         for a in self.analysis:
             a.setup(ng=ng, engine=self)

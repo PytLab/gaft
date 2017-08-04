@@ -25,7 +25,7 @@ class GAEngineTest(unittest.TestCase):
         Make sure GA engine can run correctly.
         '''
         indv_template = GAIndividual(ranges=[(0, 10)], encoding='binary', eps=0.001)
-        population = GAPopulation(indv_template=indv_template, size=50)
+        population = GAPopulation(indv_template=indv_template, size=50).init()
 
         # Create genetic operators.
         selection = RouletteWheelSelection()

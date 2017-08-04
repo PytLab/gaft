@@ -27,15 +27,30 @@ class GAPopulation(object):
         # All individuals.
         self.individuals = []
 
-    def init(self):
+    def init(self, indvs=None):
         '''
         Initialize current population with individuals.
+
+        :param indvs: Initial individuals in population, randomly initialized
+                      individuals are created if not provided.
+        :type indvs: list of GAIndividual
         '''
-        for _ in range(self.size):
-            indv = GAIndividual(ranges=self.indv_template.ranges,
-                                encoding=self.indv_template.encoding,
-                                eps=self.indv_template.eps)
-            self.individuals.append(indv)
+        if indvs is None:
+            for _ in range(self.size):
+                indv = GAIndividual(ranges=self.indv_template.ranges,
+                                    encoding=self.indv_template.encoding,
+                                    eps=self.indv_template.eps)
+                self.individuals.append(indv)
+        else:
+            # Check individuals.
+            if len(indvs) != self.size:
+                raise ValueError('Invalid individuals number')
+            for indv in indvs:
+                if not isinstance(indv, GAIndividual):
+                    raise ValueError('individual must be GAIndividual object')
+            self.individuals = individuals
+
+        return self
 
     def new(self):
         '''
