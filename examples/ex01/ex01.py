@@ -14,9 +14,6 @@ from gaft.operators import RouletteWheelSelection
 from gaft.operators import UniformCrossover
 from gaft.operators import FlipBitMutation
 
-# Decorator for analysis interfaces.
-from gaft.mpiutil import master_only
-
 # Analysis plugin base class.
 from gaft.plugin_interfaces.analysis import OnTheFlyAnalysis
 
