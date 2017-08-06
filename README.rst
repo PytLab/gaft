@@ -29,7 +29,7 @@ Introduction
 
 **gaft** is a Python Framework for genetic algorithm computation. It provide built-in genetic operators for genetic algorithm optimization and plugin interfaces for users to define your own genetic operators and on-the-fly analysis for algorithm testing.
 
-**gaft** is now accelerated using MPI parallelization interfaces. You can run it on your cluster in parallal with MPI environment.
+**gaft** is now accelerated using MPI parallelization interfaces. You can run it on your cluster in parallel with MPI environment.
 
 Installation:
 -------------
@@ -147,6 +147,6 @@ The plugin interfaces are defined in `/gaft/plugin_interfaces/ <https://github.c
 TODO
 ----
 1. ✅ Parallelization 
-2. 🏃 Add more built-in genetic operators with different algorithms (-)
-3. 🏃 Add C++ backend (-)
+2. 🏃 Add more built-in genetic operators with different algorithms
+3. 🏃 Add C++ backend
 
