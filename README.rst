@@ -51,11 +51,8 @@ Example:
 .. code-block:: python
 
     from gaft import GAEngine
-    from gaft.components import GAIndividual
-    from gaft.components import GAPopulation
-    from gaft.operators import RouletteWheelSelection
-    from gaft.operators import UniformCrossover
-    from gaft.operators import FlipBitMutation
+    from gaft.components import GAIndividual, GAPopulation
+    from gaft.operators import RouletteWheelSelection, UniformCrossover, FlipBitMutation
 
     # Analysis plugin base class.
     from gaft.plugin_interfaces.analysis import OnTheFlyAnalysis
@@ -104,6 +101,7 @@ Example:
 
     @engine.analysis_register
     class ConsoleOutputAnalysis(OnTheFlyAnalysis):
+        master_only = True
         interval = 1
         def register_step(self, ng, population, engine):
             best_indv = population.best_indv(engine.fitness)
