@@ -142,6 +142,12 @@ You can define your own genetic operators for GAFT and run your algorithm test.
 
 The plugin interfaces are defined in `/gaft/plugin_interfaces/ <https://github.com/PytLab/gaft/tree/master/gaft/plugin_interfaces>`_, you can extend the interface class and define your own analysis class or genetic operator class. The `built-in operators <https://github.com/PytLab/gaft/tree/master/gaft/operators>`_ and `built-in on-the-fly analysis <https://github.com/PytLab/gaft/tree/master/gaft/analysis>`_ can be treated as an official example for plugins development.
 
+Blogs
+-----
+- `GAFT-一个使用Python实现的遗传算法框架 <http://pytlab.github.io/2017/07/23/gaft-%E4%B8%80%E4%B8%AA%E5%9F%BA%E4%BA%8EPython%E7%9A%84%E9%81%97%E4%BC%A0%E7%AE%97%E6%B3%95%E6%A1%86%E6%9E%B6/>`_
+
+- `使用MPI并行化遗传算法框架GAFT <http://pytlab.github.io/2017/08/02/%E4%BD%BF%E7%94%A8MPI%E5%B9%B6%E8%A1%8C%E5%8C%96%E9%81%97%E4%BC%A0%E7%AE%97%E6%B3%95/>`_
+
 TODO
 ----
 1. ✅ Parallelization 
