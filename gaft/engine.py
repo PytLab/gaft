@@ -5,6 +5,7 @@
 
 import logging
 import math
+import functools
 
 from .plugin_interfaces.analysis import OnTheFlyAnalysis
 from .mpiutil import mpi
@@ -106,6 +107,7 @@ class GAEngine(object):
         '''
         A decorator for fitness function register.
         '''
+        @functools.wrap(fn)
         def _fn_with_fitness_check(*args, **kwargs):
             '''
             A wrapper function for fitness function with fitness value check.
