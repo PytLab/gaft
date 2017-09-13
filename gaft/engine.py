@@ -4,6 +4,7 @@
 ''' Genetic Algorithm engine definition '''
 
 import logging
+import math
 
 from .plugin_interfaces.analysis import OnTheFlyAnalysis
 from .mpiutil import mpi
@@ -105,7 +106,19 @@ class GAEngine(object):
         '''
         A decorator for fitness function register.
         '''
-        self.fitness = fn
+        def _fn_with_fitness_check(*args, **kwargs):
+            '''
+            A wrapper function for fitness function with fitness value check.
+            '''
+            fitness = fn(*args, **kwargs)
+            is_invalid = (type(fitness) is not float) or (math.isnan(fitness))
+            if is_invalid:
+                msg = 'Fitness value(value: {}, type: {}) is invalid'
+                msg = msg.format(fitness, type(fitness))
+                raise ValueError(msg)
+            return fitness
+
+        self.fitness = _fn_with_fitness_check
 
     def analysis_register(self, analysis_cls):
         '''
