@@ -3,7 +3,10 @@
 
 import logging
 import inspect
+import functools
 
+from ..components.individual import GAIndividual
+from ..components.population import GAPopulation
 from ..mpiutil import master_only
 
 
@@ -70,12 +73,24 @@ class CrossoverMeta(type):
 
         # Check parameter of cross method.
         sig = inspect.signature(cross)
-
         if 'father' not in sig.parameters:
             raise NameError('cross method must have father parameter')
-
         if 'mother' not in sig.parameters:
             raise NameError('cross method must have mother parameter')
+
+        # Add parameter check to user-defined method.
+        @functools.wraps(cross)
+        def _wrapped_cross(self, father, mother):
+            ''' Wrapper to add parameters type checking.
+            '''
+            # Check parameter types.
+            if not (isinstance(father, GAIndividual) and
+                    isinstance(mother, GAIndividual)):
+                raise TypeError('father and mother must be GAIndividual object')
+
+            return cross(self, father, mother)
+
+        attrs['cross'] = _wrapped_cross
 
         return type.__new__(cls, name, bases, attrs)
 
@@ -102,6 +117,19 @@ class MutationMeta(type):
         if 'individual' not in sig.parameters:
             raise NameError('mutate method must have individual parameter')
 
+        # Add parameter check to user-defined method.
+        @functools.wraps(mutate)
+        def _wrapped_mutate(self, individual):
+            ''' Wrapper to add parameters type checking.
+            '''
+            # Check parameter types.
+            if not isinstance(individual, GAIndividual):
+                raise TypeError('individual must be a GAIndividual object')
+
+            return mutate(self, individual)
+
+        attrs['mutate'] = _wrapped_mutate
+
         return type.__new__(cls, name, bases, attrs)
 
 
@@ -126,6 +154,21 @@ class SelectionMeta(type):
             raise NameError('select method must have population parameter')
         if 'fitness' not in sig.parameters:
             raise NameError('select method must have fitness parameter')
+
+        # Add parameter check to user-defined method.
+        @functools.wraps(select)
+        def _wrapped_select(self, population, fitness):
+            ''' Wrapper to add parameters type checking.
+            '''
+            # Check parameter types.
+            if not isinstance(population, GAPopulation):
+                raise TypeError('father and mother must be GAIndividual object')
+            if not callable(fitness):
+                raise TypeError('fitness must be a callable object')
+
+            return select(self, population, fitness)
+
+        attrs['select'] = _wrapped_select
 
         return type.__new__(cls, name, bases, attrs)
 
