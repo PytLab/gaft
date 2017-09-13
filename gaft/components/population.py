@@ -67,6 +67,12 @@ class GAPopulation(object):
             raise IndexError('Individual index({}) out of range'.format(key))
         return self.individuals[key]
 
+    def __len__(self):
+        '''
+        Get length of population.
+        '''
+        return len(self.individuals)
+
     def best_indv(self, fitness):
         '''
         The individual with the best fitness.
