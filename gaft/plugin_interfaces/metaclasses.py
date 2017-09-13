@@ -14,10 +14,6 @@ class AnalysisMeta(type):
     '''
     Metaclass for analysis plugin class
     '''
-    @classmethod
-    def __prepare__(cls, name, bases, **kwargs):
-        return {}
-
     def __new__(cls, name, bases, attrs):
         # Check interval type.
         if 'interval' in attrs:
@@ -58,10 +54,6 @@ class CrossoverMeta(type):
     '''
     Metaclass for crossover operator class.
     '''
-    @classmethod
-    def __prepare__(cls, name, bases, **kwargs):
-        return {}
-
     def __new__(cls, name, bases, attrs):
         if 'cross' not in attrs:
             raise AttributeError('crossover operator class must have cross method')
@@ -99,10 +91,6 @@ class MutationMeta(type):
     '''
     Metaclass for mutation operator class.
     '''
-    @classmethod
-    def __prepare__(cls, name, bases, **kwargs):
-        return {}
-
     def __new__(cls, name, bases, attrs):
         if 'mutate' not in attrs:
             raise AttributeError('mutation operator class must have mutate method')
@@ -137,10 +125,6 @@ class SelectionMeta(type):
     '''
     Metaclass for selection operator class.
     '''
-    @classmethod
-    def __prepare__(cls, name, bases, **kwargs):
-        return {}
-
     def __new__(cls, name, bases, attrs):
         # Check select method.
         if 'select' not in attrs:
