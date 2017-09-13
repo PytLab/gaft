@@ -7,6 +7,7 @@ import logging
 import math
 import functools
 
+from .components.individual import GAIndividual
 from .plugin_interfaces.analysis import OnTheFlyAnalysis
 from .mpiutil import mpi
 
@@ -107,12 +108,17 @@ class GAEngine(object):
         '''
         A decorator for fitness function register.
         '''
-        @functools.wrap(fn)
-        def _fn_with_fitness_check(*args, **kwargs):
+        @functools.wraps(fn)
+        def _fn_with_fitness_check(indv):
             '''
             A wrapper function for fitness function with fitness value check.
             '''
-            fitness = fn(*args, **kwargs)
+            # Check indv type.
+            if not isinstance(indv, GAIndividual):
+                raise TypeError('indv must be a GAIndividual object')
+
+            # Check fitness.
+            fitness = fn(indv)
             is_invalid = (type(fitness) is not float) or (math.isnan(fitness))
             if is_invalid:
                 msg = 'Fitness value(value: {}, type: {}) is invalid'
