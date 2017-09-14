@@ -65,35 +65,42 @@ class GAEngine(object):
             a.setup(ng=ng, engine=self)
 
         # Enter evolution iteration.
-        for g in range(ng):
-            # Scatter jobs to all processes.
-            local_indvs = []
-            local_size = mpi.split_size(self.population.size // 2)
+        try:
+            for g in range(ng):
+                # Scatter jobs to all processes.
+                local_indvs = []
+                local_size = mpi.split_size(self.population.size // 2)
 
-            # Fill the new population.
-            for _ in range(local_size):
-                # Select father and mother.
-                parents = self.selection.select(self.population, fitness=self.fitness)
-                # Crossover.
-                children = self.crossover.cross(*parents)
-                # Mutation.
-                children = [self.mutation.mutate(child) for child in children]
-                # Collect children.
-                local_indvs.extend(children)
+                # Fill the new population.
+                for _ in range(local_size):
+                    # Select father and mother.
+                    parents = self.selection.select(self.population, fitness=self.fitness)
+                    # Crossover.
+                    children = self.crossover.cross(*parents)
+                    # Mutation.
+                    children = [self.mutation.mutate(child) for child in children]
+                    # Collect children.
+                    local_indvs.extend(children)
 
-            # Gather individuals from all processes.
-            indvs = mpi.merge_seq(local_indvs)
-            # The next generation.
-            self.population.individuals = indvs
+                # Gather individuals from all processes.
+                indvs = mpi.merge_seq(local_indvs)
+                # The next generation.
+                self.population.individuals = indvs
 
-            # Run all analysis if needed.
+                # Run all analysis if needed.
+                for a in self.analysis:
+                    if g % a.interval == 0:
+                        a.register_step(g=g, population=self.population, engine=self)
+        except Exception as e:
+            # Log exception info.
+            if mpi.is_master:
+                msg = '{} exception is catched'.format(type(e).__name__)
+                self.logger.exception(msg)
+            raise e
+        finally:
+            # Perform the analysis post processing.
             for a in self.analysis:
-                if g % a.interval == 0:
-                    a.register_step(g=g, population=self.population, engine=self)
-
-        # Perform the analysis post processing.
-        for a in self.analysis:
-            a.finalize(population=self.population, engine=self)
+                a.finalize(population=self.population, engine=self)
 
     def _check_parameters(self):
         '''
