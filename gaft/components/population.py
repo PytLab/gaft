@@ -48,7 +48,7 @@ class GAPopulation(object):
             for indv in indvs:
                 if not isinstance(indv, GAIndividual):
                     raise ValueError('individual must be GAIndividual object')
-            self.individuals = individuals
+            self.individuals = indvs
 
         return self
 
