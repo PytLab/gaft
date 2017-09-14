@@ -7,7 +7,8 @@ import logging
 import math
 import functools
 
-from .components.individual import GAIndividual
+from .components import GAIndividual, GAPopulation
+from .plugin_interfaces.operators import GASelection, GACrossover, GAMutation
 from .plugin_interfaces.analysis import OnTheFlyAnalysis
 from .mpiutil import mpi
 
@@ -34,9 +35,6 @@ class GAEngine(object):
         :param analysis: All analysis class for on-the-fly analysis.
         :type analysis: list of OnTheFlyAnalysis subclasses.
         '''
-        # Check parameters validity.
-        self._check_parameters()
-
         # Set logger.
         logger_name = 'gaft.{}'.format(self.__class__.__name__)
         self.logger = logging.getLogger(logger_name)
@@ -49,6 +47,10 @@ class GAEngine(object):
         self.mutation= mutation
 
         self.analysis = [] if analysis is None else [a() for a in analysis]
+
+        # Check parameters validity.
+        self._check_parameters()
+
 
     def run(self, ng=100):
         '''
@@ -106,8 +108,19 @@ class GAEngine(object):
         '''
         Helper function to check parameters of engine.
         '''
-        # Need implementation.
-        pass
+        if not isinstance(self.population, GAPopulation):
+            raise TypeError('population must be a GAPopulation object')
+        if not isinstance(self.selection, GASelection):
+            raise TypeError('selection operator must be a GASelection instance')
+        if not isinstance(self.crossover, GACrossover):
+            raise TypeError('crossover operator must be a GACrossover instance')
+        if not isinstance(self.mutation, GAMutation):
+            raise TypeError('mutation operator must be a GAMutation instance')
+
+        for ap in self.analysis:
+            if not isinstance(ap, OnTheFlyAnalysis):
+                msg = '{} is not subclass of OnTheFlyAnalysis'.format(ap.__name__)
+                raise TypeError(msg)
 
     # Decorators.
 
