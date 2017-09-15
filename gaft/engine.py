@@ -71,6 +71,7 @@ class GAEngine(object):
             for g in range(ng):
                 # Scatter jobs to all processes.
                 local_indvs = []
+                # NOTE: One series of genetic operation generates 2 new individuals.
                 local_size = mpi.split_size(self.population.size // 2)
 
                 # Fill the new population.
