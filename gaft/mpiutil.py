@@ -21,6 +21,14 @@ class MPIUtil(object):
         logger_name = 'gaft.{}'.format(self.__class__.__name__)
         self._logger = logging.getLogger(logger_name)
 
+    def bcast(self, data):
+        if MPI_INSTALLED:
+            mpi_comm = MPI.COMM_WORLD
+            bdata = mpi_comm.bcast(data, root=0)
+        else:
+            bdata = data
+        return bdata
+
     # Wrapper for common MPI interfaces.
     def barrier(self):
         if MPI_INSTALLED:
