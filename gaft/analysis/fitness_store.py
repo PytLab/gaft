@@ -3,7 +3,7 @@
 
 from ..plugin_interfaces.analysis import OnTheFlyAnalysis
 
-class FitnessStoreAnalysis(OnTheFlyAnalysis):
+class FitnessStore(OnTheFlyAnalysis):
 
     # Analysis interval.
     interval = 1

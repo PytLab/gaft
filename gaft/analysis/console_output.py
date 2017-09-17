@@ -4,7 +4,7 @@
 from ..plugin_interfaces.analysis import OnTheFlyAnalysis
 
 
-class ConsoleOutputAnalysis(OnTheFlyAnalysis):
+class ConsoleOutput(OnTheFlyAnalysis):
 
     # Analysis interval.
     interval = 1
