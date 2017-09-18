@@ -82,7 +82,7 @@ Example:
 
     engine = GAEngine(population=population, selection=selection,
                       crossover=crossover, mutation=mutation,
-                      analysis=[FitnessStoreAnalysis])
+                      analysis=[FitnessStore])
 
 5. Define and register fitness function
 ```````````````````````````````````````
@@ -100,7 +100,7 @@ Example:
 .. code-block:: python
 
     @engine.analysis_register
-    class ConsoleOutputAnalysis(OnTheFlyAnalysis):
+    class ConsoleOutput(OnTheFlyAnalysis):
         master_only = True
         interval = 1
         def register_step(self, ng, population, engine):
@@ -151,6 +151,6 @@ Blogs
 TODO
 ----
 1. ✅ Parallelization 
-2. 🏃 Add more built-in genetic operators with different algorithms
+2. ✅ Add more built-in genetic operators with different algorithms
 3. 🏃 Add C++ backend
 
