@@ -6,4 +6,5 @@
 from .crossover.uniform_crossover import UniformCrossover
 from .selection.roulette_wheel_selection import RouletteWheelSelection
 from .mutation.flip_bit_mutation import FlipBitMutation
+from .selection.tournament_selection import TournamentSelection
 
