@@ -1,3 +1,3 @@
-from .console_output import ConsoleOutputAnalysis
-from .fitness_store import FitnessStoreAnalysis
+from .console_output import ConsoleOutput
+from .fitness_store import FitnessStore
 

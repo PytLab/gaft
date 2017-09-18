@@ -15,8 +15,8 @@ from gaft.operators import UniformCrossover
 from gaft.operators import FlipBitMutation
 
 # Built-in best fitness analysis.
-from gaft.analysis.fitness_store import FitnessStoreAnalysis
-from gaft.analysis.console_output import ConsoleOutputAnalysis
+from gaft.analysis.fitness_store import FitnessStore
+from gaft.analysis.console_output import ConsoleOutput
 
 # Define population.
 indv_template = GAIndividual(ranges=[(-2, 2), (-2, 2)],
@@ -33,7 +33,7 @@ mutation = FlipBitMutation(pm=0.1)
 # Here we pass all built-in analysis to engine constructor.
 engine = GAEngine(population=population, selection=selection,
                   crossover=crossover, mutation=mutation,
-                  analysis=[ConsoleOutputAnalysis, FitnessStoreAnalysis])
+                  analysis=[ConsoleOutput, FitnessStore])
 
 # Define fitness function.
 @engine.fitness_register
