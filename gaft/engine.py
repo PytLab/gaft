@@ -69,6 +69,8 @@ class GAEngine(object):
         # Enter evolution iteration.
         try:
             for g in range(ng):
+                # The best individual in current population. 
+                best_indv = self.population.best_indv(self.fitness)
                 # Scatter jobs to all processes.
                 local_indvs = []
                 # NOTE: One series of genetic operation generates 2 new individuals.
@@ -87,6 +89,8 @@ class GAEngine(object):
 
                 # Gather individuals from all processes.
                 indvs = mpi.merge_seq(local_indvs)
+                # Retain the previous best individual.
+                indvs[0] = best_indv
                 # The next generation.
                 self.population.individuals = indvs
 
