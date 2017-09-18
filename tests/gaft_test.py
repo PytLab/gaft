@@ -13,6 +13,9 @@ from uniform_crossover_test import UniformCrossoverTest
 from flip_bit_mutation_test import FlipBitMutationTest
 from mpiutil_test import MPIUtilTest
 from engine_test import GAEngineTest
+from tournament_selection_test import TournamentSelectionTest
+from linear_ranking_selection_test import LinearRankingSelectionTest
+from exponential_ranking_selection_test import ExponentialRankingSelectionTest
 
 def suite():
     test_suite = unittest.TestSuite([
@@ -22,7 +25,10 @@ def suite():
         unittest.TestLoader().loadTestsFromTestCase(UniformCrossoverTest),
         unittest.TestLoader().loadTestsFromTestCase(FlipBitMutationTest),
         unittest.TestLoader().loadTestsFromTestCase(MPIUtilTest),
-        unittest.TestLoader().loadTestsFromTestCase(GAEngineTest)
+        unittest.TestLoader().loadTestsFromTestCase(GAEngineTest),
+        unittest.TestLoader().loadTestsFromTestCase(TournamentSelectionTest),
+        unittest.TestLoader().loadTestsFromTestCase(LinearRankingSelectionTest),
+        unittest.TestLoader().loadTestsFromTestCase(ExponentialRankingSelectionTest),
     ])
 
     return test_suite
