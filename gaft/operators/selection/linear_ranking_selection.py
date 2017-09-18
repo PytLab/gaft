@@ -33,8 +33,9 @@ class LinearRankingSelection(GASelection):
         sorted_indvs = sorted(population.individuals, key=fitness, reverse=True)
 
         # Assign selection probabilities linearly.
-        p = lambda i: (self.pmin + (self.pmax - self.pmin)*(i)/(NP-1))
-        probabilities = [self.pmin] + [p(i) for i in range(1, NP-1)] + [self.pmax]
+        # NOTE: Here the rank i belongs to {1, ..., N}
+        p = lambda i: (self.pmin + (self.pmax - self.pmin)*(i-1)/(NP-1))
+        probabilities = [self.pmin] + [p(i) for i in range(2, NP)] + [self.pmax]
 
         # Normalize probabilities.
         psum = sum(probabilities)
