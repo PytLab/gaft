@@ -5,7 +5,7 @@
 
 import logging
 import math
-import functools
+from functools import wraps
 
 from .components import GAIndividual, GAPopulation
 from .plugin_interfaces.operators import GASelection, GACrossover, GAMutation
@@ -133,7 +133,7 @@ class GAEngine(object):
         '''
         A decorator for fitness function register.
         '''
-        @functools.wraps(fn)
+        @wraps(fn)
         def _fn_with_fitness_check(indv):
             '''
             A wrapper function for fitness function with fitness value check.
@@ -163,4 +163,32 @@ class GAEngine(object):
         # Add analysis instance to engine.
         analysis = analysis_cls()
         self.analysis.append(analysis)
+
+    # Functions for fitness scaling.
+
+    def linear_scaling(self, ksi=0.5, target='max'):
+        '''
+        A decorator constructor for fitness function linear scaling
+
+        Linear Scaling:
+            1. arg max f(x), then f' = f - min{f(x)} + ksi;
+            2. arg min f(x), then f' = max{f(x)} - f(x) + ksi;
+        '''
+        def _linear_scaling(fn):
+            @wraps(fn)
+            def _fn_with_linear_scaling(indv):
+                # Original fitness value.
+                f = fn(indv)
+                # Determine the value of a and b.
+                if target == 'max':
+                    fmin = fn(min(self.population.individuals, key=fn))
+                    f_prime = f - fmin + ksi
+                elif target == 'min':
+                    fmax = fn(max(self.population.individuals, key=fn))
+                    f_prime = fmax - f + ksi
+                else:
+                    raise ValueError('Invalid target type({})'.format(target))
+                return f_prime
+            return _fn_with_linear_scaling
+        return _linear_scaling
 
