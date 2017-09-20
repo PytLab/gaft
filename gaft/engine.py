@@ -166,15 +166,24 @@ class GAEngine(object):
 
     # Functions for fitness scaling.
 
-    def linear_scaling(self, ksi=0.5, target='max'):
+    def linear_scaling(self, target='max', ksi=0.5):
         '''
         A decorator constructor for fitness function linear scaling
+
+        :param target: The optimization target, maximization or minimization.
+        :type target: str, 'max' or 'min'
+
+        :param ksi: Selective pressure adjustment value.
+        :type ksi: float
 
         Linear Scaling:
             1. arg max f(x), then f' = f - min{f(x)} + ksi;
             2. arg min f(x), then f' = max{f(x)} - f(x) + ksi;
         '''
         def _linear_scaling(fn):
+            # Preserve original fitness function.
+            self.old_fitness = fn
+
             @wraps(fn)
             def _fn_with_linear_scaling(indv):
                 # Original fitness value.
@@ -189,6 +198,7 @@ class GAEngine(object):
                 else:
                     raise ValueError('Invalid target type({})'.format(target))
                 return f_prime
+
             return _fn_with_linear_scaling
         return _linear_scaling
 
