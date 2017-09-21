@@ -45,12 +45,16 @@ class GAEngine(object):
         self.selection= selection
         self.crossover= crossover
         self.mutation= mutation
-
         self.analysis = [] if analysis is None else [a() for a in analysis]
+
+        # Maxima and minima in population.
+        self.fmax, self.fmin = None, None
+
+        # Default fitness functions.
+        self.ori_fitness, self.fitness = None, None
 
         # Check parameters validity.
         self._check_parameters()
-
 
     def run(self, ng=100):
         '''
@@ -61,6 +65,12 @@ class GAEngine(object):
         '''
         if self.fitness is None:
             raise AttributeError('No fitness function in GA engine')
+
+        # Get the maxima and minima in population for fitness scaling.
+        self.fmax = self.ori_fitness(max(self.population.individuals,
+                                         key=self.ori_fitness))
+        self.fmin = self.ori_fitness(min(self.population.individuals,
+                                         key=self.ori_fitness))
 
         # Setup analysis objects.
         for a in self.analysis:
@@ -93,6 +103,12 @@ class GAEngine(object):
                 indvs[0] = best_indv
                 # The next generation.
                 self.population.individuals = indvs
+
+                # Update population maxima and minima.
+                self.fmax = self.ori_fitness(max(self.population.individuals,
+                                                 key=self.ori_fitness))
+                self.fmin = self.ori_fitness(min(self.population.individuals,
+                                                 key=self.ori_fitness))
 
                 # Run all analysis if needed.
                 for a in self.analysis:
@@ -152,6 +168,8 @@ class GAEngine(object):
             return fitness
 
         self.fitness = _fn_with_fitness_check
+        if self.ori_fitness is None:
+            self.ori_fitness = _fn_with_fitness_check
 
     def analysis_register(self, analysis_cls):
         '''
@@ -181,20 +199,16 @@ class GAEngine(object):
             2. arg min f(x), then f' = max{f(x)} - f(x) + ksi;
         '''
         def _linear_scaling(fn):
-            # Preserve original fitness function.
-            self.old_fitness = fn
-
+            self.ori_fitness = fn
             @wraps(fn)
             def _fn_with_linear_scaling(indv):
                 # Original fitness value.
                 f = fn(indv)
                 # Determine the value of a and b.
                 if target == 'max':
-                    fmin = fn(min(self.population.individuals, key=fn))
-                    f_prime = f - fmin + ksi
+                    f_prime = f - self.fmin + ksi
                 elif target == 'min':
-                    fmax = fn(max(self.population.individuals, key=fn))
-                    f_prime = fmax - f + ksi
+                    f_prime = self.fmax - f + ksi
                 else:
                     raise ValueError('Invalid target type({})'.format(target))
                 return f_prime
