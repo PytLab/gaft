@@ -72,16 +72,18 @@ class FlipBitBigMutation(FlipBitMutation):
         '''
         population, fitness = engine.population, engine.fitness
 
-        fmean = population.fmean(fitness)
-        fmax = population.fmax(fitness)
+        fmean = population.mean(fitness)
+        fmax = population.max(fitness)
+        pm = self.pm
 
         if fmax*self.alpha < fmean:
-            pm = self.pm
             self.pm = self.pbm
-            # Mutate with big probability.
-            individial = super(self.__class__, self).mutate(individial, engine)
-            # Recover probability.
-            self.pm = pm
 
-        return individial
+        # Mutate with big probability.
+        individual = super(self.__class__, self).mutate(individual, engine)
+
+        # Recover probability.
+        self.pm = pm
+
+        return individual
 
