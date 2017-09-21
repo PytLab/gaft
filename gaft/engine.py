@@ -53,6 +53,9 @@ class GAEngine(object):
         # Default fitness functions.
         self.ori_fitness, self.fitness = None, None
 
+        # Store current generation number.
+        self.current_generation = -1  # Starts from 0.
+
         # Check parameters validity.
         self._check_parameters()
 
@@ -79,6 +82,7 @@ class GAEngine(object):
         # Enter evolution iteration.
         try:
             for g in range(ng):
+                self.current_generation = g
                 # The best individual in current population. 
                 best_indv = self.population.best_indv(self.fitness)
                 # Scatter jobs to all processes.
@@ -121,6 +125,8 @@ class GAEngine(object):
                 self.logger.exception(msg)
             raise e
         finally:
+            # Recover current generation number.
+            self.current_generation = -1
             # Perform the analysis post processing.
             for a in self.analysis:
                 a.finalize(population=self.population, engine=self)
@@ -186,7 +192,7 @@ class GAEngine(object):
 
     def linear_scaling(self, target='max', ksi=0.5):
         '''
-        A decorator constructor for fitness function linear scaling
+        A decorator constructor for fitness function linear scaling.
 
         :param target: The optimization target, maximization or minimization.
         :type target: str, 'max' or 'min'
@@ -199,7 +205,9 @@ class GAEngine(object):
             2. arg min f(x), then f' = max{f(x)} - f(x) + ksi;
         '''
         def _linear_scaling(fn):
+            # For original fitness calculation.
             self.ori_fitness = fn
+
             @wraps(fn)
             def _fn_with_linear_scaling(indv):
                 # Original fitness value.
@@ -214,5 +222,46 @@ class GAEngine(object):
                 return f_prime
 
             return _fn_with_linear_scaling
+
         return _linear_scaling
+
+    def dynamic_linear_scaling(self, target='max', ksi0=2, r=0.9):
+        '''
+        A decorator constructor for fitness dynamic linear scaling.
+
+        :param target: The optimization target, maximization or minimization.
+        :type target: str, 'max' or 'min'
+
+        :param ksi0: Initial selective pressure adjustment value, default value
+                     is 2
+        :type ksi0: float
+
+        :param r: The reduction factor for selective pressure adjustment value,
+                  ksi^(k-1)*r is the adjustment value for generation k, default
+                  value is 0.9
+        :type r: float in range [0.9, 0.999]
+
+        Dynamic Linear Scaling:
+            For maximizaiton, f' = f(x) - min{f(x)} + ksi^k, k is generation number.
+        '''
+        def _dynamic_linear_scaling(fn):
+            # For original fitness calculation.
+            self.ori_fitness = fn
+
+            @wraps(fn)
+            def _fn_with_dynamic_linear_scaling(indv):
+                f = fn(indv)
+                k = self.current_generation + 1
+
+                if target == 'max':
+                    f_prime = f - self.fmin + ksi0*(r**k)
+                elif target == 'min':
+                    f_prime = self.fmax - f + ksi0*(r**k)
+                else:
+                    raise ValueError('Invalid target type({})'.format(target))
+                return f_prime
+
+            return _fn_with_dynamic_linear_scaling
+
+        return _dynamic_linear_scaling
 
