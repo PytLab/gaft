@@ -17,6 +17,7 @@ from tournament_selection_test import TournamentSelectionTest
 from linear_ranking_selection_test import LinearRankingSelectionTest
 from exponential_ranking_selection_test import ExponentialRankingSelectionTest
 from linear_scaling_test import LinearScalingTest
+from dynamic_linear_scaling_test import DynamicLinearScalingTest
 
 def suite():
     test_suite = unittest.TestSuite([
@@ -31,6 +32,7 @@ def suite():
         unittest.TestLoader().loadTestsFromTestCase(LinearRankingSelectionTest),
         unittest.TestLoader().loadTestsFromTestCase(ExponentialRankingSelectionTest),
         unittest.TestLoader().loadTestsFromTestCase(LinearScalingTest),
+        unittest.TestLoader().loadTestsFromTestCase(DynamicLinearScalingTest),
     ])
 
     return test_suite
