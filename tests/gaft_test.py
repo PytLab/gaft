@@ -18,6 +18,7 @@ from linear_ranking_selection_test import LinearRankingSelectionTest
 from exponential_ranking_selection_test import ExponentialRankingSelectionTest
 from linear_scaling_test import LinearScalingTest
 from dynamic_linear_scaling_test import DynamicLinearScalingTest
+from flip_bit_big_mutation_test import FlipBitBigMutationTest
 
 def suite():
     test_suite = unittest.TestSuite([
@@ -33,6 +34,7 @@ def suite():
         unittest.TestLoader().loadTestsFromTestCase(ExponentialRankingSelectionTest),
         unittest.TestLoader().loadTestsFromTestCase(LinearScalingTest),
         unittest.TestLoader().loadTestsFromTestCase(DynamicLinearScalingTest),
+        unittest.TestLoader().loadTestsFromTestCase(FlipBitBigMutationTest),
     ])
 
     return test_suite
