@@ -3,7 +3,7 @@
 
 import logging
 import inspect
-import functools
+from functools import wraps
 
 from ..components.individual import GAIndividual
 from ..components.population import GAPopulation
@@ -71,7 +71,7 @@ class CrossoverMeta(type):
             raise NameError('cross method must have mother parameter')
 
         # Add parameter check to user-defined method.
-        @functools.wraps(cross)
+        @wraps(cross)
         def _wrapped_cross(self, father, mother):
             ''' Wrapper to add parameters type checking.
             '''
@@ -106,15 +106,15 @@ class MutationMeta(type):
             raise NameError('mutate method must have individual parameter')
 
         # Add parameter check to user-defined method.
-        @functools.wraps(mutate)
-        def _wrapped_mutate(self, individual):
+        @wraps(mutate)
+        def _wrapped_mutate(self, individual, engine):
             ''' Wrapper to add parameters type checking.
             '''
             # Check parameter types.
             if not isinstance(individual, GAIndividual):
                 raise TypeError('individual must be a GAIndividual object')
 
-            return mutate(self, individual)
+            return mutate(self, individual, engine)
 
         attrs['mutate'] = _wrapped_mutate
 
@@ -140,7 +140,7 @@ class SelectionMeta(type):
             raise NameError('select method must have fitness parameter')
 
         # Add parameter check to user-defined method.
-        @functools.wraps(select)
+        @wraps(select)
         def _wrapped_select(self, population, fitness):
             ''' Wrapper to add parameters type checking.
             '''

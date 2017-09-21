@@ -96,7 +96,7 @@ class GAEngine(object):
                     # Crossover.
                     children = self.crossover.cross(*parents)
                     # Mutation.
-                    children = [self.mutation.mutate(child) for child in children]
+                    children = [self.mutation.mutate(child, self) for child in children]
                     # Collect children.
                     local_indvs.extend(children)
 

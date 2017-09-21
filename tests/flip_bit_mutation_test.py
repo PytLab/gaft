@@ -22,7 +22,7 @@ class FlipBitMutationTest(unittest.TestCase):
         chromsome_before = [0, 1, 1, 0, 0, 1, 0, 1, 1]
         chromsome_after = [1, 0, 0, 1, 1, 0, 1, 0, 0]
         self.assertListEqual(indv.chromsome, chromsome_before)
-        mutation.mutate(indv)
+        mutation.mutate(indv, engine=None)
         self.assertListEqual(indv.chromsome, chromsome_after)
 
 if '__main__' == __name__:

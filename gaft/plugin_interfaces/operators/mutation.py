@@ -14,12 +14,15 @@ class GAMutation(metaclass=MutationMeta):
     # Default mutation probability.
     pm = 0.1
 
-    def mutate(self, individual):
+    def mutate(self, individual, engine):
         '''
         Called when an individual to be mutated.
 
         :param individual: The individual to be mutated.
         :type individual: GAInvidual
+
+        :param engine: The GA engine where the mutation operator belongs.
+        :type engine: GAEngine
         '''
         raise NotImplementedError
 
