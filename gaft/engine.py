@@ -48,7 +48,7 @@ class GAEngine(object):
         self.analysis = [] if analysis is None else [a() for a in analysis]
 
         # Maxima and minima in population.
-        self.fmax, self.fmin = None, None
+        self.fmax, self.fmin, self.fmean = None, None, None
 
         # Default fitness functions.
         self.ori_fitness, self.fitness = None, None
@@ -70,10 +70,9 @@ class GAEngine(object):
             raise AttributeError('No fitness function in GA engine')
 
         # Get the maxima and minima in population for fitness scaling.
-        self.fmax = self.ori_fitness(max(self.population.individuals,
-                                         key=self.ori_fitness))
-        self.fmin = self.ori_fitness(min(self.population.individuals,
-                                         key=self.ori_fitness))
+        self.fmax = self.population.max(self.ori_fitness)
+        self.fmin = self.population.min(self.ori_fitness)
+        self.fmean = self.population.mean(self.ori_fitness)
 
         # Setup analysis objects.
         for a in self.analysis:
@@ -109,10 +108,9 @@ class GAEngine(object):
                 self.population.individuals = indvs
 
                 # Update population maxima and minima.
-                self.fmax = self.ori_fitness(max(self.population.individuals,
-                                                 key=self.ori_fitness))
-                self.fmin = self.ori_fitness(min(self.population.individuals,
-                                                 key=self.ori_fitness))
+                self.fmax = self.population.max(self.ori_fitness)
+                self.fmin = self.population.min(self.ori_fitness)
+                self.fmean = self.population.mean(self.ori_fitness)
 
                 # Run all analysis if needed.
                 for a in self.analysis:

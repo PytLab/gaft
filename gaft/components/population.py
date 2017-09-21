@@ -80,3 +80,28 @@ class GAPopulation(object):
         '''
         return max(self.individuals, key=fitness)
 
+    def worst_indv(self, fitness):
+        '''
+        The individual with the worst fitness.
+        '''
+        return min(self.individuals, key=fitness)
+
+    def max(self, fitness):
+        '''
+        Get the maximum fitness value in population.
+        '''
+        return fitness(self.best_indv(fitness))
+
+    def min(self, fitness):
+        '''
+        Get the minimum value of fitness in population.
+        '''
+        return fitness(self.worst_indv(fitness))
+
+    def mean(self, fitness):
+        '''
+        Get the average fitness value in population.
+        '''
+        all_fits = [fitness(indv) for indv in self.individuals]
+        return sum(all_fits)/len(all_fits)
+
