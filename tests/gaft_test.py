@@ -16,6 +16,7 @@ from engine_test import GAEngineTest
 from tournament_selection_test import TournamentSelectionTest
 from linear_ranking_selection_test import LinearRankingSelectionTest
 from exponential_ranking_selection_test import ExponentialRankingSelectionTest
+from linear_scaling_test import LinearScalingTest
 
 def suite():
     test_suite = unittest.TestSuite([
@@ -29,6 +30,7 @@ def suite():
         unittest.TestLoader().loadTestsFromTestCase(TournamentSelectionTest),
         unittest.TestLoader().loadTestsFromTestCase(LinearRankingSelectionTest),
         unittest.TestLoader().loadTestsFromTestCase(ExponentialRankingSelectionTest),
+        unittest.TestLoader().loadTestsFromTestCase(LinearScalingTest),
     ])
 
     return test_suite

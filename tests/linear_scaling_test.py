@@ -42,7 +42,7 @@ class LinearScalingTest(unittest.TestCase):
             x, = indv.variants
             return x + 10*sin(5*x) + 7*cos(4*x)
 
-        engine.run(10)
+        engine.run(50)
 
 if '__main__' == __name__:
     suite = unittest.TestLoader().loadTestsFromTestCase(LinearScalingTest)
