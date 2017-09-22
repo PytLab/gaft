@@ -13,10 +13,54 @@ from .plugin_interfaces.analysis import OnTheFlyAnalysis
 from .mpiutil import mpi
 
 
+class StatVar(object):
+    def __init__(self, name):
+        '''
+        Descriptor for statistical variables which need to be memoized when
+        engine running.
+        '''
+        # Protected.
+        self.name = '_{}'.format(name)
+
+    def __get__(self, engine, cls):
+        '''
+        Getter.
+        '''
+        stat_var = getattr(engine, self.name)
+        if stat_var is None:
+            if 'min' in self.name and 'ori' in self.name:
+                stat_var = engine.population.min(engine.ori_fitness)
+            elif 'min' in self.name:
+                stat_var = engine.population.min(engine.fitness)
+            elif 'max' in self.name and 'ori' in self.name:
+                stat_var = engine.population.max(engine.ori_fitness)
+            elif 'max' in self.name:
+                stat_var = engine.population.max(engine.fitness)
+            elif 'mean' in self.name and 'ori' in self.name:
+                stat_var = engine.population.mean(engine.ori_fitness)
+            elif 'mean' in self.name:
+                stat_var = engine.population.mean(engine.fitness)
+            setattr(engine, self.name, stat_var)
+        return stat_var
+
+    def __set__(self, engine, value):
+        '''
+        Setter.
+        '''
+        setattr(engine, self.name, value)
+
+
 class GAEngine(object):
     '''
     Class for representing a Genetic Algorithm engine.
     '''
+
+    # Statistical attributes for population.
+    fmax, fmin, fmean = StatVar('fmax'), StatVar('fmin'), StatVar('fmean')
+    ori_fmax, ori_fmin, ori_fmean = (StatVar('ori_fmax'),
+                                     StatVar('ori_fmin'),
+                                     StatVar('ori_fmean'))
+
     def __init__(self, population, selection, crossover, mutation,
                  fitness=None, analysis=None):
         '''
@@ -222,22 +266,11 @@ class GAEngine(object):
                 # Original fitness value.
                 f = fn(indv)
 
-                # Get statistic values.
-                if self.ori_fmin is None:
-                    fmin = self.population.min(self.ori_fitness)
-                else:
-                    fmin = self.ori_fmin
-
-                if self.ori_fmax is None:
-                    fmax = self.population.min(self.ori_fitness)
-                else:
-                    fmax = self.ori_fmax
-
                 # Determine the value of a and b.
                 if target == 'max':
-                    f_prime = f - fmin + ksi
+                    f_prime = f - self.ori_fmin + ksi
                 elif target == 'min':
-                    f_prime = fmax - f + ksi
+                    f_prime = self.ori_fmax - f + ksi
                 else:
                     raise ValueError('Invalid target type({})'.format(target))
                 return f_prime
@@ -274,21 +307,10 @@ class GAEngine(object):
                 f = fn(indv)
                 k = self.current_generation + 1
 
-                # Get statistic values.
-                if self.ori_fmin is None:
-                    fmin = self.population.min(self.ori_fitness)
-                else:
-                    fmin = self.ori_fmin
-
-                if self.ori_fmax is None:
-                    fmax = self.population.min(self.ori_fitness)
-                else:
-                    fmax = self.ori_fmax
-
                 if target == 'max':
-                    f_prime = f - fmin + ksi0*(r**k)
+                    f_prime = f - self.ori_fmin + ksi0*(r**k)
                 elif target == 'min':
-                    f_prime = fmax - f + ksi0*(r**k)
+                    f_prime = self.ori_fmax - f + ksi0*(r**k)
                 else:
                     raise ValueError('Invalid target type({})'.format(target))
                 return f_prime
