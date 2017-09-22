@@ -74,6 +74,7 @@ class FlipBitBigMutation(FlipBitMutation):
 
         if engine.fmax*self.alpha < engine.fmean:
             self.pm = self.pbm
+            self.logger.info('Big mutation probabilty: {} -> {}'.format(pm, self.pm))
 
         # Mutate with big probability.
         individual = super(self.__class__, self).mutate(individual, engine)
