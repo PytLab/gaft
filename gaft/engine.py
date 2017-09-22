@@ -221,11 +221,23 @@ class GAEngine(object):
             def _fn_with_linear_scaling(indv):
                 # Original fitness value.
                 f = fn(indv)
+
+                # Get statistic values.
+                if self.ori_fmin is None:
+                    fmin = self.population.min(self.ori_fitness)
+                else:
+                    fmin = self.ori_fmin
+
+                if self.ori_fmax is None:
+                    fmax = self.population.min(self.ori_fitness)
+                else:
+                    fmax = self.ori_fmax
+
                 # Determine the value of a and b.
                 if target == 'max':
-                    f_prime = f - self.fmin + ksi
+                    f_prime = f - fmin + ksi
                 elif target == 'min':
-                    f_prime = self.fmax - f + ksi
+                    f_prime = fmax - f + ksi
                 else:
                     raise ValueError('Invalid target type({})'.format(target))
                 return f_prime
@@ -262,10 +274,21 @@ class GAEngine(object):
                 f = fn(indv)
                 k = self.current_generation + 1
 
+                # Get statistic values.
+                if self.ori_fmin is None:
+                    fmin = self.population.min(self.ori_fitness)
+                else:
+                    fmin = self.ori_fmin
+
+                if self.ori_fmax is None:
+                    fmax = self.population.min(self.ori_fitness)
+                else:
+                    fmax = self.ori_fmax
+
                 if target == 'max':
-                    f_prime = f - self.ori_fmin + ksi0*(r**k)
+                    f_prime = f - fmin + ksi0*(r**k)
                 elif target == 'min':
-                    f_prime = self.ori_fmax - f + ksi0*(r**k)
+                    f_prime = fmax - f + ksi0*(r**k)
                 else:
                     raise ValueError('Invalid target type({})'.format(target))
                 return f_prime

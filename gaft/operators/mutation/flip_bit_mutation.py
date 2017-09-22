@@ -70,9 +70,20 @@ class FlipBitBigMutation(FlipBitMutation):
         '''
         Mutate the individual with adaptive big mutation rate.
         '''
+        # Get statistic variabels.
+        if engine.fmax is None:
+            fmax = engine.population.max(engine.fitness)
+        else:
+            fmax = engine.fmax
+
+        if engine.fmean is None:
+            fmean = engine.population.mean(engine.fitness)
+        else:
+            fmean = engine.fmean
+
         pm = self.pm
 
-        if engine.fmax*self.alpha < engine.fmean:
+        if fmax*self.alpha < fmean:
             self.pm = self.pbm
 
         # Mutate with big probability.
