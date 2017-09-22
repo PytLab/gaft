@@ -49,6 +49,7 @@ class GAEngine(object):
 
         # Maxima and minima in population.
         self.fmax, self.fmin, self.fmean = None, None, None
+        self.ori_fmax, self.ori_fmin, self.ori_fmean = None, None, None
 
         # Default fitness functions.
         self.ori_fitness, self.fitness = None, None
@@ -69,10 +70,7 @@ class GAEngine(object):
         if self.fitness is None:
             raise AttributeError('No fitness function in GA engine')
 
-        # Get the maxima and minima in population for fitness scaling.
-        self.fmax = self.population.max(self.ori_fitness)
-        self.fmin = self.population.min(self.ori_fitness)
-        self.fmean = self.population.mean(self.ori_fitness)
+        self._update_statvars()
 
         # Setup analysis objects.
         for a in self.analysis:
@@ -107,10 +105,8 @@ class GAEngine(object):
                 # The next generation.
                 self.population.individuals = indvs
 
-                # Update population maxima and minima.
-                self.fmax = self.population.max(self.ori_fitness)
-                self.fmin = self.population.min(self.ori_fitness)
-                self.fmean = self.population.mean(self.ori_fitness)
+                # Update statistic variables.
+                self._update_statvars()
 
                 # Run all analysis if needed.
                 for a in self.analysis:
@@ -128,6 +124,21 @@ class GAEngine(object):
             # Perform the analysis post processing.
             for a in self.analysis:
                 a.finalize(population=self.population, engine=self)
+
+    def _update_statvars(self):
+        '''
+        Private helper function to update statistic variables in GA engine, like
+        maximum, minimum and mean values.
+        '''
+        # Wrt original fitness.
+        self.ori_fmax = self.population.max(self.ori_fitness)
+        self.ori_fmin = self.population.min(self.ori_fitness)
+        self.ori_fmean = self.population.mean(self.ori_fitness)
+
+        # Wrt decorated fitness.
+        self.fmax = self.population.max(self.fitness)
+        self.fmin = self.population.min(self.fitness)
+        self.fmean = self.population.mean(self.fitness)
 
     def _check_parameters(self):
         '''
@@ -252,9 +263,9 @@ class GAEngine(object):
                 k = self.current_generation + 1
 
                 if target == 'max':
-                    f_prime = f - self.fmin + ksi0*(r**k)
+                    f_prime = f - self.ori_fmin + ksi0*(r**k)
                 elif target == 'min':
-                    f_prime = self.fmax - f + ksi0*(r**k)
+                    f_prime = self.ori_fmax - f + ksi0*(r**k)
                 else:
                     raise ValueError('Invalid target type({})'.format(target))
                 return f_prime
