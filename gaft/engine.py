@@ -124,8 +124,14 @@ class GAEngine(object):
         try:
             for g in range(ng):
                 self.current_generation = g
+
                 # The best individual in current population. 
-                best_indv = self.population.best_indv(self.fitness)
+                if mpi.is_master:
+                    best_indv = self.population.best_indv(self.fitness)
+                else:
+                    best_indv = None
+                best_indv = mpi.bcast(best_indv)
+
                 # Scatter jobs to all processes.
                 local_indvs = []
                 # NOTE: One series of genetic operation generates 2 new individuals.
