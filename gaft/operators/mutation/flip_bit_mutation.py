@@ -3,6 +3,7 @@
 
 from random import random
 
+from ...mpiutil import mpi
 from ...plugin_interfaces.operators.mutation import GAMutation
 
 
@@ -57,7 +58,7 @@ class FlipBitBigMutation(FlipBitMutation):
 
         if not (0.0 < pbm < 1.0):
             raise ValueError('Invalid big mutation probability')
-        if pbm < 5*pm:
+        if pbm < 5*pm and mpi.is_master:
             self.logger.warning('Relative low probability for big mutation')
         self.pbm = pbm
 
@@ -74,7 +75,6 @@ class FlipBitBigMutation(FlipBitMutation):
 
         if engine.fmax*self.alpha < engine.fmean:
             self.pm = self.pbm
-            self.logger.info('Big mutation probabilty: {} -> {}'.format(pm, self.pm))
 
         # Mutate with big probability.
         individual = super(self.__class__, self).mutate(individual, engine)
