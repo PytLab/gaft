@@ -12,7 +12,7 @@ from gaft.components import GAIndividual
 from gaft.components import GAPopulation
 from gaft.operators import RouletteWheelSelection, TournamentSelection
 from gaft.operators import UniformCrossover
-from gaft.operators import FlipBitMutation
+from gaft.operators import FlipBitBigMutation
 
 # Built-in best fitness analysis.
 from gaft.analysis.fitness_store import FitnessStore
@@ -28,7 +28,7 @@ population = GAPopulation(indv_template=indv_template, size=50).init()
 #selection = RouletteWheelSelection()
 selection = TournamentSelection()
 crossover = UniformCrossover(pc=0.8, pe=0.5)
-mutation = FlipBitMutation(pm=0.1)
+mutation = FlipBitBigMutation(pm=0.1, pbm=0.55, alpha=0.6)
 
 # Create genetic algorithm engine.
 # Here we pass all built-in analysis to engine constructor.
