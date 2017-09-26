@@ -29,7 +29,6 @@ class TournamentSelectionTest(unittest.TestCase):
 
         self.assertTrue(isinstance(father, GAIndividual))
         self.assertTrue(isinstance(mother, GAIndividual))
-        self.assertNotEqual(father.chromsome, mother.chromsome)
 
 if '__main__' == __name__:
     suite = unittest.TestLoader().loadTestsFromTestCase(TournamentSelectionTest)
