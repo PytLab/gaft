@@ -84,6 +84,10 @@ class CrossoverMeta(type):
 
         attrs['cross'] = _wrapped_cross
 
+        # Set logger.
+        logger_name = 'gaft.{}'.format(name)
+        attrs['logger'] = logging.getLogger(logger_name)
+
         return type.__new__(cls, name, bases, attrs)
 
 
@@ -117,6 +121,10 @@ class MutationMeta(type):
             return mutate(self, individual, engine)
 
         attrs['mutate'] = _wrapped_mutate
+
+        # Set logger.
+        logger_name = 'gaft.{}'.format(name)
+        attrs['logger'] = logging.getLogger(logger_name)
 
         return type.__new__(cls, name, bases, attrs)
 
@@ -153,6 +161,10 @@ class SelectionMeta(type):
             return select(self, population, fitness)
 
         attrs['select'] = _wrapped_select
+
+        # Set logger.
+        logger_name = 'gaft.{}'.format(name)
+        attrs['logger'] = logging.getLogger(logger_name)
 
         return type.__new__(cls, name, bases, attrs)
 
