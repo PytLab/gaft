@@ -31,7 +31,7 @@ A **G**\ enetic **A**\ lgorithm **F**\ ramework in py\ **T**\ hon
     :target: https://www.python.org/downloads/release/python-351/
     :alt: platform
 
-.. image:: https://img.shields.io/badge/pypi-v0.3.3-blue.svg
+.. image:: https://img.shields.io/badge/pypi-v0.3.4-blue.svg
     :target: https://pypi.python.org/pypi/gaft/
     :alt: versions
 
@@ -53,6 +53,8 @@ Installation:
 2. From source::
 
     python setup.py install
+
+See `INSTALL.md <https://github.com/PytLab/gaft/blob/master/INSTALL.md>`_ for more installation details.
 
 '''
 install_requires = [
