@@ -19,7 +19,7 @@ A **G**\ enetic **A**\ lgorithm **F**\ ramework in py\ **T**\ hon
     :target: https://www.python.org/downloads/release/python-351/
     :alt: platform
 
-.. image:: https://img.shields.io/badge/pypi-v0.3.4-blue.svg
+.. image:: https://img.shields.io/badge/pypi-v0.3.5-blue.svg
     :target: https://pypi.python.org/pypi/gaft/
     :alt: versions
 
