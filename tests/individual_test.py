@@ -76,6 +76,14 @@ class IndividualTest(unittest.TestCase):
         self.assertEqual(indv.eps, indv_clone.eps)
         self.assertEqual(indv.encoding, indv_clone.encoding)
 
+    def test_multi_precisions(self):
+        ''' Make sure we can construct individual using different decrete precisions.
+        '''
+        indv = GAIndividual(ranges=[(0, 1), (0, 10)],
+                            encoding='binary',
+                            eps=[0.01, 1.0]).init(variants=[0.3, 0.5])
+        self.assertNotEqual(indv.precisions[0], indv.precisions[1])
+
 if '__main__' == __name__:
     suite = unittest.TestLoader().loadTestsFromTestCase(IndividualTest)
     unittest.TextTestRunner(verbosity=2).run(suite)
