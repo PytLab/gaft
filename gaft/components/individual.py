@@ -15,20 +15,26 @@ class GAIndividual(object):
         :type ranges: list of range tuples. e.g. [(0, 1), (-1, 1)]
 
         :param encoding: gene encoding, 'decimal' or 'binary', default is binary.
-        :param eps: decrete precision for binary encoding, default is 0.001.
+        :type encoding: str
+
+        :param eps: decrete precisions for binary encoding, default is 0.001.
+        :type eps: float or float list with the same length with ranges.
 
         '''
-        self._check_parameters()
-
         self.ranges = ranges
         self.eps = eps
         self.encoding = encoding
 
+        # Check parameters.
+        self._check_parameters()
+
         # Lengths for all binary sequence in chromsome.
-        self.lengths = [int(log2((b-a)/eps)) for a, b in ranges]
+        self.lengths = [int(log2((b-a)/eps))
+                        for (a, b), eps in zip(self.ranges, self.eps)]
 
         # Correct decrete precision according to binary sequence length.
-        self.precisions = [(b - a)/(2**l - 1) for l, (a, b) in zip(self.lengths, self.ranges)]
+        self.precisions = [(b - a)/(2**l - 1)
+                           for l, (a, b) in zip(self.lengths, self.ranges)]
 
         # The start and end indices for each gene segment for entries in variants.
         self.gene_indices = self._get_gene_indices()
@@ -73,8 +79,20 @@ class GAIndividual(object):
         return indv
 
     def _check_parameters(self):
-        # Need implementation.
-        pass
+        '''
+        Private helper function to check individual parameters.
+        '''
+        # Check decrete precision.
+        if type(self.eps) is float:
+            self.eps = [self.eps]*len(self.ranges)
+        else:
+            # Check eps length.
+            if len(self.eps) != len(self.ranges):
+                raise ValueError('Lengths of eps and ranges should be the same')
+            for eps, (a, b) in zip(self.eps, self.ranges):
+                if eps > (b - a):
+                    msg = 'Invalid eps {} in range ({}, {})'.format(eps, a, b)
+                    raise ValueError(msg)
 
     def _init_variants(self):
         '''
