@@ -98,7 +98,12 @@ class GAIndividual(object):
         '''
         Initialize individual variants randomly.
         '''
-        return [uniform(a, b) for a, b in self.ranges]
+        variants = []
+        for eps, (a, b) in zip(self.precisions, self.ranges):
+            n_intervals = (b - a)//eps
+            n = int(uniform(0, n_intervals))
+            variants.append(a + n*eps)
+        return variants
 
     def encode(self):
         '''
