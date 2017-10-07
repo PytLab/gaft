@@ -18,7 +18,7 @@ class Memoized(object):
 
     def __call__(self, fitness):
         if self.instance._updated:
-            # Memoize result.
+            # Update and memoize result.
             self.result = self.func(self.instance, fitness)
             # Recover flag.
             self.instance._updated = False
