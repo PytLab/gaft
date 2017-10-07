@@ -13,7 +13,7 @@ class PopulationTest(unittest.TestCase):
 
     def setUp(self):
         self.maxDiff = True
-        self.indv_template = GAIndividual(ranges=[(0, 1), (-1, 1)])
+        self.indv_template = GAIndividual(ranges=[(0, 1)])
         def fitness(indv):
             x, = indv.variants
             return x**3 - 60*x**2 + 900*x + 100
@@ -38,6 +38,16 @@ class PopulationTest(unittest.TestCase):
         new_population = population.new()
         self.assertEqual(new_population.size, 10)
         self.assertListEqual(new_population.individuals, [])
+
+    def test_all_fits(self):
+        population = GAPopulation(indv_template=self.indv_template, size=10)
+        population.init()
+        all_fits = population.all_fits(fitness=self.fitness)
+
+        self.assertEqual(len(all_fits), 10)
+
+        for fit in all_fits:
+            self.assertTrue(type(fit) is float)
 
 if '__main__' == __name__:
     suite = unittest.TestLoader().loadTestsFromTestCase(PopulationTest)
