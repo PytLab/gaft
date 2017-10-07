@@ -4,6 +4,27 @@
 from .individual import GAIndividual
 
 
+class Memoized(object):
+    '''
+    Descriptor for population statistical varibles caching.
+    '''
+    def __init__(self, func):
+        self.func = func
+        self.result = None
+
+    def __get__(self, instance, cls):
+        self.instance = instance
+        return self
+
+    def __call__(self, fitness):
+        if self.instance._updated:
+            # Memoize result.
+            self.result = self.func(self.instance, fitness)
+            # Recover flag.
+            self.instance._updated = False
+        return self.result
+
+
 class GAPopulation(object):
     def __init__(self, indv_template, size=100):
         '''
@@ -26,6 +47,9 @@ class GAPopulation(object):
 
         # All individuals.
         self.individuals = []
+
+        # Flag for monitoring changes of population.
+        self._updated = False
 
     def init(self, indvs=None):
         '''
@@ -50,7 +74,15 @@ class GAPopulation(object):
                     raise ValueError('individual must be GAIndividual object')
             self.individuals = indvs
 
+        self.flag_update()
+
         return self
+
+    def flag_update(self):
+        '''
+        Update individual update flag to True.
+        '''
+        self._updated = True
 
     def new(self):
         '''
@@ -78,13 +110,17 @@ class GAPopulation(object):
         The individual with the best fitness.
 
         '''
-        return max(self.individuals, key=fitness)
+        all_fits = self.all_fits(fitness)
+        return max(self.individuals,
+                   key=lambda indv: all_fits[self.individuals.index(indv)])
 
     def worst_indv(self, fitness):
         '''
         The individual with the worst fitness.
         '''
-        return min(self.individuals, key=fitness)
+        all_fits = self.all_fits(fitness)
+        return min(self.individuals,
+                   key=lambda indv: all_fits[self.individuals.index(indv)])
 
     def max(self, fitness):
         '''
@@ -102,6 +138,13 @@ class GAPopulation(object):
         '''
         Get the average fitness value in population.
         '''
-        all_fits = [fitness(indv) for indv in self.individuals]
+        all_fits = self.all_fits(fitness)
         return sum(all_fits)/len(all_fits)
+
+    @Memoized
+    def all_fits(self, fitness):
+        '''
+        Get all fitness values in population.
+        '''
+        return [fitness(indv) for indv in self.individuals]
 

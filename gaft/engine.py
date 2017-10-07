@@ -191,6 +191,7 @@ class GAEngine(object):
                 indvs[0] = best_indv
                 # The next generation.
                 self.population.individuals = indvs
+                self.population.flag_update()
 
                 # Update statistic variables.
                 self._update_statvars()
