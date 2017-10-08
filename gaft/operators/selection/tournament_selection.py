@@ -21,7 +21,13 @@ class TournamentSelection(GASelection):
         Select a pair of parent using Tournament strategy.
         '''
         # Competition function.
-        complete = lambda competitors: max(competitors, key=fitness)
+        all_fits = population.all_fits(fitness)
+        def complete(competitors):
+            '''
+            Competition function.
+            '''
+            key = lambda indv: all_fits[competitors.index(indv)]
+            return max(competitors, key=key)
 
         # Check validity of tournament size.
         if self.tournament_size >= len(population):
