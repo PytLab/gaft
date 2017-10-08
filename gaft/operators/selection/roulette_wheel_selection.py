@@ -22,7 +22,7 @@ class RouletteWheelSelection(GASelection):
         Select a pair of parent using FPS algorithm.
         '''
         # Normalize fitness values for all individuals.
-        fit = [fitness(indv) for indv in population.individuals]
+        fit = population.all_fits(fitness)
         min_fit = min(fit)
         fit = [(i - min_fit) for i in fit]
 
