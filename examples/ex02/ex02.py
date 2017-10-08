@@ -10,7 +10,7 @@ from math import sin, cos, pi
 from gaft import GAEngine
 from gaft.components import GAIndividual
 from gaft.components import GAPopulation
-from gaft.operators import RouletteWheelSelection, TournamentSelection
+from gaft.operators import TournamentSelection
 from gaft.operators import UniformCrossover
 from gaft.operators import FlipBitBigMutation
 
