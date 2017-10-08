@@ -29,6 +29,9 @@ class Memoized(object):
 
 
 class GAIndividuals(object):
+    '''
+    Descriptor for all individuals in population.
+    '''
     def __init__(self, name):
         self.name = '_{}'.format(name)
 
@@ -38,7 +41,9 @@ class GAIndividuals(object):
     def __set__(self, instance, value):
         instance.__dict__[self.name] = value
         # Update flag.
-        instance.flag_update()
+        instance._updated = True
+
+
 
 
 class GAPopulation(object):
@@ -65,11 +70,47 @@ class GAPopulation(object):
         # Template individual.
         self.indv_template = indv_template
 
-        # All individuals.
-        self._individuals = []
-
         # Flag for monitoring changes of population.
         self._updated = False
+
+        # Container for all individuals.
+        class IndvList(list):
+            '''
+            A proxy class inherited from built-in list to contain all
+            individuals which can update the population._updated flag
+            automatically when its content is changed.
+            '''
+            # NOTE: Use 'this' here to avoid name conflict.
+            def __init__(this, *args):
+                super(this.__class__, this).__init__(*args)
+
+            def __setitem__(this, key, value):
+                '''
+                Override __setitem__ in built-in list type.
+                '''
+                old_value = this[key]
+                if old_value == value:
+                    return
+                super(this.__class__, self).__setitem__(key, value)
+                # Update population flag.
+                self._updated = True
+
+            def append(this, item):
+                '''
+                Override append method of built-in list type.
+                '''
+                super(this.__class__, this).append(item)
+                # Update population flag.
+                self._updated = True
+
+            def extend(this, iterable_item):
+                if not iterable_item:
+                    return
+                super(this.__class__, this).extend(iterable_item)
+                # Update population flag.
+                self._updated = True
+
+        self._individuals = IndvList()
 
     def init(self, indvs=None):
         '''
@@ -94,13 +135,13 @@ class GAPopulation(object):
                     raise ValueError('individual must be GAIndividual object')
             self.individuals = indvs
 
-        self.flag_update()
+        self._updated = True
 
         return self
 
     def flag_update(self):
         '''
-        Update individual update flag to True.
+        Interface for updating individual update flag to True.
         '''
         self._updated = True
 
