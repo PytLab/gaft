@@ -35,9 +35,14 @@ class GAIndividuals(object):
     def __set__(self, instance, value):
         instance.__dict__[self.name] = value
         # Update flag.
+        instance.flag_update()
 
 
 class GAPopulation(object):
+
+    # All individuals.
+    individuals = GAIndividuals('individuals')
+
     def __init__(self, indv_template, size=100):
         '''
         Class for representing population in genetic algorithm.
@@ -58,7 +63,7 @@ class GAPopulation(object):
         self.indv_template = indv_template
 
         # All individuals.
-        self.individuals = []
+        self._individuals = []
 
         # Flag for monitoring changes of population.
         self._updated = False
