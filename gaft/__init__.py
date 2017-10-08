@@ -3,7 +3,7 @@ import sys
 
 from .engine import GAEngine
 
-__version__ = '0.3.5'
+__version__ = '0.4.0'
 __author__ = 'ShaoZhengjiang <shaozhengjiang@gmail.com>'
 
 # Set root logger.
