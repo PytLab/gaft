@@ -30,7 +30,11 @@ class LinearRankingSelection(GASelection):
         NP = len(population)
 
         # Add rank to all individuals in population.
-        sorted_indvs = sorted(population.individuals, key=fitness, reverse=True)
+        all_fits = population.all_fits(fitness)
+        indvs = population.individuals
+        sorted_indvs = sorted(indvs,
+                              key=lambda indv: all_fits[indvs.index(indv)],
+                              reverse=True)
 
         # Assign selection probabilities linearly.
         # NOTE: Here the rank i belongs to {1, ..., N}
@@ -43,9 +47,9 @@ class LinearRankingSelection(GASelection):
 
         # Select parents.
         father_idx = bisect_right(wheel, random())
-        father = population[father_idx]
+        father = sorted_indvs[father_idx]
         mother_idx = (father_idx + 1) % len(wheel)
-        mother = population[mother_idx]
+        mother = sorted_indvs[mother_idx]
 
         return father, mother
 

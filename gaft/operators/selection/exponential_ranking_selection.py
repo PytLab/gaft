@@ -30,6 +30,13 @@ class ExponentialRankingSelection(GASelection):
         # Individual number.
         NP = len(population)
 
+        # Add rank to all individuals in population.
+        all_fits = population.all_fits(fitness)
+        indvs = population.individuals
+        sorted_indvs = sorted(indvs,
+                              key=lambda indv: all_fits[indvs.index(indv)],
+                              reverse=True)
+
         # NOTE: Here the rank i belongs to {1, ..., N}
         p = lambda i: self.base**(NP - i)
         probabilities = [p(i) for i in range(1, NP + 1)]
@@ -40,9 +47,9 @@ class ExponentialRankingSelection(GASelection):
 
         # Select parents.
         father_idx = bisect_right(wheel, random())
-        father = population[father_idx]
+        father = sorted_indvs[father_idx]
         mother_idx = (father_idx + 1) % len(wheel)
-        mother = population[mother_idx]
+        mother = sorted_indvs[mother_idx]
 
         return father, mother
 
