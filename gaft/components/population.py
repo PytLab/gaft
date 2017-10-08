@@ -25,6 +25,18 @@ class Memoized(object):
         return self.result
 
 
+class GAIndividuals(object):
+    def __init__(self, name):
+        self.name = '_{}'.format(name)
+
+    def __get__(self, instance, owner):
+        return instance.__dict__[self.name]
+
+    def __set__(self, instance, value):
+        instance.__dict__[self.name] = value
+        # Update flag.
+
+
 class GAPopulation(object):
     def __init__(self, indv_template, size=100):
         '''
