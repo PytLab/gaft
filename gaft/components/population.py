@@ -11,13 +11,16 @@ class Memoized(object):
     def __init__(self, func):
         self.func = func
         self.result = None
+        self.fitness = None
 
     def __get__(self, instance, cls):
         self.instance = instance
         return self
 
     def __call__(self, fitness):
-        if (not self.instance._updated) and (self.result is not None):
+        if ((not self.instance._updated)         # population not changed
+                and (self.result is not None)    # result already cached
+                and (fitness == self.fitness)):  # fitness not changed
             # Return cached result directly.
             return self.result
         else:
@@ -42,8 +45,6 @@ class GAIndividuals(object):
         instance.__dict__[self.name] = value
         # Update flag.
         instance._updated = True
-
-
 
 
 class GAPopulation(object):
@@ -80,6 +81,7 @@ class GAPopulation(object):
             individuals which can update the population._updated flag
             automatically when its content is changed.
             '''
+            # {{{
             # NOTE: Use 'this' here to avoid name conflict.
             def __init__(this, *args):
                 super(this.__class__, this).__init__(*args)
@@ -109,6 +111,7 @@ class GAPopulation(object):
                 super(this.__class__, this).extend(iterable_item)
                 # Update population flag.
                 self._updated = True
+            # }}}
 
         self._individuals = IndvList()
 
