@@ -17,12 +17,15 @@ class Memoized(object):
         return self
 
     def __call__(self, fitness):
-        if self.instance._updated:
+        if (not self.instance._updated) and (self.result is not None):
+            # Return cached result directly.
+            return self.result
+        else:
             # Update and memoize result.
             self.result = self.func(self.instance, fitness)
             # Recover flag.
             self.instance._updated = False
-        return self.result
+            return self.result
 
 
 class GAIndividuals(object):
