@@ -24,6 +24,8 @@ class Memoized(object):
             # Return cached result directly.
             return self.result
         else:
+            # Update fitness function.
+            self.fitness = fitness
             # Update and memoize result.
             self.result = self.func(self.instance, fitness)
             # Recover flag.
