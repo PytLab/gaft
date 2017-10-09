@@ -34,8 +34,7 @@ class ExponentialRankingSelection(GASelection):
         all_fits = population.all_fits(fitness)
         indvs = population.individuals
         sorted_indvs = sorted(indvs,
-                              key=lambda indv: all_fits[indvs.index(indv)],
-                              reverse=True)
+                              key=lambda indv: all_fits[indvs.index(indv)])
 
         # NOTE: Here the rank i belongs to {1, ..., N}
         p = lambda i: self.base**(NP - i)

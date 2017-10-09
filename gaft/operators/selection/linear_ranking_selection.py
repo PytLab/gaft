@@ -33,8 +33,7 @@ class LinearRankingSelection(GASelection):
         all_fits = population.all_fits(fitness)
         indvs = population.individuals
         sorted_indvs = sorted(indvs,
-                              key=lambda indv: all_fits[indvs.index(indv)],
-                              reverse=True)
+                              key=lambda indv: all_fits[indvs.index(indv)])
 
         # Assign selection probabilities linearly.
         # NOTE: Here the rank i belongs to {1, ..., N}
