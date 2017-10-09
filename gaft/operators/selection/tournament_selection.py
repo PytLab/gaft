@@ -26,7 +26,7 @@ class TournamentSelection(GASelection):
             '''
             Competition function.
             '''
-            key = lambda indv: all_fits[competitors.index(indv)]
+            key = lambda indv: all_fits[population.individuals.index(indv)]
             return max(competitors, key=key)
 
         # Check validity of tournament size.
