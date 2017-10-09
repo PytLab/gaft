@@ -19,7 +19,7 @@ A **G**\ enetic **A**\ lgorithm **F**\ ramework in py\ **T**\ hon
     :target: https://www.python.org/downloads/release/python-351/
     :alt: platform
 
-.. image:: https://img.shields.io/badge/pypi-v0.4.1-blue.svg
+.. image:: https://img.shields.io/badge/pypi-v0.4.2-blue.svg
     :target: https://pypi.python.org/pypi/gaft/
     :alt: versions
 
@@ -153,6 +153,8 @@ Blogs
 - `遗传算法中几种不同选择算子的比较 <http://pytlab.github.io/2017/09/19/%E9%81%97%E4%BC%A0%E7%AE%97%E6%B3%95%E4%B8%AD%E5%87%A0%E7%A7%8D%E4%B8%8D%E5%90%8C%E9%80%89%E6%8B%A9%E7%AE%97%E5%AD%90%E7%9A%84%E6%AF%94%E8%BE%83/>`_
 
 - `遗传算法中适值函数的标定与大变异算法 <http://pytlab.github.io/2017/09/23/%E9%81%97%E4%BC%A0%E7%AE%97%E6%B3%95%E4%B8%AD%E9%80%82%E5%80%BC%E5%87%BD%E6%95%B0%E7%9A%84%E6%A0%87%E5%AE%9A%E4%B8%8E%E5%A4%A7%E5%8F%98%E5%BC%82%E7%AE%97%E6%B3%95/>`_
+
+- `遗传算法框架GAFT优化小记 <http://pytlab.github.io/2017/10/08/%E9%81%97%E4%BC%A0%E7%AE%97%E6%B3%95%E6%A1%86%E6%9E%B6GAFT%E4%BC%98%E5%8C%96%E5%B0%8F%E8%AE%B0/>`_
 
 TODO
 ----
