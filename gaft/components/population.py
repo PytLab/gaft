@@ -18,7 +18,7 @@ class Memoized(object):
         return self
 
     def __call__(self, fitness):
-        if ((not self.instance._updated)         # population not changed
+        if ((not self.instance.updated)         # population not changed
                 and (self.result is not None)    # result already cached
                 and (fitness == self.fitness)):  # fitness not changed
             # Return cached result directly.
@@ -46,7 +46,7 @@ class GAIndividuals(object):
     def __set__(self, instance, value):
         instance.__dict__[self.name] = value
         # Update flag.
-        instance._updated = True
+        instance.update_flag()
 
 
 class GAPopulation(object):
@@ -97,7 +97,7 @@ class GAPopulation(object):
                     return
                 super(this.__class__, self).__setitem__(key, value)
                 # Update population flag.
-                self._updated = True
+                self.update_flag()
 
             def append(this, item):
                 '''
@@ -105,14 +105,14 @@ class GAPopulation(object):
                 '''
                 super(this.__class__, this).append(item)
                 # Update population flag.
-                self._updated = True
+                self.update_flag()
 
             def extend(this, iterable_item):
                 if not iterable_item:
                     return
                 super(this.__class__, this).extend(iterable_item)
                 # Update population flag.
-                self._updated = True
+                self.update_flag()
             # }}}
 
         self._individuals = IndvList()
@@ -144,11 +144,18 @@ class GAPopulation(object):
 
         return self
 
-    def flag_update(self):
+    def update_flag(self):
         '''
         Interface for updating individual update flag to True.
         '''
         self._updated = True
+
+    @property
+    def updated(self):
+        '''
+        Query function for population updating flag.
+        '''
+        return self._updated
 
     def new(self):
         '''
