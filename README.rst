@@ -162,3 +162,11 @@ TODO
 2. ✅ Add more built-in genetic operators with different algorithms
 3. 🏃 Add C++ backend
 
+Obtain a copy
+-------------
+
+The GAFT framework is distributed under the GPLv3 license and can be obtained from the GAFT git repository or PyPI 
+
+- https://github.com/PytLab/gaft
+- https://pypi.python.org/pypi/gaft/
+
