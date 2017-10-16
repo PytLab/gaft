@@ -32,7 +32,7 @@ Introduction
 **GAFT** is now accelerated using MPI parallelization interfaces. You can run it on your cluster in parallel with MPI environment.
 
 Python Support
-''''''''''''''
+--------------
 
 **GAFT** requires Python version 3.x (Python 2.x is not supported).
 
