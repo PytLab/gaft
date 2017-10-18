@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-''' Roulette Wheel Selection '''
+''' Roulette Wheel Selection implementation. '''
 
 from random import random
 from bisect import bisect_right

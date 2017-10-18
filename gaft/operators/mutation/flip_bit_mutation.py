@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+''' Flip Bit mutation implementation. '''
+
 from random import random
 
 from ...mpiutil import mpi

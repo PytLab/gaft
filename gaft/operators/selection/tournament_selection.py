@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-''' Tournament Selection '''
+''' Tournament Selection implementation. '''
 
 from random import sample
 
