@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 '''
-Utitlities for parallelize Genetic Algorithm by using MPI interfaces
+Utitlities for parallelizing Genetic Algorithm by using MPI interfaces
 in distributed MPI environment.
 '''
 

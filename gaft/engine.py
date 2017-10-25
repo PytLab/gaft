@@ -122,9 +122,9 @@ class GAEngine(object):
         # Attributes assignment.
         self.population = population
         self.fitness = fitness
-        self.selection= selection
-        self.crossover= crossover
-        self.mutation= mutation
+        self.selection = selection
+        self.crossover = crossover
+        self.mutation = mutation
         self.analysis = [] if analysis is None else [a() for a in analysis]
 
         # Maxima and minima in population.
