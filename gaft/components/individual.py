@@ -4,17 +4,23 @@
 from math import log2
 from itertools import accumulate
 from random import uniform
+import logging
+
+from ..mpiutil import mpi
 
 
 class GAIndividual(object):
-    def __init__(self, ranges, encoding='binary', eps=0.001):
+    def __init__(self, ranges, encoding='binary', eps=0.001, verbosity=logging.INFO):
         '''
         Class for individual in population. Random variants will be initialized
         by default.
 
         NOTE: The decrete precisions for different components in varants may be
               adjusted automatically (possible precision loss) if eps and ranges
-              are not appropriate. Please check it before you put it into GA engine.
+              are not appropriate.
+              
+              Please check it before you put it into GA engine. If you don't want
+              to see the warning info, set verbosity to logging.ERROR :)
 
         :param ranges: value ranges for all entries in variants.
         :type ranges: list of range tuples. e.g. [(0, 1), (-1, 1)]
@@ -25,7 +31,15 @@ class GAIndividual(object):
         :param eps: decrete precisions for binary encoding, default is 0.001.
         :type eps: float or float list with the same length with ranges.
 
+        :param verbosity: The threshold for logger messages output.
+        :type verbosity: The same with Logging Levels, default value is logging.INFO
+                         (https://docs.python.org/3/library/logging.html#levels)
         '''
+        # Set logger.
+        logger_name = 'gaft.{}'.format(self.__class__.__name__)
+        self.logger = logging.getLogger(logger_name)
+        self.logger.setLevel(verbosity)
+
         self.ranges = ranges
         self.eps = eps
         self.encoding = encoding
@@ -33,13 +47,18 @@ class GAIndividual(object):
         # Check parameters.
         self._check_parameters()
 
-        # Lengths for all binary sequence in chromsome.
-        self.lengths = [int(log2((b-a)/eps))
-                        for (a, b), eps in zip(self.ranges, self.eps)]
+        # Lengths for all binary sequence in chromsome and adjusted decrete precisions.
+        self.lengths, self.precisions = [], []
 
-        # Correct decrete precision according to binary sequence length.
-        self.precisions = [(b - a)/(2**l)
-                           for l, (a, b) in zip(self.lengths, self.ranges)]
+        for (a, b), eps in zip(self.ranges, self.eps):
+            length = int(log2((b - a)/eps))
+            precision = (b - a)/(2**length)
+
+            if precision != eps and mpi.is_master:
+                self.logger.warning('Precision loss {} -> {}'.format(eps, precision))
+
+            self.lengths.append(length)
+            self.precisions.append(precision)
 
         # The start and end indices for each gene segment for entries in variants.
         self.gene_indices = self._get_gene_indices()
@@ -79,7 +98,10 @@ class GAIndividual(object):
         '''
         Clone a new individual from current one.
         '''
-        indv = self.__class__(self.ranges, encoding=self.encoding, eps=self.eps)
+        indv = self.__class__(self.ranges,
+                              encoding=self.encoding,
+                              eps=self.eps,
+                              verbosity=self.logger.level)
         indv.init(chromsome=self.chromsome)
         return indv
 

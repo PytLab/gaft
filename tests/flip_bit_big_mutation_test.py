@@ -22,7 +22,7 @@ class FlipBitBigMutationTest(unittest.TestCase):
     def test_mutate(self):
         ''' Make sure the individual can be mutated correctly.
         '''
-        indv_template = GAIndividual(ranges=[(0, 10)], encoding='binary', eps=0.001)
+        indv_template = GAIndividual(ranges=[(0, 10)], encoding='binary', eps=0.001, verbosity=40)
         population = GAPopulation(indv_template=indv_template, size=50).init()
 
         # Create genetic operators.

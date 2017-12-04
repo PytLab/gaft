@@ -17,8 +17,8 @@ class UniformCrossoverTest(unittest.TestCase):
     def test_cross(self):
         ''' Make sure individuals can be crossed correctly.
         '''
-        father = GAIndividual(ranges=[(0, 1)]).init(variants=[0.398])
-        mother = GAIndividual(ranges=[(0, 1)]).init(variants=[0.298])
+        father = GAIndividual(ranges=[(0, 1)], verbosity=40).init(variants=[0.398])
+        mother = GAIndividual(ranges=[(0, 1)], verbosity=40).init(variants=[0.298])
         crossover = UniformCrossover(pc=1.0, pe=0.5)
         child1, child2 = crossover.cross(father, mother)
 

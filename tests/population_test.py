@@ -13,7 +13,7 @@ class PopulationTest(unittest.TestCase):
 
     def setUp(self):
         self.maxDiff = True
-        self.indv_template = GAIndividual(ranges=[(0, 1)])
+        self.indv_template = GAIndividual(ranges=[(0, 1)], verbosity=40)
         def fitness(indv):
             x, = indv.variants
             return x**3 - 60*x**2 + 900*x + 100
