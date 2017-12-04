@@ -20,7 +20,7 @@ class ExponentialRankingSelectionTest(unittest.TestCase):
         self.fitness = fitness
 
     def test_selection(self):
-        indv = GAIndividual(ranges=[(0, 30)], verbosity=40)
+        indv = GAIndividual(ranges=[(0, 30)], verbosity=0)
         p = GAPopulation(indv)
         p.init()
 

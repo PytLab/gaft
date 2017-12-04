@@ -16,7 +16,7 @@ class IndividualTest(unittest.TestCase):
     def test_binary_encoding(self):
         ''' Make sure individual can decode and encode binary gene correctly.
         '''
-        indv = GAIndividual(ranges=[(0, 1)], encoding='binary', eps=0.001, verbosity=40)
+        indv = GAIndividual(ranges=[(0, 1)], encoding='binary', eps=0.001, verbosity=0)
         indv.init(variants=[0.398])
 
         # Test binary chromsome.
@@ -26,7 +26,7 @@ class IndividualTest(unittest.TestCase):
         # Test decode.
         self.assertListEqual(indv.decode(), [0.396484375])
 
-        indv = GAIndividual(ranges=[(0, 1), (-1, 1)], encoding='binary', eps=0.001, verbosity=40)
+        indv = GAIndividual(ranges=[(0, 1), (-1, 1)], encoding='binary', eps=0.001, verbosity=0)
         indv.init(variants=[0.398, 0.66])
 
         # Test binary chromsome.
@@ -39,7 +39,7 @@ class IndividualTest(unittest.TestCase):
     def test_decimal_construction(self):
         ''' Make sure individual can decode and encode decimal gene correctly.
         '''
-        indv = GAIndividual(ranges=[(0, 1)], encoding='decimal', eps=0.001, verbosity=40)
+        indv = GAIndividual(ranges=[(0, 1)], encoding='decimal', eps=0.001, verbosity=0)
 
         indv.init(variants=[0.398])
         self.assertListEqual(indv.encode(), [0.398])
@@ -48,7 +48,7 @@ class IndividualTest(unittest.TestCase):
     def test_init(self):
         ''' Make sure the individual can be initialized correctly.
         '''
-        indv = GAIndividual(ranges=[(0, 1)], encoding='binary', eps=0.001, verbosity=40)
+        indv = GAIndividual(ranges=[(0, 1)], encoding='binary', eps=0.001, verbosity=0)
 
         # Check chromsome initialization.
         indv.init(chromsome=[0, 1, 1, 0, 0, 0, 1, 1, 1, 0])
@@ -68,7 +68,7 @@ class IndividualTest(unittest.TestCase):
         indv = GAIndividual(ranges=[(0, 1)],
                             encoding='binary',
                             eps=0.001,
-                            verbosity=40).init(variants=[0.398])
+                            verbosity=0).init(variants=[0.398])
         indv_clone = indv.clone()
 
         self.assertListEqual(indv.chromsome, indv_clone.chromsome)
@@ -83,7 +83,7 @@ class IndividualTest(unittest.TestCase):
         indv = GAIndividual(ranges=[(0, 1), (0, 10)],
                             encoding='binary',
                             eps=[0.01, 1.0],
-                            verbosity=40).init(variants=[0.3, 0.5])
+                            verbosity=0).init(variants=[0.3, 0.5])
         self.assertNotEqual(indv.precisions[0], indv.precisions[1])
 
 if '__main__' == __name__:

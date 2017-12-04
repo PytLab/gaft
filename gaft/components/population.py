@@ -130,7 +130,7 @@ class GAPopulation(object):
                 indv = GAIndividual(ranges=self.indv_template.ranges,
                                     encoding=self.indv_template.encoding,
                                     eps=self.indv_template.eps,
-                                    verbosity=self.indv_template.logger.level)
+                                    verbosity=self.indv_template.verbosity)
                 self.individuals.append(indv)
         else:
             # Check individuals.

@@ -17,7 +17,7 @@ class FlipBitMutationTest(unittest.TestCase):
     def test_mutate(self):
         ''' Make sure the individual can be mutated correctly.
         '''
-        indv = GAIndividual(ranges=[(0, 1)], verbosity=40).init(variants=[0.398])
+        indv = GAIndividual(ranges=[(0, 1)], verbosity=0).init(variants=[0.398])
         mutation = FlipBitMutation(pm=1.0)
         chromsome_before = [0, 1, 1, 0, 0, 1, 0, 1, 1]
         chromsome_after = [1, 0, 0, 1, 1, 0, 1, 0, 0]

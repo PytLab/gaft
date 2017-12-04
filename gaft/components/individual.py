@@ -10,7 +10,7 @@ from ..mpiutil import mpi
 
 
 class GAIndividual(object):
-    def __init__(self, ranges, encoding='binary', eps=0.001, verbosity=logging.INFO):
+    def __init__(self, ranges, encoding='binary', eps=0.001, verbosity=1):
         '''
         Class for individual in population. Random variants will be initialized
         by default.
@@ -20,7 +20,7 @@ class GAIndividual(object):
               are not appropriate.
               
               Please check it before you put it into GA engine. If you don't want
-              to see the warning info, set verbosity to logging.ERROR :)
+              to see the warning info, set verbosity to 0 :)
 
         :param ranges: value ranges for all entries in variants.
         :type ranges: list of range tuples. e.g. [(0, 1), (-1, 1)]
@@ -31,18 +31,14 @@ class GAIndividual(object):
         :param eps: decrete precisions for binary encoding, default is 0.001.
         :type eps: float or float list with the same length with ranges.
 
-        :param verbosity: The threshold for logger messages output.
-        :type verbosity: The same with Logging Levels, default value is logging.INFO
-                         (https://docs.python.org/3/library/logging.html#levels)
+        :param verbosity: The verbosity level of info output.
+        :param verbosity: int, 0 or 1(default)
         '''
-        # Set logger.
-        logger_name = 'gaft.{}'.format(self.__class__.__name__)
-        self.logger = logging.getLogger(logger_name)
-        self.logger.setLevel(verbosity)
 
         self.ranges = ranges
         self.eps = eps
         self.encoding = encoding
+        self.verbosity = verbosity
 
         # Check parameters.
         self._check_parameters()
@@ -54,8 +50,8 @@ class GAIndividual(object):
             length = int(log2((b - a)/eps))
             precision = (b - a)/(2**length)
 
-            if precision != eps and mpi.is_master:
-                self.logger.warning('Precision loss {} -> {}'.format(eps, precision))
+            if precision != eps and mpi.is_master and self.verbosity:
+                print('Precision loss {} -> {}'.format(eps, precision))
 
             self.lengths.append(length)
             self.precisions.append(precision)
@@ -101,7 +97,7 @@ class GAIndividual(object):
         indv = self.__class__(self.ranges,
                               encoding=self.encoding,
                               eps=self.eps,
-                              verbosity=self.logger.level)
+                              verbosity=self.verbosity)
         indv.init(chromsome=self.chromsome)
         return indv
 
