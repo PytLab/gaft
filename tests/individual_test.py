@@ -24,7 +24,7 @@ class IndividualTest(unittest.TestCase):
         self.assertListEqual(indv.chromsome, ref_chromsome)
 
         # Test decode.
-        self.assertListEqual(indv.decode(), [0.3972602739726027])
+        self.assertListEqual(indv.decode(), [0.396484375])
 
         indv = GAIndividual(ranges=[(0, 1), (-1, 1)], encoding='binary', eps=0.001)
         indv.init(variants=[0.398, 0.66])
@@ -34,7 +34,7 @@ class IndividualTest(unittest.TestCase):
         self.assertListEqual(indv.chromsome, ref_chromsome)
 
         # Test decode.
-        self.assertListEqual(indv.decode(), [0.3972602739726027, 0.6598240469208212])
+        self.assertListEqual(indv.decode(), [0.396484375, 0.658203125])
 
     def test_decimal_construction(self):
         ''' Make sure individual can decode and encode decimal gene correctly.
@@ -54,7 +54,7 @@ class IndividualTest(unittest.TestCase):
         indv.init(chromsome=[0, 1, 1, 0, 0, 0, 1, 1, 1, 0])
         
         self.assertListEqual([0, 1, 1, 0, 0, 0, 1, 1, 1, 0], indv.chromsome)
-        self.assertListEqual(indv.variants, [0.38943248532289626])
+        self.assertListEqual(indv.variants, [0.388671875])
 
         # Check variants initialization.
         indv.init(variants=[0.398])

@@ -9,7 +9,12 @@ from random import uniform
 class GAIndividual(object):
     def __init__(self, ranges, encoding='binary', eps=0.001):
         '''
-        Class for individual in population.
+        Class for individual in population. Random variants will be initialized
+        by default.
+
+        NOTE: The decrete precisions for different components in varants may be
+              adjusted automatically (possible precision loss) if eps and ranges
+              are not appropriate. Please check it before you put it into GA engine.
 
         :param ranges: value ranges for all entries in variants.
         :type ranges: list of range tuples. e.g. [(0, 1), (-1, 1)]
@@ -33,7 +38,7 @@ class GAIndividual(object):
                         for (a, b), eps in zip(self.ranges, self.eps)]
 
         # Correct decrete precision according to binary sequence length.
-        self.precisions = [(b - a)/(2**l - 1)
+        self.precisions = [(b - a)/(2**l)
                            for l, (a, b) in zip(self.lengths, self.ranges)]
 
         # The start and end indices for each gene segment for entries in variants.
@@ -101,7 +106,7 @@ class GAIndividual(object):
         variants = []
         for eps, (a, b) in zip(self.precisions, self.ranges):
             n_intervals = (b - a)//eps
-            n = int(uniform(0, n_intervals))
+            n = int(uniform(0, n_intervals + 1))
             variants.append(a + n*eps)
         return variants
 
