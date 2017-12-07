@@ -24,7 +24,7 @@ class FitnessStore(OnTheFlyAnalysis):
     def register_step(self, g, population, engine):
         # Collect data.
         best_indv = population.best_indv(engine.fitness)
-        best_fit = engine.fitness(best_indv)
+        best_fit = engine.ori_fitness(best_indv)
 
         self.ngs.append(g)
         self.variants.append(best_indv.variants)

@@ -20,8 +20,9 @@ class ConsoleOutput(OnTheFlyAnalysis):
     def register_step(self, g, population, engine):
         best_indv = population.best_indv(engine.fitness)
         ng_info = 'Generation: {}, '.format(g+1)
-        fit_info = 'best fitness: {:.3f}'.format(engine.fitness(best_indv))
-        msg = ng_info + fit_info
+        fit_info = 'best fitness: {:.3f}, '.format(engine.ori_fitness(best_indv))
+        scaled_info = 'scaled fitness: {:.3f}'.format(engine.fitness(best_indv))
+        msg = ng_info + fit_info + scaled_info
         self.logger.info(msg)
 
     def finalize(self, population, engine):
