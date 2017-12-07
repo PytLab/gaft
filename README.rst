@@ -71,6 +71,7 @@ Example:
     
     indv_template = GAIndividual(ranges=[(0, 10)], encoding='binary', eps=0.001)
     population = GAPopulation(indv_template=indv_template, size=50)
+    population.init()  # Initialize population with individuals.
 
 3. Create genetic operators
 ```````````````````````````
