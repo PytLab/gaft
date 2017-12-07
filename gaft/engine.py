@@ -362,3 +362,11 @@ class GAEngine(object):
 
         return _dynamic_linear_scaling
 
+    def minimize(self, fn):
+        '''
+        A decorator for minimizing the fitness function.
+        '''
+        def _minimize(indv):
+            return -fn(indv)
+        return _minimize
+

@@ -37,6 +37,7 @@ class GAEngineTest(unittest.TestCase):
                           crossover=crossover, mutation=mutation)
 
         @engine.fitness_register
+        @engine.minimize
         def fitness(indv):
             x, = indv.variants
             return x + 10*sin(5*x) + 7*cos(4*x)
