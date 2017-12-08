@@ -102,6 +102,16 @@ Example:
         x, = indv.variants
         return x + 10*sin(5*x) + 7*cos(4*x)
 
+or if you want to minimize it, you can add a minimize decorator on it
+
+.. code-block:: python
+
+    @engine.fitness_register
+    @engine.minimize
+    def fitness(indv):
+        x, = indv.variants
+        return x + 10*sin(5*x) + 7*cos(4*x)
+
 6. Define and register an on-the-fly analysis (optional)
 ````````````````````````````````````````````````````````
 
