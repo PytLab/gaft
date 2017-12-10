@@ -102,7 +102,7 @@ Example:
         x, = indv.variants
         return x + 10*sin(5*x) + 7*cos(4*x)
 
-or if you want to minimize it, you can add a minimize decorator on it
+or if you want to minimize it, you can add a minimization decorator on it
 
 .. code-block:: python
 
