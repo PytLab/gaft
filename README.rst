@@ -58,7 +58,7 @@ Example:
 .. code-block:: python
 
     from gaft import GAEngine
-    from gaft.components import GAIndividual, GAPopulation
+    from gaft.components import BinaryIndividual, Population
     from gaft.operators import RouletteWheelSelection, UniformCrossover, FlipBitMutation
 
     # Analysis plugin base class.
@@ -69,8 +69,8 @@ Example:
 
 .. code-block:: python
     
-    indv_template = GAIndividual(ranges=[(0, 10)], encoding='binary', eps=0.001)
-    population = GAPopulation(indv_template=indv_template, size=50)
+    indv_template = BinaryIndividual(ranges=[(0, 10)], eps=0.001)
+    population = Population(indv_template=indv_template, size=50)
     population.init()  # Initialize population with individuals.
 
 3. Create genetic operators
@@ -99,7 +99,7 @@ Example:
 
     @engine.fitness_register
     def fitness(indv):
-        x, = indv.variants
+        x, = indv.solution
         return x + 10*sin(5*x) + 7*cos(4*x)
 
 or if you want to minimize it, you can add a minimization decorator on it
@@ -109,7 +109,7 @@ or if you want to minimize it, you can add a minimization decorator on it
     @engine.fitness_register
     @engine.minimize
     def fitness(indv):
-        x, = indv.variants
+        x, = indv.solution
         return x + 10*sin(5*x) + 7*cos(4*x)
 
 6. Define and register an on-the-fly analysis (optional)
