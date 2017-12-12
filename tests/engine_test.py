@@ -9,7 +9,7 @@ from math import sin, cos
 
 from gaft import GAEngine
 from gaft.components import BinaryIndividual
-from gaft.components import GAPopulation
+from gaft.components import Population
 from gaft.operators import RouletteWheelSelection
 from gaft.operators import UniformCrossover
 from gaft.operators import FlipBitMutation
@@ -25,7 +25,7 @@ class GAEngineTest(unittest.TestCase):
         Make sure GA engine can run correctly.
         '''
         indv_template = BinaryIndividual(ranges=[(0, 10)], eps=0.001, verbosity=0)
-        population = GAPopulation(indv_template=indv_template, size=50).init()
+        population = Population(indv_template=indv_template, size=50).init()
 
         # Create genetic operators.
         selection = RouletteWheelSelection()

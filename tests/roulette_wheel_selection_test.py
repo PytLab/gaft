@@ -6,7 +6,7 @@
 
 import unittest
 
-from gaft.components import GAPopulation, BinaryIndividual
+from gaft.components import Population, BinaryIndividual
 from gaft.operators.selection.roulette_wheel_selection import RouletteWheelSelection
 
 class RouletteWheelSelectionTest(unittest.TestCase):
@@ -20,7 +20,7 @@ class RouletteWheelSelectionTest(unittest.TestCase):
 
     def test_selection(self):
         indv = BinaryIndividual(ranges=[(0, 30)], verbosity=0)
-        p = GAPopulation(indv)
+        p = Population(indv)
         p.init()
 
         selection = RouletteWheelSelection()

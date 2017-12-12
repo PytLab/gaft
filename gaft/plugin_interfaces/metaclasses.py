@@ -6,7 +6,7 @@ import inspect
 from functools import wraps
 
 from ..components.individual import IndividualBase
-from ..components.population import GAPopulation
+from ..components.population import Population
 from ..mpiutil import master_only
 
 
@@ -153,8 +153,8 @@ class SelectionMeta(type):
             ''' Wrapper to add parameters type checking.
             '''
             # Check parameter types.
-            if not isinstance(population, GAPopulation):
-                raise TypeError('population must be GAPopulation object')
+            if not isinstance(population, Population):
+                raise TypeError('population must be Population object')
             if not callable(fitness):
                 raise TypeError('fitness must be a callable object')
 

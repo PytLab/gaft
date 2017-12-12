@@ -36,7 +36,7 @@ class OnTheFlyAnalysis(metaclass=AnalysisMeta):
         :type g: int
 
         :param population: The up to date population of the iteration.
-        :type population: GAPopulation
+        :type population: Population
 
         :param engine: The current GAEngine where the analysis is running.
         :type engine: GAEngine
@@ -49,7 +49,7 @@ class OnTheFlyAnalysis(metaclass=AnalysisMeta):
         post-processing of the collected data.
 
         :param population: The up to date population of the iteration.
-        :type population: GAPopulation
+        :type population: Population
 
         :param engine: The current GAEngine where the analysis is running.
         :type engine: GAEngine

@@ -1,4 +1,4 @@
 from .individual import IndividualBase
 from .binary_individual import BinaryIndividual
-from .population import GAPopulation
+from .population import Population
 

@@ -9,7 +9,7 @@ from math import sin, cos, pi
 
 from gaft import GAEngine
 from gaft.components import BinaryIndividual
-from gaft.components import GAPopulation
+from gaft.components import Population
 from gaft.operators import TournamentSelection
 from gaft.operators import UniformCrossover
 from gaft.operators import FlipBitBigMutation
@@ -20,7 +20,7 @@ from gaft.analysis.console_output import ConsoleOutput
 
 # Define population.
 indv_template = BinaryIndividual(ranges=[(-2, 2), (-2, 2)], eps=0.001)
-population = GAPopulation(indv_template=indv_template, size=50).init()
+population = Population(indv_template=indv_template, size=50).init()
 
 # Create genetic operators.
 #selection = RouletteWheelSelection()

@@ -6,7 +6,7 @@
 
 import unittest
 
-from gaft.components import GAPopulation, BinaryIndividual
+from gaft.components import Population, BinaryIndividual
 from gaft.operators import TournamentSelection
 
 class TournamentSelectionTest(unittest.TestCase):
@@ -20,7 +20,7 @@ class TournamentSelectionTest(unittest.TestCase):
 
     def test_selection(self):
         indv = BinaryIndividual(ranges=[(0, 30)], verbosity=0)
-        p = GAPopulation(indv)
+        p = Population(indv)
         p.init()
 
         selection = TournamentSelection()

@@ -33,7 +33,7 @@ class Memoized(object):
             return self.result
 
 
-class GAIndividuals(object):
+class Individuals(object):
     '''
     Descriptor for all individuals in population.
     '''
@@ -49,10 +49,10 @@ class GAIndividuals(object):
         instance.update_flag()
 
 
-class GAPopulation(object):
+class Population(object):
 
     # All individuals.
-    individuals = GAIndividuals('individuals')
+    individuals = Individuals('individuals')
 
     def __init__(self, indv_template, size=100):
         '''

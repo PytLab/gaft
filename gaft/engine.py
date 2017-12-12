@@ -12,7 +12,7 @@ import cProfile
 import pstats
 import os
 
-from .components import IndividualBase, GAPopulation
+from .components import IndividualBase, Population
 from .plugin_interfaces.operators import GASelection, GACrossover, GAMutation
 from .plugin_interfaces.analysis import OnTheFlyAnalysis
 from .mpiutil import mpi
@@ -106,7 +106,7 @@ class GAEngine(object):
         the engine object unites these informations and provide means for running
         a genetic algorthm optimization.
 
-        :param population: The GAPopulation to be reproduced in evolution iteration.
+        :param population: The Population to be reproduced in evolution iteration.
         :param selection: The GASelection to be used for individual seleciton.
         :param crossover: The GACrossover to be used for individual crossover.
         :param mutation: The GAMutation to be used for individual mutation.
@@ -231,8 +231,8 @@ class GAEngine(object):
         '''
         Helper function to check parameters of engine.
         '''
-        if not isinstance(self.population, GAPopulation):
-            raise TypeError('population must be a GAPopulation object')
+        if not isinstance(self.population, Population):
+            raise TypeError('population must be a Population object')
         if not isinstance(self.selection, GASelection):
             raise TypeError('selection operator must be a GASelection instance')
         if not isinstance(self.crossover, GACrossover):
