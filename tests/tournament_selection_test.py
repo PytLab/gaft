@@ -6,8 +6,7 @@
 
 import unittest
 
-from gaft.components.population import GAPopulation
-from gaft.components.individual import BinaryIndividual
+from gaft.components import GAPopulation, BinaryIndividual
 from gaft.operators import TournamentSelection
 
 class TournamentSelectionTest(unittest.TestCase):

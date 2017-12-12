@@ -6,7 +6,7 @@
 
 import unittest
 
-from gaft.components.individual import BinaryIndividual
+from gaft.components import BinaryIndividual
 from gaft.operators.crossover.uniform_crossover import UniformCrossover
 
 class UniformCrossoverTest(unittest.TestCase):

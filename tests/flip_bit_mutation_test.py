@@ -6,7 +6,7 @@
 
 import unittest
 
-from gaft.components.individual import BinaryIndividual
+from gaft.components import BinaryIndividual
 from gaft.operators.mutation.flip_bit_mutation import FlipBitMutation
 
 class FlipBitMutationTest(unittest.TestCase):

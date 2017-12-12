@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from .individual import IndividualBase, BinaryIndividual
+from .individual import IndividualBase
 
 
 class Memoized(object):
