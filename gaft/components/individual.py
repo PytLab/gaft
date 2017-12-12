@@ -48,6 +48,8 @@ class DecretePrecision(object):
             self.__precisions = [precisions]*len(obj.ranges)
         else:
             # Check.
+            if type(precisions) not in [tuple, list]:
+                raise TypeError('precisions must be a list of numbers')
             if len(precisions) != len(obj.ranges):
                 raise ValueError('Lengths of eps and ranges should be the same')
             for (a, b), eps in zip(obj.ranges, precisions):
