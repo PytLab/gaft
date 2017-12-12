@@ -18,8 +18,8 @@ class FitnessStore(OnTheFlyAnalysis):
         # Best fitness in each generation.
         self.fitness_values = []
 
-        # Best variants.
-        self.variants = []
+        # Best solution.
+        self.solution = []
 
     def register_step(self, g, population, engine):
         # Collect data.
@@ -27,13 +27,13 @@ class FitnessStore(OnTheFlyAnalysis):
         best_fit = engine.ori_fitness(best_indv)
 
         self.ngs.append(g)
-        self.variants.append(best_indv.variants)
+        self.solution.append(best_indv.solution)
         self.fitness_values.append(best_fit)
 
     def finalize(self, population, engine):
         with open('best_fit.py', 'w', encoding='utf-8') as f:
             f.write('best_fit = [\n')
-            for ng, x, y in zip(self.ngs, self.variants, self.fitness_values):
+            for ng, x, y in zip(self.ngs, self.solution, self.fitness_values):
                 f.write('    ({}, {}, {}),\n'.format(ng, x, y))
             f.write(']\n\n')
 

@@ -8,7 +8,7 @@ Find the global maximum for function: f(x) = x + 10sin(5x) + 7cos(4x)
 from math import sin, cos
 
 from gaft import GAEngine
-from gaft.components import GAIndividual
+from gaft.components import BinaryIndividual
 from gaft.components import GAPopulation
 from gaft.operators import TournamentSelection
 from gaft.operators import UniformCrossover
@@ -21,7 +21,7 @@ from gaft.plugin_interfaces.analysis import OnTheFlyAnalysis
 from gaft.analysis.fitness_store import FitnessStore
 
 # Define population.
-indv_template = GAIndividual(ranges=[(0, 10)], encoding='binary', eps=0.001)
+indv_template = BinaryIndividual(ranges=[(0, 10)], eps=0.001)
 population = GAPopulation(indv_template=indv_template, size=50).init()
 
 # Create genetic operators.
@@ -37,7 +37,7 @@ engine = GAEngine(population=population, selection=selection,
 # Define fitness function.
 @engine.fitness_register
 def fitness(indv):
-    x, = indv.variants
+    x, = indv.solution
     return x + 10*sin(5*x) + 7*cos(4*x)
 
 # Define on-the-fly analysis.
@@ -53,7 +53,7 @@ class ConsoleOutputAnalysis(OnTheFlyAnalysis):
 
     def finalize(self, population, engine):
         best_indv = population.best_indv(engine.fitness)
-        x = best_indv.variants
+        x = best_indv.solution
         y = engine.fitness(best_indv)
         msg = 'Optimal solution: ({}, {})'.format(x, y)
         self.logger.info(msg)

@@ -27,7 +27,7 @@ class ConsoleOutput(OnTheFlyAnalysis):
 
     def finalize(self, population, engine):
         best_indv = population.best_indv(engine.fitness)
-        x = best_indv.variants
+        x = best_indv.solution
         y = engine.fitness(best_indv)
         msg = 'Optimal solution: ({}, {})'.format(x, y)
         self.logger.info(msg)
