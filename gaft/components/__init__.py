@@ -1,3 +1,3 @@
-from .individual import GAIndividual
+from .individual import *
 from .population import GAPopulation
 

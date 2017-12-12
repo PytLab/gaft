@@ -12,7 +12,7 @@ import cProfile
 import pstats
 import os
 
-from .components import GAIndividual, GAPopulation
+from .components import IndividualBase, GAPopulation
 from .plugin_interfaces.operators import GASelection, GACrossover, GAMutation
 from .plugin_interfaces.analysis import OnTheFlyAnalysis
 from .mpiutil import mpi
@@ -257,8 +257,8 @@ class GAEngine(object):
             A wrapper function for fitness function with fitness value check.
             '''
             # Check indv type.
-            if not isinstance(indv, GAIndividual):
-                raise TypeError('indv must be a GAIndividual object')
+            if not isinstance(indv, IndividualBase):
+                raise TypeError('indv\'s class must be subclass of IndividualBase')
 
             # Check fitness.
             fitness = fn(indv)

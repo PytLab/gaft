@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from .individual import GAIndividual
+from .individual import IndividualBase, BinaryIndividual
 
 
 class Memoized(object):
@@ -123,22 +123,23 @@ class GAPopulation(object):
 
         :param indvs: Initial individuals in population, randomly initialized
                       individuals are created if not provided.
-        :type indvs: list of GAIndividual
+        :type indvs: list of Individual object
         '''
+        IndvType = self.indv_template.__class__
+
         if indvs is None:
             for _ in range(self.size):
-                indv = GAIndividual(ranges=self.indv_template.ranges,
-                                    encoding=self.indv_template.encoding,
-                                    eps=self.indv_template.eps,
-                                    verbosity=self.indv_template.verbosity)
+                indv = IndvType(ranges=self.indv_template.ranges,
+                                eps=self.indv_template.eps,
+                                verbosity=self.indv_template.verbosity)
                 self.individuals.append(indv)
         else:
             # Check individuals.
             if len(indvs) != self.size:
                 raise ValueError('Invalid individuals number')
             for indv in indvs:
-                if not isinstance(indv, GAIndividual):
-                    raise ValueError('individual must be GAIndividual object')
+                if not isinstance(indv, IndividualBase):
+                    raise ValueError('individual class must be subclass of IndividualBase')
             self.individuals = indvs
 
         self._updated = True

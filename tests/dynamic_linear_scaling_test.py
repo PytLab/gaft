@@ -8,7 +8,7 @@ import unittest
 from math import sin, cos
 
 from gaft import GAEngine
-from gaft.components import GAIndividual
+from gaft.components import BinaryIndividual
 from gaft.components import GAPopulation
 from gaft.operators import RouletteWheelSelection
 from gaft.operators import UniformCrossover
@@ -24,7 +24,7 @@ class DynamicLinearScalingTest(unittest.TestCase):
         '''
         Make sure GA engine can run correctly.
         '''
-        indv_template = GAIndividual(ranges=[(0, 10)], encoding='binary', eps=0.001, verbosity=0)
+        indv_template = BinaryIndividual(ranges=[(0, 10)], eps=0.001, verbosity=0)
         population = GAPopulation(indv_template=indv_template, size=50).init()
 
         # Create genetic operators.

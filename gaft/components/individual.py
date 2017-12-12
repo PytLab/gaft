@@ -9,8 +9,85 @@ import logging
 from ..mpiutil import mpi
 
 
-class GAIndividual(object):
-    def __init__(self, ranges, encoding='binary', eps=0.001, verbosity=1):
+class IndividualBase(object):
+    ''' Base class for individuals.
+    '''
+    def __init__(self, ranges, eps=0.001):
+        self.ranges = ranges
+        self.eps = eps
+        self.precisions = eps
+
+        self._check_parameters()
+
+        self.variants, self.chromsome = [], []
+
+    def _check_parameters(self):
+        '''
+        Private helper function to check individual parameters.
+        '''
+        # Check decrete precision.
+        if type(self.eps) is float:
+            self.eps = [self.eps]*len(self.ranges)
+            self.precisions = self.eps
+        else:
+            # Check eps length.
+            if len(self.eps) != len(self.ranges):
+                raise ValueError('Lengths of eps and ranges should be the same')
+            for eps, (a, b) in zip(self.eps, self.ranges):
+                if eps > (b - a):
+                    msg = 'Invalid eps {} in range ({}, {})'.format(eps, a, b)
+                    raise ValueError(msg)
+
+    def _rand_variants(self):
+        ''' Initialize individual variants randomly.
+        '''
+        variants = []
+        for eps, (a, b) in zip(self.precisions, self.ranges):
+            n_intervals = (b - a)//eps
+            n = int(uniform(0, n_intervals + 1))
+            variants.append(a + n*eps)
+        return variants
+
+    def init(self, chromsome=None, variants=None):
+        '''
+        Initialize the individual by providing chromsome or variants.
+
+        If both chromsome and variants are provided, only the chromsome would
+        be used. If neither is provided, individual would be initialized randomly.
+
+        :param chromsome: chromesome sequence for the individual
+        :type chromsome: list of float/int.
+
+        :param variants: the variable vector of the target function.
+        :type variants: list of float.
+        '''
+        if not any([chromsome, variants]):
+            self.variants = self._rand_variants()
+            self.chromsome = self.encode()
+        elif chromsome:
+            self.chromsome = chromsome
+            self.variants = self.decode()
+        else:
+            self.variants = variants
+            self.chromsome = self.encode()
+
+        return self
+
+    def encode(self):
+        ''' *NEED IMPLIMENTATION*
+        Convert variants to chromsome sequence.
+        '''
+        raise NotImplementedError
+
+    def decode(self):
+        ''' *NEED IMPLIMENTATION*
+        Convert chromsome sequence to variants.
+        '''
+        raise NotImplementedError
+
+
+class BinaryIndividual(IndividualBase):
+    def __init__(self, ranges, eps=0.001, verbosity=1):
         '''
         Class for individual in population. Random variants will be initialized
         by default.
@@ -25,28 +102,20 @@ class GAIndividual(object):
         :param ranges: value ranges for all entries in variants.
         :type ranges: list of range tuples. e.g. [(0, 1), (-1, 1)]
 
-        :param encoding: gene encoding, 'decimal' or 'binary', default is binary.
-        :type encoding: str
-
         :param eps: decrete precisions for binary encoding, default is 0.001.
         :type eps: float or float list with the same length with ranges.
 
         :param verbosity: The verbosity level of info output.
         :param verbosity: int, 0 or 1(default)
         '''
+        super(self.__class__, self).__init__(ranges, eps)
 
-        self.ranges = ranges
-        self.eps = eps
-        self.encoding = encoding
         self.verbosity = verbosity
 
-        # Check parameters.
-        self._check_parameters()
-
         # Lengths for all binary sequence in chromsome and adjusted decrete precisions.
-        self.lengths, self.precisions = [], []
+        self.lengths = []
 
-        for (a, b), eps in zip(self.ranges, self.eps):
+        for i, ((a, b), eps) in enumerate(zip(self.ranges, self.eps)):
             length = int(log2((b - a)/eps))
             precision = (b - a)/(2**length)
 
@@ -54,87 +123,28 @@ class GAIndividual(object):
                 print('Precision loss {} -> {}'.format(eps, precision))
 
             self.lengths.append(length)
-            self.precisions.append(precision)
+            self.precisions[i] = precision
 
         # The start and end indices for each gene segment for entries in variants.
         self.gene_indices = self._get_gene_indices()
 
-        # Generate randomly.
-        self.variants = self._init_variants()
-
-        # Gene encoding.
-        self.chromsome = self.encode()
-
-    def init(self, chromsome=None, variants=None):
-        '''
-        Initialize the individual by providing chromsome or variants.
-        If both chromsome and variants are provided, only the chromsome would
-        be used.
-
-        :param chromsome: chromesome sequence for the individual
-        :type chromsome: list of float/int.
-
-        :param variants: the variable vector of the target function.
-        :type variants: list of float.
-        '''
-        if not any([chromsome, variants]):
-            msg = 'Chromsome or variants must be supplied for individual initialization'
-            raise ValueError(msg)
-
-        if chromsome:
-            self.chromsome = chromsome
-            self.variants = self.decode()
-        else:
-            self.variants = variants
-            self.chromsome = self.encode()
-
-        return self
+        # Initialize individual randomly.
+        self.init()
 
     def clone(self):
         '''
         Clone a new individual from current one.
         '''
         indv = self.__class__(self.ranges,
-                              encoding=self.encoding,
                               eps=self.eps,
                               verbosity=self.verbosity)
         indv.init(chromsome=self.chromsome)
         return indv
 
-    def _check_parameters(self):
-        '''
-        Private helper function to check individual parameters.
-        '''
-        # Check decrete precision.
-        if type(self.eps) is float:
-            self.eps = [self.eps]*len(self.ranges)
-        else:
-            # Check eps length.
-            if len(self.eps) != len(self.ranges):
-                raise ValueError('Lengths of eps and ranges should be the same')
-            for eps, (a, b) in zip(self.eps, self.ranges):
-                if eps > (b - a):
-                    msg = 'Invalid eps {} in range ({}, {})'.format(eps, a, b)
-                    raise ValueError(msg)
-
-    def _init_variants(self):
-        '''
-        Initialize individual variants randomly.
-        '''
-        variants = []
-        for eps, (a, b) in zip(self.precisions, self.ranges):
-            n_intervals = (b - a)//eps
-            n = int(uniform(0, n_intervals + 1))
-            variants.append(a + n*eps)
-        return variants
-
     def encode(self):
         '''
         Encode variant to gene sequence in individual using different encoding.
         '''
-        if self.encoding == 'decimal':
-            return self.variants
-
         chromsome = []
         for var, (a, _), length, eps in zip(self.variants, self.ranges,
                                             self.lengths, self.precisions):
@@ -146,9 +156,6 @@ class GAIndividual(object):
         ''' 
         Decode gene sequence to variants of target function.
         '''
-        if self.encoding == 'decimal':
-            return self.variants
-
         variants =  [self.decimalize(self.chromsome[start: end], eps, lower_bound)
                      for (start, end), (lower_bound, _), eps in
                      zip(self.gene_indices, self.ranges, self.precisions)]

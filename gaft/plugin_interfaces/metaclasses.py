@@ -5,7 +5,7 @@ import logging
 import inspect
 from functools import wraps
 
-from ..components.individual import GAIndividual
+from ..components.individual import IndividualBase
 from ..components.population import GAPopulation
 from ..mpiutil import master_only
 
@@ -76,9 +76,9 @@ class CrossoverMeta(type):
             ''' Wrapper to add parameters type checking.
             '''
             # Check parameter types.
-            if not (isinstance(father, GAIndividual) and
-                    isinstance(mother, GAIndividual)):
-                raise TypeError('father and mother must be GAIndividual object')
+            if not (isinstance(father, IndividualBase) and
+                    isinstance(mother, IndividualBase)):
+                raise TypeError('father and mother\'s type must be subclass of IndividualBase')
 
             return cross(self, father, mother)
 
@@ -115,8 +115,8 @@ class MutationMeta(type):
             ''' Wrapper to add parameters type checking.
             '''
             # Check parameter types.
-            if not isinstance(individual, GAIndividual):
-                raise TypeError('individual must be a GAIndividual object')
+            if not isinstance(individual, IndividualBase):
+                raise TypeError('individual\' type must be subclass of IndividualBase')
 
             return mutate(self, individual, engine)
 
@@ -154,7 +154,7 @@ class SelectionMeta(type):
             '''
             # Check parameter types.
             if not isinstance(population, GAPopulation):
-                raise TypeError('father and mother must be GAIndividual object')
+                raise TypeError('population must be GAPopulation object')
             if not callable(fitness):
                 raise TypeError('fitness must be a callable object')
 

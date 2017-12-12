@@ -7,7 +7,7 @@
 import unittest
 
 from gaft.components.population import GAPopulation
-from gaft.components.individual import GAIndividual
+from gaft.components.individual import BinaryIndividual
 from gaft.operators import TournamentSelection
 
 class TournamentSelectionTest(unittest.TestCase):
@@ -20,15 +20,15 @@ class TournamentSelectionTest(unittest.TestCase):
         self.fitness = fitness
 
     def test_selection(self):
-        indv = GAIndividual(ranges=[(0, 30)], verbosity=0)
+        indv = BinaryIndividual(ranges=[(0, 30)], verbosity=0)
         p = GAPopulation(indv)
         p.init()
 
         selection = TournamentSelection()
         father, mother = selection.select(p, fitness=self.fitness)
 
-        self.assertTrue(isinstance(father, GAIndividual))
-        self.assertTrue(isinstance(mother, GAIndividual))
+        self.assertTrue(isinstance(father, BinaryIndividual))
+        self.assertTrue(isinstance(mother, BinaryIndividual))
 
 if '__main__' == __name__:
     suite = unittest.TestLoader().loadTestsFromTestCase(TournamentSelectionTest)
