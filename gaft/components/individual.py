@@ -44,19 +44,18 @@ class DecretePrecision(object):
         return self.__precisions
 
     def __set__(self, obj, precisions):
-        if type(precisions) is float:
-            self.__precisions = [precisions]*len(obj.ranges)
-        else:
-            # Check.
-            if type(precisions) not in [tuple, list]:
-                raise TypeError('precisions must be a list of numbers')
-            if len(precisions) != len(obj.ranges):
-                raise ValueError('Lengths of eps and ranges should be the same')
-            for (a, b), eps in zip(obj.ranges, precisions):
-                if eps > (b - a):
-                    msg = 'Invalid precision {} in range ({}, {})'.format(eps, a, b)
-                    raise ValueError(msg)
-            self.__precisions = precisions
+        if type(precisions) in [int, float]:
+            precisions = [precisions]*len(obj.ranges)
+        # Check.
+        if type(precisions) not in [tuple, list]:
+            raise TypeError('precisions must be a list of numbers')
+        if len(precisions) != len(obj.ranges):
+            raise ValueError('Lengths of eps and ranges should be the same')
+        for (a, b), eps in zip(obj.ranges, precisions):
+            if eps > (b - a):
+                msg = 'Invalid precision {} in range ({}, {})'.format(eps, a, b)
+                raise ValueError(msg)
+        self.__precisions = precisions
 
 
 class IndividualBase(object):
