@@ -5,10 +5,10 @@
 
 from random import sample
 
-from ...plugin_interfaces.operators.selection import GASelection
+from ...plugin_interfaces.operators.selection import Selection
 
 
-class TournamentSelection(GASelection):
+class TournamentSelection(Selection):
     def __init__(self, tournament_size=2):
         '''
         Selection operator using Tournament Strategy with tournament size equals

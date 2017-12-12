@@ -5,7 +5,7 @@
 
 from ..metaclasses import SelectionMeta
 
-class GASelection(metaclass=SelectionMeta):
+class Selection(metaclass=SelectionMeta):
     '''
     Class for providing an interface to easily extend the behavior of selection
     operation.
@@ -16,7 +16,7 @@ class GASelection(metaclass=SelectionMeta):
         Called when we need to select parents from a population to later breeding.
 
         :param population: The current population.
-        :type population: GAPopulation
+        :type population: Population
 
         :return parents: Two selected individuals for crossover.
         :type parents: Tuple of tow GAIndividual objects.

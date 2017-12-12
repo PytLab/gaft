@@ -6,10 +6,10 @@
 from random import random
 
 from ...mpiutil import mpi
-from ...plugin_interfaces.operators.mutation import GAMutation
+from ...plugin_interfaces.operators.mutation import Mutation
 
 
-class FlipBitMutation(GAMutation):
+class FlipBitMutation(Mutation):
     def __init__(self, pm):
         '''
         Mutation operator with Flip Bit mutation implementation.

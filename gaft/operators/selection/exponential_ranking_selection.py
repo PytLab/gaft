@@ -7,10 +7,10 @@ from random import random
 from itertools import accumulate
 from bisect import bisect_right
 
-from ...plugin_interfaces.operators.selection import GASelection
+from ...plugin_interfaces.operators.selection import Selection
 
 
-class ExponentialRankingSelection(GASelection): 
+class ExponentialRankingSelection(Selection): 
     def __init__(self, base=0.5):
         '''
         Selection operator using Exponential Ranking selection method.

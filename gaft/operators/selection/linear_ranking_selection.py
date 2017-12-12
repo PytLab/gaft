@@ -7,10 +7,10 @@ from random import random
 from itertools import accumulate
 from bisect import bisect_right
 
-from ...plugin_interfaces.operators.selection import GASelection
+from ...plugin_interfaces.operators.selection import Selection
 
 
-class LinearRankingSelection(GASelection):
+class LinearRankingSelection(Selection):
     def __init__(self, pmin=0.1, pmax=0.9):
         '''
         Selection operator using Linear Ranking selection method.

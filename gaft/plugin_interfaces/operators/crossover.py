@@ -6,7 +6,7 @@
 from ..metaclasses import CrossoverMeta
 
 
-class GACrossover(metaclass=CrossoverMeta):
+class Crossover(metaclass=CrossoverMeta):
     '''
     Class for providing an interface to easily extend the behavior of crossover
     operation between two individuals for children breeding.

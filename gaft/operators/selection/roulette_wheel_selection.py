@@ -7,9 +7,9 @@ from random import random
 from bisect import bisect_right
 from itertools import accumulate
 
-from ...plugin_interfaces.operators.selection import GASelection
+from ...plugin_interfaces.operators.selection import Selection
 
-class RouletteWheelSelection(GASelection):
+class RouletteWheelSelection(Selection):
     def __init__(self):
         '''
         Selection operator with fitness proportionate selection(FPS) or

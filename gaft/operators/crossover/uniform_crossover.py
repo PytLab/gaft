@@ -5,10 +5,10 @@
 
 from random import random
 
-from ...plugin_interfaces.operators.crossover import GACrossover
+from ...plugin_interfaces.operators.crossover import Crossover
 
 
-class UniformCrossover(GACrossover):
+class UniformCrossover(Crossover):
     def __init__(self, pc, pe=0.5):
         '''
         Crossover operator with uniform crossover algorithm,

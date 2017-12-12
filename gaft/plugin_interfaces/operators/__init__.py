@@ -1,4 +1,4 @@
-from .selection import GASelection
-from .crossover import GACrossover
-from .mutation import GAMutation
+from .selection import Selection
+from .crossover import Crossover
+from .mutation import Mutation
 

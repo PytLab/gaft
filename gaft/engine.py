@@ -13,7 +13,7 @@ import pstats
 import os
 
 from .components import IndividualBase, Population
-from .plugin_interfaces.operators import GASelection, GACrossover, GAMutation
+from .plugin_interfaces.operators import Selection, Crossover, Mutation
 from .plugin_interfaces.analysis import OnTheFlyAnalysis
 from .mpiutil import mpi
 
@@ -107,9 +107,9 @@ class GAEngine(object):
         a genetic algorthm optimization.
 
         :param population: The Population to be reproduced in evolution iteration.
-        :param selection: The GASelection to be used for individual seleciton.
-        :param crossover: The GACrossover to be used for individual crossover.
-        :param mutation: The GAMutation to be used for individual mutation.
+        :param selection: The Selection to be used for individual seleciton.
+        :param crossover: The Crossover to be used for individual crossover.
+        :param mutation: The Mutation to be used for individual mutation.
         :param fitness: The fitness calculation function for an individual in population.
 
         :param analysis: All analysis class for on-the-fly analysis.
@@ -144,9 +144,6 @@ class GAEngine(object):
     def run(self, ng=100):
         '''
         Run the Genetic Algorithm optimization iteration with specified parameters.
-
-        :param control_parameters: An instance of GAControlParamters specifying
-                                   number of evolution generations etc.
         '''
         if self.fitness is None:
             raise AttributeError('No fitness function in GA engine')
@@ -233,12 +230,12 @@ class GAEngine(object):
         '''
         if not isinstance(self.population, Population):
             raise TypeError('population must be a Population object')
-        if not isinstance(self.selection, GASelection):
-            raise TypeError('selection operator must be a GASelection instance')
-        if not isinstance(self.crossover, GACrossover):
-            raise TypeError('crossover operator must be a GACrossover instance')
-        if not isinstance(self.mutation, GAMutation):
-            raise TypeError('mutation operator must be a GAMutation instance')
+        if not isinstance(self.selection, Selection):
+            raise TypeError('selection operator must be a Selection instance')
+        if not isinstance(self.crossover, Crossover):
+            raise TypeError('crossover operator must be a Crossover instance')
+        if not isinstance(self.mutation, Mutation):
+            raise TypeError('mutation operator must be a Mutation instance')
 
         for ap in self.analysis:
             if not isinstance(ap, OnTheFlyAnalysis):
