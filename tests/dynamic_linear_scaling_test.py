@@ -39,7 +39,7 @@ class DynamicLinearScalingTest(unittest.TestCase):
         @engine.fitness_register
         @engine.dynamic_linear_scaling()
         def fitness(indv):
-            x, = indv.variants
+            x, = indv.solution
             return x + 10*sin(5*x) + 7*cos(4*x)
 
         engine.run(50)

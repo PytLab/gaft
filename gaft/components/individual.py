@@ -76,52 +76,52 @@ class IndividualBase(object):
         self.eps = eps
         self.precisions = eps
 
-        self.variants, self.chromsome = [], []
+        self.solution, self.chromsome = [], []
 
-    def _rand_variants(self):
-        ''' Initialize individual variants randomly.
+    def _rand_solution(self):
+        ''' Initialize individual solution randomly.
         '''
-        variants = []
+        solution = []
         for eps, (a, b) in zip(self.precisions, self.ranges):
             n_intervals = (b - a)//eps
             n = int(uniform(0, n_intervals + 1))
-            variants.append(a + n*eps)
-        return variants
+            solution.append(a + n*eps)
+        return solution
 
-    def init(self, chromsome=None, variants=None):
+    def init(self, chromsome=None, solution=None):
         '''
-        Initialize the individual by providing chromsome or variants.
+        Initialize the individual by providing chromsome or solution.
 
-        If both chromsome and variants are provided, only the chromsome would
+        If both chromsome and solution are provided, only the chromsome would
         be used. If neither is provided, individual would be initialized randomly.
 
         :param chromsome: chromesome sequence for the individual
         :type chromsome: list of float/int.
 
-        :param variants: the variable vector of the target function.
-        :type variants: list of float.
+        :param solution: the variable vector of the target function.
+        :type solution: list of float.
         '''
-        if not any([chromsome, variants]):
-            self.variants = self._rand_variants()
+        if not any([chromsome, solution]):
+            self.solution = self._rand_solution()
             self.chromsome = self.encode()
         elif chromsome:
             self.chromsome = chromsome
-            self.variants = self.decode()
+            self.solution = self.decode()
         else:
-            self.variants = variants
+            self.solution = solution
             self.chromsome = self.encode()
 
         return self
 
     def encode(self):
         ''' *NEED IMPLIMENTATION*
-        Convert variants to chromsome sequence.
+        Convert solution to chromsome sequence.
         '''
         raise NotImplementedError
 
     def decode(self):
         ''' *NEED IMPLIMENTATION*
-        Convert chromsome sequence to variants.
+        Convert chromsome sequence to solution.
         '''
         raise NotImplementedError
 
@@ -129,7 +129,7 @@ class IndividualBase(object):
 class BinaryIndividual(IndividualBase):
     def __init__(self, ranges, eps=0.001, verbosity=1):
         '''
-        Class for individual in population. Random variants will be initialized
+        Class for individual in population. Random solution will be initialized
         by default.
 
         NOTE: The decrete precisions for different components in varants may be
@@ -139,7 +139,7 @@ class BinaryIndividual(IndividualBase):
               Please check it before you put it into GA engine. If you don't want
               to see the warning info, set verbosity to 0 :)
 
-        :param ranges: value ranges for all entries in variants.
+        :param ranges: value ranges for all entries in solution.
         :type ranges: list of range tuples. e.g. [(0, 1), (-1, 1)]
 
         :param eps: decrete precisions for binary encoding, default is 0.001.
@@ -165,7 +165,7 @@ class BinaryIndividual(IndividualBase):
             self.lengths.append(length)
             self.precisions[i] = precision
 
-        # The start and end indices for each gene segment for entries in variants.
+        # The start and end indices for each gene segment for entries in solution.
         self.gene_indices = self._get_gene_indices()
 
         # Initialize individual randomly.
@@ -183,10 +183,10 @@ class BinaryIndividual(IndividualBase):
 
     def encode(self):
         '''
-        Encode variant to gene sequence in individual using different encoding.
+        Encode solution to gene sequence in individual using different encoding.
         '''
         chromsome = []
-        for var, (a, _), length, eps in zip(self.variants, self.ranges,
+        for var, (a, _), length, eps in zip(self.solution, self.ranges,
                                             self.lengths, self.precisions):
             chromsome.extend(self.binarize(var-a, eps, length))
 
@@ -194,12 +194,12 @@ class BinaryIndividual(IndividualBase):
 
     def decode(self):
         ''' 
-        Decode gene sequence to variants of target function.
+        Decode gene sequence to solution of target function.
         '''
-        variants =  [self.decimalize(self.chromsome[start: end], eps, lower_bound)
+        solution =  [self.decimalize(self.chromsome[start: end], eps, lower_bound)
                      for (start, end), (lower_bound, _), eps in
                      zip(self.gene_indices, self.ranges, self.precisions)]
-        return variants
+        return solution
 
     def _get_gene_indices(self):
         '''

@@ -15,7 +15,7 @@ class PopulationTest(unittest.TestCase):
         self.maxDiff = True
         self.indv_template = BinaryIndividual(ranges=[(0, 1)], verbosity=0)
         def fitness(indv):
-            x, = indv.variants
+            x, = indv.solution
             return x**3 - 60*x**2 + 900*x + 100
         self.fitness = fitness
 

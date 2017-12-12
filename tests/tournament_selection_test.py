@@ -15,7 +15,7 @@ class TournamentSelectionTest(unittest.TestCase):
     def setUp(self):
         self.maxDiff
         def fitness(indv):
-            x, = indv.variants
+            x, = indv.solution
             return x**3 - 60*x**2 + 900*x + 100
         self.fitness = fitness
 

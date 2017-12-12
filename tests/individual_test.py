@@ -17,7 +17,7 @@ class IndividualTest(unittest.TestCase):
         ''' Make sure individual can decode and encode binary gene correctly.
         '''
         indv = BinaryIndividual(ranges=[(0, 1)], eps=0.001, verbosity=0)
-        indv.init(variants=[0.398])
+        indv.init(solution=[0.398])
 
         # Test binary chromsome.
         ref_chromsome = [0, 1, 1, 0, 0, 1, 0, 1, 1]
@@ -27,7 +27,7 @@ class IndividualTest(unittest.TestCase):
         self.assertListEqual(indv.decode(), [0.396484375])
 
         indv = BinaryIndividual(ranges=[(0, 1), (-1, 1)],  eps=0.001, verbosity=0)
-        indv.init(variants=[0.398, 0.66])
+        indv.init(solution=[0.398, 0.66])
 
         # Test binary chromsome.
         ref_chromsome = [0, 1, 1, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 0, 1, 0, 0, 0, 1]
@@ -45,12 +45,12 @@ class IndividualTest(unittest.TestCase):
         indv.init(chromsome=[0, 1, 1, 0, 0, 0, 1, 1, 1, 0])
         
         self.assertListEqual([0, 1, 1, 0, 0, 0, 1, 1, 1, 0], indv.chromsome)
-        self.assertListEqual(indv.variants, [0.388671875])
+        self.assertListEqual(indv.solution, [0.388671875])
 
-        # Check variants initialization.
-        indv.init(variants=[0.398])
+        # Check solution initialization.
+        indv.init(solution=[0.398])
         
-        self.assertListEqual(indv.variants, [0.398])
+        self.assertListEqual(indv.solution, [0.398])
         self.assertListEqual(indv.chromsome, [0, 1, 1, 0, 0, 1, 0, 1, 1])
 
     def test_clone(self):
@@ -58,11 +58,11 @@ class IndividualTest(unittest.TestCase):
         '''
         indv = BinaryIndividual(ranges=[(0, 1)],
                                 eps=0.001,
-                                verbosity=0).init(variants=[0.398])
+                                verbosity=0).init(solution=[0.398])
         indv_clone = indv.clone()
 
         self.assertListEqual(indv.chromsome, indv_clone.chromsome)
-        self.assertAlmostEqual(indv.variants[0], indv_clone.variants[0], places=2)
+        self.assertAlmostEqual(indv.solution[0], indv_clone.solution[0], places=2)
         self.assertEqual(indv.ranges, indv_clone.ranges)
         self.assertEqual(indv.eps, indv_clone.eps)
 
@@ -71,7 +71,7 @@ class IndividualTest(unittest.TestCase):
         '''
         indv = BinaryIndividual(ranges=[(0, 1), (0, 10)],
                                 eps=[0.01, 1.0],
-                                verbosity=0).init(variants=[0.3, 0.5])
+                                verbosity=0).init(solution=[0.3, 0.5])
         self.assertNotEqual(indv.precisions[0], indv.precisions[1])
 
 if '__main__' == __name__:
