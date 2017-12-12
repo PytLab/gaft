@@ -8,7 +8,7 @@ Find the global maximum for binary function: f(x) = y*sim(2*pi*x) + x*cos(2*pi*y
 from math import sin, cos, pi
 
 from gaft import GAEngine
-from gaft.components import GAIndividual
+from gaft.components import BinaryIndividual
 from gaft.components import GAPopulation
 from gaft.operators import TournamentSelection
 from gaft.operators import UniformCrossover
@@ -19,9 +19,7 @@ from gaft.analysis.fitness_store import FitnessStore
 from gaft.analysis.console_output import ConsoleOutput
 
 # Define population.
-indv_template = GAIndividual(ranges=[(-2, 2), (-2, 2)],
-                             encoding='binary',
-                             eps=0.001)
+indv_template = BinaryIndividual(ranges=[(-2, 2), (-2, 2)], eps=0.001)
 population = GAPopulation(indv_template=indv_template, size=50).init()
 
 # Create genetic operators.
@@ -39,7 +37,7 @@ engine = GAEngine(population=population, selection=selection,
 # Define fitness function.
 @engine.fitness_register
 def fitness(indv):
-    x, y = indv.variants
+    x, y = indv.solution
     return y*sin(2*pi*x) + x*cos(2*pi*y)
 
 if '__main__' == __name__:
