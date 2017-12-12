@@ -9,34 +9,72 @@ import logging
 from ..mpiutil import mpi
 
 
+class SolutionRanges(object):
+    ''' Descriptor for solution ranges.
+    '''
+    def __init__(self):
+        self.__ranges = []
+
+    def __get__(self, obj, owner):
+        return self.__ranges
+
+    def __set__(self, obj, ranges):
+        # Check.
+        if type(ranges) not in [tuple, list]:
+            raise TypeError('solution ranges must be a list of range tuples')
+        for rng in ranges:
+            if type(rng) not in [tuple, list]:
+                raise TypeError('range({}) is not a tuple containing two numbers'.format(rng))
+            if len(rng) != 2:
+                raise ValueError('length of range({}) not equal to 2')
+            a, b = rng
+            if a >= b:
+                raise ValueError('Wrong range value {}'.format(rng))
+        # Assignment.
+        self.__ranges = ranges
+
+
+class DecretePrecision(object):
+    ''' Descriptor for individual decrete precisions.
+    '''
+    def __init__(self):
+        self.__precisions = []
+
+    def __get__(self, obj, owner):
+        return self.__precisions
+
+    def __set__(self, obj, precisions):
+        if type(precisions) is float:
+            self.__precisions = [precisions]*len(obj.ranges)
+        else:
+            # Check.
+            if len(precisions) != len(obj.ranges):
+                raise ValueError('Lengths of eps and ranges should be the same')
+            for (a, b), eps in zip(obj.ranges, precisions):
+                if eps > (b - a):
+                    msg = 'Invalid precision {} in range ({}, {})'.format(eps, a, b)
+                    raise ValueError(msg)
+            self.__precisions = precisions
+
+
 class IndividualBase(object):
     ''' Base class for individuals.
     '''
+    # Solution ranges.
+    ranges = SolutionRanges()
+
+    # Original decrete precisions (provided by users).
+    eps = DecretePrecision()
+    
+    # Actual decrete precisions used in GA.
+    precisions = DecretePrecision()
+
     def __init__(self, ranges, eps=0.001):
         self.ranges = ranges
         self.eps = eps
         self.precisions = eps
 
-        self._check_parameters()
-
         self.variants, self.chromsome = [], []
-
-    def _check_parameters(self):
-        '''
-        Private helper function to check individual parameters.
-        '''
-        # Check decrete precision.
-        if type(self.eps) is float:
-            self.eps = [self.eps]*len(self.ranges)
-            self.precisions = self.eps
-        else:
-            # Check eps length.
-            if len(self.eps) != len(self.ranges):
-                raise ValueError('Lengths of eps and ranges should be the same')
-            for eps, (a, b) in zip(self.eps, self.ranges):
-                if eps > (b - a):
-                    msg = 'Invalid eps {} in range ({}, {})'.format(eps, a, b)
-                    raise ValueError(msg)
 
     def _rand_variants(self):
         ''' Initialize individual variants randomly.
