@@ -36,6 +36,14 @@ class IndividualTest(unittest.TestCase):
         # Test decode.
         self.assertListEqual(indv.decode(), [0.396484375, 0.658203125])
 
+    def test_descriptors(self):
+        ''' Make sure descriptors can check the parameters correctly.
+        '''
+        self.assertRaises(TypeError, BinaryIndividual, ranges=0.1, eps=0.001, verbosity=0)
+        self.assertRaises(TypeError, BinaryIndividual, ranges=[(0, 1)], eps='asdf', verbosity=0)
+        self.assertRaises(ValueError, BinaryIndividual, ranges=[(0, 1)], eps=10.0, verbosity=0)
+        self.assertRaises(ValueError, BinaryIndividual, ranges=[(0, 1)], eps=[1, 2], verbosity=0)
+
     def test_init(self):
         ''' Make sure the individual can be initialized correctly.
         '''
