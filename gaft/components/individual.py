@@ -65,22 +65,12 @@ class IndividualBase(object):
     # Actual decrete precisions used in GA.
     precisions = DecretePrecision()
 
-    def __init__(self, ranges, eps=0.001):
+    def __init__(self, ranges, eps):
         self.ranges = ranges
         self.eps = eps
         self.precisions = eps
 
         self.solution, self.chromsome = [], []
-
-    def _rand_solution(self):
-        ''' Initialize individual solution randomly.
-        '''
-        solution = []
-        for eps, (a, b) in zip(self.precisions, self.ranges):
-            n_intervals = (b - a)//eps
-            n = int(uniform(0, n_intervals + 1))
-            solution.append(a + n*eps)
-        return solution
 
     def init(self, chromsome=None, solution=None):
         '''
@@ -110,12 +100,27 @@ class IndividualBase(object):
     def encode(self):
         ''' *NEED IMPLIMENTATION*
         Convert solution to chromsome sequence.
+
+        :return chromsome: The chromsome sequence, float list.
         '''
         raise NotImplementedError
 
     def decode(self):
         ''' *NEED IMPLIMENTATION*
         Convert chromsome sequence to solution.
+
+        :return solution: The solution vector, float list.
         '''
         raise NotImplementedError
+
+    def _rand_solution(self):
+        ''' Initialize individual solution randomly.
+        '''
+        solution = []
+        for eps, (a, b) in zip(self.precisions, self.ranges):
+            n_intervals = (b - a)//eps
+            n = int(uniform(0, n_intervals + 1))
+            solution.append(a + n*eps)
+        return solution
+
 
