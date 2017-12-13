@@ -19,7 +19,7 @@ A **G**\ enetic **A**\ lgorithm **F**\ ramework in py\ **T**\ hon
     :target: https://www.python.org/downloads/release/python-351/
     :alt: platform
 
-.. image:: https://img.shields.io/badge/pypi-v0.5.0-blue.svg
+.. image:: https://img.shields.io/badge/pypi-v0.5.1-blue.svg
     :target: https://pypi.python.org/pypi/gaft/
     :alt: versions
 
@@ -49,8 +49,8 @@ Installation:
 
 See `INSTALL.md <https://github.com/PytLab/gaft/blob/master/INSTALL.md>`_ for more installation details.
 
-Example:
---------
+Quick start:
+------------
 
 1. Importing
 ````````````
