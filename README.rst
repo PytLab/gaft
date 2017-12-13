@@ -36,8 +36,8 @@ Python Support
 
 **GAFT** requires Python version 3.x (Python 2.x is not supported).
 
-Installation:
--------------
+Installation
+------------
 
 1. Via pip::
 
@@ -49,8 +49,8 @@ Installation:
 
 See `INSTALL.md <https://github.com/PytLab/gaft/blob/master/INSTALL.md>`_ for more installation details.
 
-Quick start:
-------------
+Quick start
+-----------
 
 1. Importing
 ````````````
