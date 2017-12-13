@@ -3,10 +3,12 @@
 
 ''' Flip Bit mutation implementation. '''
 
-from random import random
+from random import random, uniform
 
 from ...mpiutil import mpi
 from ...plugin_interfaces.operators.mutation import Mutation
+from ...components.binary_individual import BinaryIndividual
+from ...components.decimal_individual import DecimalIndividual
 
 
 class FlipBitMutation(Mutation):
@@ -30,9 +32,20 @@ class FlipBitMutation(Mutation):
 
         if do_mutation:
             for i, genome in enumerate(individual.chromsome):
-                do_flip = True if random() <= self.pm else False
-                if do_flip:
+                no_flip = True if random() > self.pm else False
+                if no_flip:
+                    continue
+
+                if type(individual) is BinaryIndividual:
                     individual.chromsome[i] = genome^1
+                elif type(individual) is DecimalIndividual:
+                    a, b = individual.ranges[i]
+                    eps = individual.precisions[i]
+                    n_intervals = (b - a)//eps
+                    n = int(uniform(0, n_intervals + 1))
+                    individual.chromsome[i] = a + n*eps
+                else:
+                    raise TypeError('Wrong individual type: {}'.format(type(individual)))
 
             # Update solution.
             individual.solution = individual.decode()
