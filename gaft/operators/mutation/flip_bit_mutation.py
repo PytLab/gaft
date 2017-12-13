@@ -34,8 +34,8 @@ class FlipBitMutation(Mutation):
                 if do_flip:
                     individual.chromsome[i] = genome^1
 
-            # Update variants.
-            individual.variants = individual.decode()
+            # Update solution.
+            individual.solution = individual.decode()
 
         return individual
 
