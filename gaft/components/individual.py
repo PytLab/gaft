@@ -97,6 +97,15 @@ class IndividualBase(object):
 
         return self
 
+    def clone(self):
+        '''
+        Clone a new individual from current one.
+        '''
+        indv = self.__class__(self.ranges, eps=self.eps)
+        indv.init(chromsome=self.chromsome)
+        return indv
+
+
     def encode(self):
         ''' *NEED IMPLIMENTATION*
         Convert solution to chromsome sequence.

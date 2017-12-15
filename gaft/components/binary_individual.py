@@ -44,14 +44,6 @@ class BinaryIndividual(IndividualBase):
         # Initialize individual randomly.
         self.init()
 
-    def clone(self):
-        '''
-        Clone a new individual from current one.
-        '''
-        indv = self.__class__(self.ranges, eps=self.eps)
-        indv.init(chromsome=self.chromsome)
-        return indv
-
     def encode(self):
         '''
         Encode solution to gene sequence in individual using different encoding.
