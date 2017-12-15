@@ -130,8 +130,7 @@ class Population(object):
         if indvs is None:
             for _ in range(self.size):
                 indv = IndvType(ranges=self.indv_template.ranges,
-                                eps=self.indv_template.eps,
-                                verbosity=self.indv_template.verbosity)
+                                eps=self.indv_template.eps)
                 self.individuals.append(indv)
         else:
             # Check individuals.

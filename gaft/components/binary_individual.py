@@ -12,7 +12,7 @@ from ..mpiutil import mpi
 
 
 class BinaryIndividual(IndividualBase):
-    def __init__(self, ranges, eps=0.001, verbosity=1):
+    def __init__(self, ranges, eps=0.001):
         '''
         Class for individual in population. Random solution will be initialized
         by default.
@@ -20,22 +20,14 @@ class BinaryIndividual(IndividualBase):
         NOTE: The decrete precisions for different components in varants may be
               adjusted automatically (possible precision loss) if eps and ranges
               are not appropriate.
-              
-              Please check it before you put it into GA engine. If you don't want
-              to see the warning info, set verbosity to 0 :)
 
         :param ranges: value ranges for all entries in solution.
         :type ranges: list of range tuples. e.g. [(0, 1), (-1, 1)]
 
         :param eps: decrete precisions for binary encoding, default is 0.001.
         :type eps: float or float list with the same length with ranges.
-
-        :param verbosity: The verbosity level of info output.
-        :param verbosity: int, 0 or 1(default)
         '''
         super(self.__class__, self).__init__(ranges, eps)
-
-        self.verbosity = verbosity
 
         # Lengths for all binary sequence in chromsome and adjusted decrete precisions.
         self.lengths = []
@@ -43,10 +35,6 @@ class BinaryIndividual(IndividualBase):
         for i, ((a, b), eps) in enumerate(zip(self.ranges, self.eps)):
             length = int(log2((b - a)/eps))
             precision = (b - a)/(2**length)
-
-            if precision != eps and mpi.is_master and self.verbosity:
-                print('Precision loss {} -> {}'.format(eps, precision))
-
             self.lengths.append(length)
             self.precisions[i] = precision
 
@@ -60,9 +48,7 @@ class BinaryIndividual(IndividualBase):
         '''
         Clone a new individual from current one.
         '''
-        indv = self.__class__(self.ranges,
-                              eps=self.eps,
-                              verbosity=self.verbosity)
+        indv = self.__class__(self.ranges, eps=self.eps)
         indv.init(chromsome=self.chromsome)
         return indv
 
