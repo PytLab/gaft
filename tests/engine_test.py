@@ -24,7 +24,7 @@ class GAEngineTest(unittest.TestCase):
         '''
         Make sure GA engine can run correctly.
         '''
-        indv_template = BinaryIndividual(ranges=[(0, 10)], eps=0.001, verbosity=0)
+        indv_template = BinaryIndividual(ranges=[(0, 10)], eps=0.001)
         population = Population(indv_template=indv_template, size=50).init()
 
         # Create genetic operators.

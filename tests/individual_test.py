@@ -16,7 +16,7 @@ class IndividualTest(unittest.TestCase):
     def test_binary_encoding(self):
         ''' Make sure individual can decode and encode binary gene correctly.
         '''
-        indv = BinaryIndividual(ranges=[(0, 1)], eps=0.001, verbosity=0)
+        indv = BinaryIndividual(ranges=[(0, 1)], eps=0.001)
         indv.init(solution=[0.398])
 
         # Test binary chromsome.
@@ -26,7 +26,7 @@ class IndividualTest(unittest.TestCase):
         # Test decode.
         self.assertListEqual(indv.decode(), [0.396484375])
 
-        indv = BinaryIndividual(ranges=[(0, 1), (-1, 1)],  eps=0.001, verbosity=0)
+        indv = BinaryIndividual(ranges=[(0, 1), (-1, 1)],  eps=0.001)
         indv.init(solution=[0.398, 0.66])
 
         # Test binary chromsome.
@@ -39,15 +39,15 @@ class IndividualTest(unittest.TestCase):
     def test_descriptors(self):
         ''' Make sure descriptors can check the parameters correctly.
         '''
-        self.assertRaises(TypeError, BinaryIndividual, ranges=0.1, eps=0.001, verbosity=0)
-        self.assertRaises(TypeError, BinaryIndividual, ranges=[(0, 1)], eps='asdf', verbosity=0)
-        self.assertRaises(ValueError, BinaryIndividual, ranges=[(0, 1)], eps=10.0, verbosity=0)
-        self.assertRaises(ValueError, BinaryIndividual, ranges=[(0, 1)], eps=[1, 2], verbosity=0)
+        self.assertRaises(TypeError, BinaryIndividual, ranges=0.1, eps=0.001)
+        self.assertRaises(TypeError, BinaryIndividual, ranges=[(0, 1)], eps='asdf')
+        self.assertRaises(ValueError, BinaryIndividual, ranges=[(0, 1)], eps=10.0)
+        self.assertRaises(ValueError, BinaryIndividual, ranges=[(0, 1)], eps=[1, 2])
 
     def test_init(self):
         ''' Make sure the individual can be initialized correctly.
         '''
-        indv = BinaryIndividual(ranges=[(0, 1)], eps=0.001, verbosity=0)
+        indv = BinaryIndividual(ranges=[(0, 1)], eps=0.001)
 
         # Check chromsome initialization.
         indv.init(chromsome=[0, 1, 1, 0, 0, 0, 1, 1, 1, 0])
@@ -65,8 +65,7 @@ class IndividualTest(unittest.TestCase):
         ''' Make sure individual can be cloned correctly.
         '''
         indv = BinaryIndividual(ranges=[(0, 1)],
-                                eps=0.001,
-                                verbosity=0).init(solution=[0.398])
+                                eps=0.001).init(solution=[0.398])
         indv_clone = indv.clone()
 
         self.assertListEqual(indv.chromsome, indv_clone.chromsome)
@@ -77,9 +76,7 @@ class IndividualTest(unittest.TestCase):
     def test_multi_precisions(self):
         ''' Make sure we can construct individual using different decrete precisions.
         '''
-        indv = BinaryIndividual(ranges=[(0, 1), (0, 10)],
-                                eps=[0.01, 1.0],
-                                verbosity=0).init(solution=[0.3, 0.5])
+        indv = BinaryIndividual(ranges=[(0, 1), (0, 10)], eps=[0.01, 1.0]).init(solution=[0.3, 0.5])
         self.assertNotEqual(indv.precisions[0], indv.precisions[1])
 
 if '__main__' == __name__:

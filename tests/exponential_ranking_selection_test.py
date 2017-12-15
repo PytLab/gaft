@@ -19,7 +19,7 @@ class ExponentialRankingSelectionTest(unittest.TestCase):
         self.fitness = fitness
 
     def test_selection(self):
-        indv = BinaryIndividual(ranges=[(0, 30)], verbosity=0)
+        indv = BinaryIndividual(ranges=[(0, 30)])
         p = Population(indv)
         p.init()
 

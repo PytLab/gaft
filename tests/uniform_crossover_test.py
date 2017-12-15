@@ -17,8 +17,8 @@ class UniformCrossoverTest(unittest.TestCase):
     def test_cross(self):
         ''' Make sure individuals can be crossed correctly.
         '''
-        father = BinaryIndividual(ranges=[(0, 1)], verbosity=0).init(solution=[0.398])
-        mother = BinaryIndividual(ranges=[(0, 1)], verbosity=0).init(solution=[0.298])
+        father = BinaryIndividual(ranges=[(0, 1)]).init(solution=[0.398])
+        mother = BinaryIndividual(ranges=[(0, 1)]).init(solution=[0.298])
         crossover = UniformCrossover(pc=1.0, pe=0.5)
         child1, child2 = crossover.cross(father, mother)
 

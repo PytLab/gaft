@@ -17,7 +17,7 @@ class FlipBitMutationTest(unittest.TestCase):
     def test_mutate_binary_indv(self):
         ''' Make sure the individual can be mutated correctly.
         '''
-        indv = BinaryIndividual(ranges=[(0, 1)], verbosity=0).init(solution=[0.398])
+        indv = BinaryIndividual(ranges=[(0, 1)]).init(solution=[0.398])
         mutation = FlipBitMutation(pm=1.0)
         chromsome_before = [0, 1, 1, 0, 0, 1, 0, 1, 1]
         chromsome_after = [1, 0, 0, 1, 1, 0, 1, 0, 0]
