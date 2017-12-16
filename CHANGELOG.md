@@ -1,3 +1,8 @@
+## Version: 0.5.2
+### Date: 2017-12-15
+1. Removed verboisty parameter for `BinaryIndividual` class.
+2. Added unittest for decimal individual.
+
 ## Version: 0.5.1
 ### Date: 2017-12-13
 1. Added `DecimalIndividual` class.
