@@ -8,10 +8,7 @@ A **G**\ enetic **A**\ lgorithm **F**\ ramework in py\ **T**\ hon
     :target: https://travis-ci.org/PytLab/gaft
     :alt: Build Status
 
-.. image:: https://codecov.io/gh/PytLab/gaft/branch/master/graph/badge.svg
-  :target: https://codecov.io/gh/PytLab/gaft
-
-.. image:: https://landscape.io/github/PytLab/gaft/master/landscape.svg?style=flat
+.. image:: https://img.shields.io/codecov/c/github/PytLab/gaft/master.svg
     :target: https://landscape.io/github/PytLab/gaft/master
     :alt: Code Health
 
