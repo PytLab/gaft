@@ -9,6 +9,10 @@ A **G**\ enetic **A**\ lgorithm **F**\ ramework in py\ **T**\ hon
     :alt: Build Status
 
 .. image:: https://img.shields.io/codecov/c/github/PytLab/gaft/master.svg
+    :target: https://codecov.io/gh/PytLab/gaft
+    :alt: Codecov
+
+.. image:: https://landscape.io/github/PytLab/gaft/master/landscape.svg?style=flat
     :target: https://landscape.io/github/PytLab/gaft/master
     :alt: Code Health
 
@@ -16,7 +20,7 @@ A **G**\ enetic **A**\ lgorithm **F**\ ramework in py\ **T**\ hon
     :target: https://www.python.org/downloads/release/python-351/
     :alt: platform
 
-.. image:: https://img.shields.io/badge/pypi-v0.5.2-blue.svg
+.. image:: https://img.shields.io/badge/pypi-v0.5.3-blue.svg
     :target: https://pypi.python.org/pypi/gaft/
     :alt: versions
 
@@ -174,7 +178,7 @@ TODO
 ----
 1. ✅ Parallelization 
 2. ✅ Add more built-in genetic operators with different algorithms
-3. 🏃 Add C++ backend
+3. 🏃 Add C++ backend(See `GASol <https://github.com/PytLab/GASol>`_)
 
 Obtain a copy
 -------------
