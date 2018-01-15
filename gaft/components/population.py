@@ -18,7 +18,7 @@ class Memoized(object):
         return self
 
     def __call__(self, fitness):
-        if ((not self.instance.updated)         # population not changed
+        if ((not self.instance.updated)          # population not changed
                 and (self.result is not None)    # result already cached
                 and (fitness == self.fitness)):  # fitness not changed
             # Return cached result directly.
@@ -200,13 +200,13 @@ class Population(object):
         '''
         Get the maximum fitness value in population.
         '''
-        return fitness(self.best_indv(fitness))
+        return max(self.all_fits(fitness))
 
     def min(self, fitness):
         '''
         Get the minimum value of fitness in population.
         '''
-        return fitness(self.worst_indv(fitness))
+        return min(self.all_fits(fitness))
 
     def mean(self, fitness):
         '''
