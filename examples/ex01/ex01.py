@@ -22,7 +22,7 @@ from gaft.analysis.fitness_store import FitnessStore
 
 # Define population.
 indv_template = BinaryIndividual(ranges=[(0, 10)], eps=0.001)
-population = Population(indv_template=indv_template, size=50).init()
+population = Population(indv_template=indv_template, size=30).init()
 
 # Create genetic operators.
 selection = TournamentSelection()
@@ -48,13 +48,13 @@ class ConsoleOutputAnalysis(OnTheFlyAnalysis):
 
     def register_step(self, g, population, engine):
         best_indv = population.best_indv(engine.fitness)
-        msg = 'Generation: {}, best fitness: {:.3f}'.format(g, engine.fitness(best_indv))
+        msg = 'Generation: {}, best fitness: {:.3f}'.format(g, engine.ori_fmax)
         self.logger.info(msg)
 
     def finalize(self, population, engine):
         best_indv = population.best_indv(engine.fitness)
         x = best_indv.solution
-        y = engine.fitness(best_indv)
+        y = engine.ori_fmax
         msg = 'Optimal solution: ({}, {})'.format(x, y)
         self.logger.info(msg)
 
