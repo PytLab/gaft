@@ -1,3 +1,8 @@
+## Version: 0.5.3
+### Date: 2018-01-15
+1. Removed redundant calling of fitness function in iteration.
+2. Improved the efficiency.
+
 ## Version: 0.5.2
 ### Date: 2017-12-15
 1. Removed verboisty parameter for `BinaryIndividual` class.
