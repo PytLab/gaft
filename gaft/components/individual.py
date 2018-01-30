@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from random import uniform
+from copy import deepcopy
 
 
 class SolutionRanges(object):
@@ -101,8 +102,8 @@ class IndividualBase(object):
         '''
         Clone a new individual from current one.
         '''
-        indv = self.__class__(self.ranges, eps=self.eps)
-        indv.init(chromsome=self.chromsome)
+        indv = self.__class__(deepcopy(self.ranges), eps=deepcopy(self.eps))
+        indv.init(chromsome=deepcopy(self.chromsome))
         return indv
 
 

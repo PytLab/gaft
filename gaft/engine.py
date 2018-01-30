@@ -128,8 +128,8 @@ class GAEngine(object):
         self.analysis = [] if analysis is None else [a() for a in analysis]
 
         # Maxima and minima in population.
-        self.fmax, self.fmin, self.fmean = None, None, None
-        self.ori_fmax, self.ori_fmin, self.ori_fmean = None, None, None
+        self._fmax, self._fmin, self._fmean = None, None, None
+        self._ori_fmax, self._ori_fmin, self._ori_fmean = None, None, None
 
         # Default fitness functions.
         self.ori_fitness, self.fitness = None, None

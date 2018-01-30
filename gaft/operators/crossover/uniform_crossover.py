@@ -4,6 +4,7 @@
 ''' Uniform Crossover operator implementation. '''
 
 from random import random
+from copy import deepcopy
 
 from ...plugin_interfaces.operators.crossover import Crossover
 
@@ -34,11 +35,11 @@ class UniformCrossover(Crossover):
         do_cross = True if random() <= self.pc else False
 
         if not do_cross:
-            return father, mother
+            return father.clone(), mother.clone()
 
         # Chromsomes for two children.
-        chrom1 = father.chromsome.copy()
-        chrom2 = mother.chromsome.copy()
+        chrom1 = deepcopy(father.chromsome)
+        chrom2 = deepcopy(mother.chromsome)
 
         for i, (g1, g2) in enumerate(zip(chrom1, chrom2)):
             do_exchange = True if random() < self.pe else False
