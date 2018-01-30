@@ -1,3 +1,7 @@
+## Version: 0.5.4
+### Date: 2018-01-30
+1. Fixed important bugs in individual clone.
+
 ## Version: 0.5.3
 ### Date: 2018-01-15
 1. Removed redundant calling of fitness function in iteration.
