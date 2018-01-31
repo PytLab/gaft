@@ -363,6 +363,7 @@ class GAEngine(object):
         '''
         A decorator for minimizing the fitness function.
         '''
+        @wraps(fn)
         def _minimize(indv):
             return -fn(indv)
         return _minimize
