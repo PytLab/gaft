@@ -124,7 +124,7 @@ or if you want to minimize it, you can add a minimization decorator on it
         interval = 1
         def register_step(self, ng, population, engine):
             best_indv = population.best_indv(engine.fitness)
-            msg = 'Generation: {}, best fitness: {:.3f}'.format(ng, engine.fitness(best_indv))
+            msg = 'Generation: {}, best fitness: {:.3f}'.format(ng, engine.fmax)
             engine.logger.info(msg)
 
 7. Run
