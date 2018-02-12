@@ -122,9 +122,9 @@ or if you want to minimize it, you can add a minimization decorator on it
     class ConsoleOutput(OnTheFlyAnalysis):
         master_only = True
         interval = 1
-        def register_step(self, ng, population, engine):
+        def register_step(self, g, population, engine):
             best_indv = population.best_indv(engine.fitness)
-            msg = 'Generation: {}, best fitness: {:.3f}'.format(ng, engine.fmax)
+            msg = 'Generation: {}, best fitness: {:.3f}'.format(g, engine.fmax)
             engine.logger.info(msg)
 
 7. Run
