@@ -152,7 +152,7 @@ Global maximum search for binary function
 
 .. image:: https://github.com/PytLab/gaft/blob/master/examples/ex02/surface_animation.gif
 
-See `example 02 <https://github.com/PytLab/gaft/blob/master/examples/ex02/ex02.py>`_ for a two-dimension search for the global maximum of function `f(x) = y*sin(2*pi*x) + x*cos(2*pi*y)`
+See `example 02 <https://github.com/PytLab/gaft/blob/master/examples/ex02/ex02.py>`_ for a two-dimension search for the global maximum of function `f(x, y) = y*sin(2*pi*x) + x*cos(2*pi*y)`
 
 Plugins
 -------
