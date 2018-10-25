@@ -19,12 +19,10 @@ from .mpiutil import mpi
 
 
 def do_profile(filename, sortby='tottime'):
-    '''
-    Constructor for function profiling decorator.
+    ''' Constructor for function profiling decorator.
     '''
     def _do_profile(func):
-        '''
-        Function profiling decorator.
+        ''' Function profiling decorator.
         '''
         @wraps(func)
         def profiled_func(*args, **kwargs):
@@ -51,8 +49,7 @@ def do_profile(filename, sortby='tottime'):
 
 class StatVar(object):
     def __init__(self, name):
-        '''
-        Descriptor for statistical variables which need to be memoized when
+        ''' Descriptor for statistical variables which need to be memoized when
         engine running.
         '''
         # Protected.
@@ -87,10 +84,8 @@ class StatVar(object):
 
 
 class GAEngine(object):
+    ''' Class for representing a Genetic Algorithm engine.
     '''
-    Class for representing a Genetic Algorithm engine.
-    '''
-
     # Statistical attributes for population.
     fmax, fmin, fmean = StatVar('fmax'), StatVar('fmin'), StatVar('fmean')
     ori_fmax, ori_fmin, ori_fmean = (StatVar('ori_fmax'),
@@ -99,21 +94,29 @@ class GAEngine(object):
 
     def __init__(self, population, selection, crossover, mutation,
                  fitness=None, analysis=None):
-        '''
-        The Genetic Algorithm engine class is the central object in GAPY framework
+        ''' Genetic algorithm engine. The class is the central object in GAFT framework
         for running a genetic algorithm optimization. Once the population with
         individuals,  a set of genetic operators and fitness function are setup,
         the engine object unites these informations and provide means for running
         a genetic algorthm optimization.
 
         :param population: The Population to be reproduced in evolution iteration.
+        :type population: :obj:`gaft.components.Population`
+
         :param selection: The Selection to be used for individual seleciton.
+        :type selection: :obj:`gaft.plugin_interfaces.operators.Selection`
+
         :param crossover: The Crossover to be used for individual crossover.
+        :type crossover: :obj:`gaft.plugin_interfaces.operators.Crossover`
+
         :param mutation: The Mutation to be used for individual mutation.
+        :type mutation: :obj:`gaft.plugin_interfaces.operators.Mutation`
+
         :param fitness: The fitness calculation function for an individual in population.
+        :type fitness: function
 
         :param analysis: All analysis class for on-the-fly analysis.
-        :type analysis: list of OnTheFlyAnalysis subclasses.
+        :type analysis: :obj:`OnTheFlyAnalysis` list
         '''
         # Set logger.
         logger_name = 'gaft.{}'.format(self.__class__.__name__)
@@ -142,8 +145,10 @@ class GAEngine(object):
 
     @do_profile(filename='gaft_run.prof')
     def run(self, ng=100):
-        '''
-        Run the Genetic Algorithm optimization iteration with specified parameters.
+        ''' Run the Genetic Algorithm optimization iteration with specified parameters.
+
+        :param ng: Evolution iteration steps (generation number)
+        :type ng: int
         '''
         if self.fitness is None:
             raise AttributeError('No fitness function in GA engine')
@@ -245,8 +250,10 @@ class GAEngine(object):
     # Decorators.
 
     def fitness_register(self, fn):
-        '''
-        A decorator for fitness function register.
+        ''' A decorator for fitness function register.
+
+        :param fn: Fitness function to be registered
+        :type fn: function
         '''
         @wraps(fn)
         def _fn_with_fitness_check(indv):
@@ -271,8 +278,10 @@ class GAEngine(object):
             self.ori_fitness = _fn_with_fitness_check
 
     def analysis_register(self, analysis_cls):
-        '''
-        A decorator for analysis regsiter.
+        ''' A decorator for analysis regsiter.
+
+        :param analysis_cls: The analysis to be registered
+        :type analysis_cls: :obj:`gaft.plugin_interfaces.OnTheFlyAnalysis`
         '''
         if not issubclass(analysis_cls, OnTheFlyAnalysis):
             raise TypeError('analysis class must be subclass of OnTheFlyAnalysis')
@@ -287,15 +296,17 @@ class GAEngine(object):
         '''
         A decorator constructor for fitness function linear scaling.
 
-        :param target: The optimization target, maximization or minimization.
-        :type target: str, 'max' or 'min'
+        :param target: The optimization target, maximization or minimization,
+                       possible value: 'max', 'min'
+        :type target: str
 
         :param ksi: Selective pressure adjustment value.
         :type ksi: float
 
-        Linear Scaling:
-            1. arg max f(x), then f' = f - min{f(x)} + ksi;
-            2. arg min f(x), then f' = max{f(x)} - f(x) + ksi;
+        Note::
+            Linear Scaling:
+                1. arg max f(x), then f' = f - min{f(x)} + ksi;
+                2. arg min f(x), then f' = max{f(x)} - f(x) + ksi;
         '''
         def _linear_scaling(fn):
             # For original fitness calculation.
@@ -323,11 +334,11 @@ class GAEngine(object):
         '''
         A decorator constructor for fitness dynamic linear scaling.
 
-        :param target: The optimization target, maximization or minimization.
-        :type target: str, 'max' or 'min'
+        :param target: The optimization target, maximization or minimization
+                       possible value: 'min' or 'max'
+        :type target: str
 
-        :param ksi0: Initial selective pressure adjustment value, default value
-                     is 2
+        :param ksi0: Initial selective pressure adjustment value, default value is 2
         :type ksi0: float
 
         :param r: The reduction factor for selective pressure adjustment value,
@@ -335,7 +346,8 @@ class GAEngine(object):
                   value is 0.9
         :type r: float in range [0.9, 0.999]
 
-        Dynamic Linear Scaling:
+        Note::
+            Dynamic Linear Scaling:
             For maximizaiton, f' = f(x) - min{f(x)} + ksi^k, k is generation number.
         '''
         def _dynamic_linear_scaling(fn):
@@ -360,8 +372,10 @@ class GAEngine(object):
         return _dynamic_linear_scaling
 
     def minimize(self, fn):
-        '''
-        A decorator for minimizing the fitness function.
+        ''' A decorator for minimizing the fitness function.
+
+        :param fn: Original fitness function
+        :type fn: function
         '''
         @wraps(fn)
         def _minimize(indv):
