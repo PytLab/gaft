@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-''' Genetic Algorithm engine definition '''
+''' Genetic Algorithm engine definition
+'''
 
 import logging
 import math
@@ -15,8 +16,9 @@ import os
 from .components import IndividualBase, Population
 from .plugin_interfaces.operators import Selection, Crossover, Mutation
 from .plugin_interfaces.analysis import OnTheFlyAnalysis
-from .mpiutil import mpi
+from .mpiutil import MPIUtil
 
+mpi = MPIUtil()
 
 def do_profile(filename, sortby='tottime'):
     ''' Constructor for function profiling decorator.
@@ -84,7 +86,29 @@ class StatVar(object):
 
 
 class GAEngine(object):
-    ''' Class for representing a Genetic Algorithm engine.
+    ''' Class for representing a Genetic Algorithm engine. The class is the 
+    central object in GAFT framework for running a genetic algorithm optimization.
+    Once the population with individuals,  a set of genetic operators and fitness 
+    function are setup, the engine object unites these informations and provide 
+    means for running a genetic algorthm optimization.
+
+    :param population: The Population to be reproduced in evolution iteration.
+    :type population: :obj:`gaft.components.Population`
+
+    :param selection: The Selection to be used for individual seleciton.
+    :type selection: :obj:`gaft.plugin_interfaces.operators.Selection`
+
+    :param crossover: The Crossover to be used for individual crossover.
+    :type crossover: :obj:`gaft.plugin_interfaces.operators.Crossover`
+
+    :param mutation: The Mutation to be used for individual mutation.
+    :type mutation: :obj:`gaft.plugin_interfaces.operators.Mutation`
+
+    :param fitness: The fitness calculation function for an individual in population.
+    :type fitness: function
+
+    :param analysis: All analysis class for on-the-fly analysis.
+    :type analysis: :obj:`OnTheFlyAnalysis` list
     '''
     # Statistical attributes for population.
     fmax, fmin, fmean = StatVar('fmax'), StatVar('fmin'), StatVar('fmean')
@@ -94,30 +118,6 @@ class GAEngine(object):
 
     def __init__(self, population, selection, crossover, mutation,
                  fitness=None, analysis=None):
-        ''' Genetic algorithm engine. The class is the central object in GAFT framework
-        for running a genetic algorithm optimization. Once the population with
-        individuals,  a set of genetic operators and fitness function are setup,
-        the engine object unites these informations and provide means for running
-        a genetic algorthm optimization.
-
-        :param population: The Population to be reproduced in evolution iteration.
-        :type population: :obj:`gaft.components.Population`
-
-        :param selection: The Selection to be used for individual seleciton.
-        :type selection: :obj:`gaft.plugin_interfaces.operators.Selection`
-
-        :param crossover: The Crossover to be used for individual crossover.
-        :type crossover: :obj:`gaft.plugin_interfaces.operators.Crossover`
-
-        :param mutation: The Mutation to be used for individual mutation.
-        :type mutation: :obj:`gaft.plugin_interfaces.operators.Mutation`
-
-        :param fitness: The fitness calculation function for an individual in population.
-        :type fitness: function
-
-        :param analysis: All analysis class for on-the-fly analysis.
-        :type analysis: :obj:`OnTheFlyAnalysis` list
-        '''
         # Set logger.
         logger_name = 'gaft.{}'.format(self.__class__.__name__)
         self.logger = logging.getLogger(logger_name)
@@ -303,10 +303,12 @@ class GAEngine(object):
         :param ksi: Selective pressure adjustment value.
         :type ksi: float
 
-        Note::
+        .. Note::
+
             Linear Scaling:
-                1. arg max f(x), then f' = f - min{f(x)} + ksi;
-                2. arg min f(x), then f' = max{f(x)} - f(x) + ksi;
+                1. :math:`arg \max f(x)`, then the scaled fitness would be :math:`f - \min f(x) + {\\xi}`
+                2. :math:`arg \min f(x)`, then the scaled fitness would be :math:`\max f(x) - f(x) + {\\xi}`
+
         '''
         def _linear_scaling(fn):
             # For original fitness calculation.
@@ -346,9 +348,10 @@ class GAEngine(object):
                   value is 0.9
         :type r: float in range [0.9, 0.999]
 
-        Note::
+        .. Note::
             Dynamic Linear Scaling:
-            For maximizaiton, f' = f(x) - min{f(x)} + ksi^k, k is generation number.
+
+            For maximizaiton, :math:`f' = f(x) - \min f(x) + {\\xi}^{k}`, :math:`k` is generation number.
         '''
         def _dynamic_linear_scaling(fn):
             # For original fitness calculation.

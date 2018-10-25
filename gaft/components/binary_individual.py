@@ -8,7 +8,9 @@ from itertools import accumulate
 import logging
 
 from .individual import IndividualBase
-from ..mpiutil import mpi
+from ..mpiutil import MPIUtil
+
+mpi = MPIUtil()
 
 
 class BinaryIndividual(IndividualBase):

@@ -6,7 +6,9 @@
 
 import unittest
 
-from gaft.mpiutil import mpi
+from gaft.mpiutil import MPIUtil
+
+mpi = MPIUtil()
 
 
 class MPIUtilTest(unittest.TestCase):
