@@ -14,21 +14,23 @@ mpi = MPIUtil()
 
 
 class BinaryIndividual(IndividualBase):
+    '''
+    Class for individual in population. Random solution will be initialized
+    by default.
+
+    :param ranges: value ranges for all entries in solution.
+    :type ranges: tuple list
+
+    :param eps: decrete precisions for binary encoding, default is 0.001.
+    :type eps: float or float list (with the same length with ranges)
+
+    .. Note:
+
+        The decrete precisions for different components in varants may be
+        adjusted automatically (possible precision loss) if eps and ranges
+        are not appropriate.
+    '''
     def __init__(self, ranges, eps=0.001):
-        '''
-        Class for individual in population. Random solution will be initialized
-        by default.
-
-        NOTE: The decrete precisions for different components in varants may be
-              adjusted automatically (possible precision loss) if eps and ranges
-              are not appropriate.
-
-        :param ranges: value ranges for all entries in solution.
-        :type ranges: list of range tuples. e.g. [(0, 1), (-1, 1)]
-
-        :param eps: decrete precisions for binary encoding, default is 0.001.
-        :type eps: float or float list with the same length with ranges.
-        '''
         super(self.__class__, self).__init__(ranges, eps)
 
         # Lengths for all binary sequence in chromsome and adjusted decrete precisions.
@@ -47,8 +49,7 @@ class BinaryIndividual(IndividualBase):
         self.init()
 
     def encode(self):
-        '''
-        Encode solution to gene sequence in individual using different encoding.
+        ''' Encode solution to gene sequence in individual using different encoding.
         '''
         chromsome = []
         for var, (a, _), length, eps in zip(self.solution, self.ranges,
@@ -58,8 +59,7 @@ class BinaryIndividual(IndividualBase):
         return chromsome
 
     def decode(self):
-        ''' 
-        Decode gene sequence to solution of target function.
+        ''' Decode gene sequence to solution of target function.
         '''
         solution =  [self.decimalize(self.chromsome[start: end], eps, lower_bound)
                      for (start, end), (lower_bound, _), eps in
@@ -76,12 +76,16 @@ class BinaryIndividual(IndividualBase):
 
     @staticmethod
     def binarize(decimal, eps, length):
-        '''
-        Helper function to convert a float to binary sequence.
+        ''' Helper function to convert a float to binary sequence.
 
-        :param decimal: the decimal number to be converted.
-        :param eps: the decrete precision of binary sequence.
+        :param decimal: the decimal number to be converted
+        :type decimal: float
+
+        :param eps: the decrete precision of binary sequence
+        :type eps: float
+
         :param length: the length of binary sequence.
+        :type length: int
         '''
         n = int(decimal/eps)
         bin_str = '{:0>{}b}'.format(n, length)
@@ -89,8 +93,16 @@ class BinaryIndividual(IndividualBase):
 
     @staticmethod
     def decimalize(binary, eps, lower_bound):
-        '''
-        Helper function to convert a binary sequence back to decimal number.
+        ''' Helper function to convert a binary sequence back to decimal number.
+
+        :param binary: The binary list to be converted
+        :type binary: list of int
+
+        :param eps: the decrete precision of binary sequence
+        :type eps: float
+
+        :param lower_bound: the lower bound for decimal number
+        :type lower_bound: float
         '''
         bin_str = ''.join([str(bit) for bit in binary])
         return lower_bound + int(bin_str, 2)*eps

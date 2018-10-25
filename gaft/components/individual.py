@@ -56,11 +56,17 @@ class DecretePrecision(object):
 
 class IndividualBase(object):
     ''' Base class for individuals.
+
+    :param ranges: value ranges for all entries in solution.
+    :type ranges: tuple list
+
+    :param eps: decrete precisions for binary encoding, default is 0.001.
+    :type eps: float or float list (with the same length with ranges)
     '''
     # Solution ranges.
     ranges = SolutionRanges()
 
-    # Original decrete precisions (provided by users).
+    # Orginal decrete precisions (provided by users).
     eps = DecretePrecision()
     
     # Actual decrete precisions used in GA.
@@ -74,17 +80,17 @@ class IndividualBase(object):
         self.solution, self.chromsome = [], []
 
     def init(self, chromsome=None, solution=None):
-        '''
-        Initialize the individual by providing chromsome or solution.
-
-        If both chromsome and solution are provided, only the chromsome would
-        be used. If neither is provided, individual would be initialized randomly.
+        ''' Initialize the individual by providing chromsome or solution.
 
         :param chromsome: chromesome sequence for the individual
-        :type chromsome: list of float/int.
+        :type chromsome: list of (float / int)
 
         :param solution: the variable vector of the target function.
-        :type solution: list of float.
+        :type solution: list of float
+
+        .. Note::
+            If both chromsome and solution are provided, only the chromsome would
+            be used. If neither is provided, individual would be initialized randomly.
         '''
         if not any([chromsome, solution]):
             self.solution = self._rand_solution()
@@ -99,8 +105,7 @@ class IndividualBase(object):
         return self
 
     def clone(self):
-        '''
-        Clone a new individual from current one.
+        ''' Clone a new individual from current one.
         '''
         indv = self.__class__(deepcopy(self.ranges), eps=deepcopy(self.eps))
         indv.init(chromsome=deepcopy(self.chromsome))
@@ -108,18 +113,22 @@ class IndividualBase(object):
 
 
     def encode(self):
-        ''' *NEED IMPLIMENTATION*
+        ''' **NEED IMPLIMENTATION**
+
         Convert solution to chromsome sequence.
 
-        :return chromsome: The chromsome sequence, float list.
+        :return: The chromsome sequence
+        :rtype: list of float
         '''
         raise NotImplementedError
 
     def decode(self):
-        ''' *NEED IMPLIMENTATION*
+        ''' **NEED IMPLIMENTATION**
+
         Convert chromsome sequence to solution.
 
-        :return solution: The solution vector, float list.
+        :return: The solution vector
+        :rtype: list of float
         '''
         raise NotImplementedError
 

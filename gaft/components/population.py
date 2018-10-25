@@ -5,8 +5,7 @@ from .individual import IndividualBase
 
 
 class Memoized(object):
-    '''
-    Descriptor for population statistical varibles caching.
+    ''' Descriptor for population statistical varibles caching.
     '''
     def __init__(self, func):
         self.func = func
@@ -34,8 +33,11 @@ class Memoized(object):
 
 
 class Individuals(object):
-    '''
-    Descriptor for all individuals in population.
+    ''' Descriptor for all individuals in population.
+
+    .. Note::
+        Use this descriptor to ensure the individual related flags can be updated
+        when the population indivduals are changed.
     '''
     def __init__(self, name):
         self.name = '_{}'.format(name)
@@ -50,21 +52,19 @@ class Individuals(object):
 
 
 class Population(object):
+    ''' Class for representing population in genetic algorithm.
 
+    :param indv_template: A template individual to clone all the other
+                          individuals in current population.
+    :type indv_template: :obj:`gaft.components.IndividualBase`
+
+    :param size: The size of population, number of individuals in population.
+    :type size: int
+    '''
     # All individuals.
     individuals = Individuals('individuals')
 
     def __init__(self, indv_template, size=100):
-        '''
-        Class for representing population in genetic algorithm.
-
-        :param indv_template: A template individual to clone all the other
-                              individuals in current population.
-
-        :param size: The size of population, number of individuals in population.
-        :type size: int
-
-        '''
         # Population size.
         if size % 2 != 0:
             raise ValueError('Population size must be an even number')
@@ -78,8 +78,7 @@ class Population(object):
 
         # Container for all individuals.
         class IndvList(list):
-            '''
-            A proxy class inherited from built-in list to contain all
+            ''' A proxy class inherited from built-in list to contain all
             individuals which can update the population._updated flag
             automatically when its content is changed.
             '''
@@ -118,8 +117,7 @@ class Population(object):
         self._individuals = IndvList()
 
     def init(self, indvs=None):
-        '''
-        Initialize current population with individuals.
+        ''' Initialize current population with individuals.
 
         :param indvs: Initial individuals in population, randomly initialized
                       individuals are created if not provided.
@@ -146,21 +144,18 @@ class Population(object):
         return self
 
     def update_flag(self):
-        '''
-        Interface for updating individual update flag to True.
+        ''' Interface for updating individual update flag to True.
         '''
         self._updated = True
 
     @property
     def updated(self):
-        '''
-        Query function for population updating flag.
+        ''' Query function for population updating flag.
         '''
         return self._updated
 
     def new(self):
-        '''
-        Create a new emtpy population.
+        ''' Create a new emtpy population.
         '''
         return self.__class__(indv_template=self.indv_template,
                               size=self.size)
@@ -180,45 +175,71 @@ class Population(object):
         return len(self.individuals)
 
     def best_indv(self, fitness):
-        '''
-        The individual with the best fitness.
+        ''' The individual with the best fitness.
 
+        :param fitness: Fitness function to calculate fitness value
+        :type fitness: function
+
+        :return: the best individual in current population
+        :rtype: :obj:`gaft.components.IndividualBase`
         '''
         all_fits = self.all_fits(fitness)
         return max(self.individuals,
                    key=lambda indv: all_fits[self.individuals.index(indv)])
 
     def worst_indv(self, fitness):
-        '''
-        The individual with the worst fitness.
+        ''' The individual with the worst fitness.
+
+        :param fitness: Fitness function to calculate fitness value
+        :type fitness: function
+
+        :return: the worst individual in current population
+        :rtype: :obj:`gaft.components.IndividualBase`
         '''
         all_fits = self.all_fits(fitness)
         return min(self.individuals,
                    key=lambda indv: all_fits[self.individuals.index(indv)])
 
     def max(self, fitness):
-        '''
-        Get the maximum fitness value in population.
+        ''' Get the maximum fitness value in population.
+
+        :param fitness: Fitness function to calculate fitness value
+        :type fitness: function
+
+        :return: The maximum fitness value
+        :rtype: float
         '''
         return max(self.all_fits(fitness))
 
     def min(self, fitness):
-        '''
-        Get the minimum value of fitness in population.
+        ''' Get the minimum value of fitness in population.
+
+        :param fitness: Fitness function to calculate fitness value
+        :type fitness: function
+
+        :return: The minimum fitness value
+        :rtype: float
         '''
         return min(self.all_fits(fitness))
 
     def mean(self, fitness):
-        '''
-        Get the average fitness value in population.
+        ''' Get the average fitness value in population.
+
+        :param fitness: Fitness function to calculate fitness value
+        :type fitness: function
+
+        :return: The average fitness value
+        :rtype: float
         '''
         all_fits = self.all_fits(fitness)
         return sum(all_fits)/len(all_fits)
 
     @Memoized
     def all_fits(self, fitness):
-        '''
-        Get all fitness values in population.
+        ''' Get all fitness values in population.
+
+        :param fitness: Fitness function to calculate fitness value
+        :type fitness: function
         '''
         return [fitness(indv) for indv in self.individuals]
 
