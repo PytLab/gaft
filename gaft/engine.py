@@ -135,7 +135,7 @@ class GAEngine(object):
         self._ori_fmax, self._ori_fmin, self._ori_fmean = None, None, None
 
         # Default fitness functions.
-        self.ori_fitness, self.fitness = None, None
+        self.ori_fitness = None if self.fitness is None else self.fitness
 
         # Store current generation number.
         self.current_generation = -1  # Starts from 0.
