@@ -11,8 +11,7 @@ from ..mpiutil import master_only
 
 
 class AnalysisMeta(type):
-    '''
-    Metaclass for analysis plugin class
+    ''' Metaclass for analysis plugin class
     '''
     def __new__(cls, name, bases, attrs):
         # Check interval type.
@@ -51,8 +50,7 @@ class AnalysisMeta(type):
 
 
 class CrossoverMeta(type):
-    '''
-    Metaclass for crossover operator class.
+    ''' Metaclass for crossover operator class.
     '''
     def __new__(cls, name, bases, attrs):
         if 'cross' not in attrs:
@@ -92,8 +90,7 @@ class CrossoverMeta(type):
 
 
 class MutationMeta(type):
-    '''
-    Metaclass for mutation operator class.
+    ''' Metaclass for mutation operator class.
     '''
     def __new__(cls, name, bases, attrs):
         if 'mutate' not in attrs:
@@ -130,8 +127,7 @@ class MutationMeta(type):
 
 
 class SelectionMeta(type):
-    '''
-    Metaclass for selection operator class.
+    ''' Metaclass for selection operator class.
     '''
     def __new__(cls, name, bases, attrs):
         # Check select method.

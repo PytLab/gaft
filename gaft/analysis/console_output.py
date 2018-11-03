@@ -5,6 +5,16 @@ from ..plugin_interfaces.analysis import OnTheFlyAnalysis
 
 
 class ConsoleOutput(OnTheFlyAnalysis):
+    ''' Built-in on-the-fly analysis plugin class for outputing log on console.
+
+    Attribute:
+
+        interval(:obj:`int`): The analysis interval in evolution iteration, default 
+                              value is 1 meaning analyze every step.
+
+        master_only(:obj:`bool`): Flag for if the analysis plugin is only effective 
+                                  in master process. Default is True.
+    '''
 
     # Analysis interval.
     interval = 1

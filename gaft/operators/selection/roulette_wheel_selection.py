@@ -10,16 +10,20 @@ from itertools import accumulate
 from ...plugin_interfaces.operators.selection import Selection
 
 class RouletteWheelSelection(Selection):
+    ''' Selection operator with fitness proportionate selection(FPS) or
+    so-called roulette-wheel selection implementation.
+    '''
     def __init__(self):
-        '''
-        Selection operator with fitness proportionate selection(FPS) or
-        so-called roulette-wheel selection implementation.
-        '''
         pass
 
     def select(self, population, fitness):
-        '''
-        Select a pair of parent using FPS algorithm.
+        ''' Select a pair of parent using FPS algorithm.
+
+        :param population: Population where the selection operation occurs.
+        :type population: :obj:`gaft.components.Population`
+
+        :return: Selected parents (a father and a mother)
+        :rtype: list of :obj:`gaft.components.IndividualBase`
         '''
         # Normalize fitness values for all individuals.
         fit = population.all_fits(fitness)

@@ -11,21 +11,25 @@ from ...plugin_interfaces.operators.selection import Selection
 
 
 class ExponentialRankingSelection(Selection): 
-    def __init__(self, base=0.5):
-        '''
-        Selection operator using Exponential Ranking selection method.
+    ''' Selection operator using Exponential Ranking selection method.
 
-        :param base: The base of exponent
-        :type base: float in range (0.0, 1.0)
-        '''
+    :param base: The base of exponent
+    :type base: float in range (0.0, 1.0)
+    '''
+    def __init__(self, base=0.5):
         if not (0.0 < base < 1.0):
             raise ValueError('The base of exponent c must in range (0.0, 1.0)')
 
         self.base = base
 
     def select(self, population, fitness):
-        '''
-        Select a pair of parent individuals using exponential ranking method.
+        ''' Select a pair of parent individuals using exponential ranking method.
+
+        :param population: Population where the selection operation occurs.
+        :type population: :obj:`gaft.components.Population`
+
+        :return: Selected parents (a father and a mother)
+        :rtype: list of :obj:`gaft.components.IndividualBase`
         '''
         # Individual number.
         NP = len(population)

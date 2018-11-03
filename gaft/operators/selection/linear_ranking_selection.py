@@ -11,20 +11,24 @@ from ...plugin_interfaces.operators.selection import Selection
 
 
 class LinearRankingSelection(Selection):
-    def __init__(self, pmin=0.1, pmax=0.9):
-        '''
-        Selection operator using Linear Ranking selection method.
+    ''' Selection operator using Linear Ranking selection method.
 
-        Reference: Baker J E. Adaptive selection methods for genetic
-        algorithms[C]//Proceedings of an International Conference on Genetic
-        Algorithms and their applications. 1985: 101-111.
-        '''
+    Reference: Baker J E. Adaptive selection methods for genetic
+    algorithms[C]//Proceedings of an International Conference on Genetic
+    Algorithms and their applications. 1985: 101-111.
+    '''
+    def __init__(self, pmin=0.1, pmax=0.9):
         # Selection probabilities for the worst and best individuals.
         self.pmin, self.pmax = pmin, pmax
 
     def select(self, population, fitness):
-        '''
-        Select a pair of parent individuals using linear ranking method.
+        ''' Select a pair of parent individuals using linear ranking method.
+
+        :param population: Population where the selection operation occurs.
+        :type population: :obj:`gaft.components.Population`
+
+        :return: Selected parents (a father and a mother)
+        :rtype: list of :obj:`gaft.components.IndividualBase`
         '''
         # Individual number.
         NP = len(population)

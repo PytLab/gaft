@@ -10,16 +10,16 @@ from ...plugin_interfaces.operators.crossover import Crossover
 
 
 class UniformCrossover(Crossover):
+    ''' Crossover operator with uniform crossover algorithm,
+    see https://en.wikipedia.org/wiki/Crossover_(genetic_algorithm)
+
+    :param pc: The probability of crossover (usaully between 0.25 ~ 1.0)
+    :type pc: float in (0.0, 1.0]
+
+    :param pe: Gene exchange probability.
+    :type pe: float in range (0.0, 1.0]
+    '''
     def __init__(self, pc, pe=0.5):
-        '''
-        Crossover operator with uniform crossover algorithm,
-        see https://en.wikipedia.org/wiki/Crossover_(genetic_algorithm)
-
-        :param pc: The probability of crossover (usaully between 0.25 ~ 1.0)
-        :type pc: float in (0.0, 1.0]
-
-        :param pe: Gene exchange probability.
-        '''
         if pc <= 0.0 or pc > 1.0:
             raise ValueError('Invalid crossover probability')
         self.pc = pc
@@ -29,8 +29,13 @@ class UniformCrossover(Crossover):
         self.pe = pe
 
     def cross(self, father, mother):
-        '''
-        Cross chromsomes of parent using uniform crossover method.
+        ''' Cross chromsomes of parent using uniform crossover method.
+
+        :param population: Population where the selection operation occurs.
+        :type population: :obj:`gaft.components.Population`
+
+        :return: Selected parents (a father and a mother)
+        :rtype: list of :obj:`gaft.components.IndividualBase`
         '''
         do_cross = True if random() <= self.pc else False
 

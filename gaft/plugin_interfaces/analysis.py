@@ -5,9 +5,16 @@ from .metaclasses import AnalysisMeta
 
 
 class OnTheFlyAnalysis(metaclass=AnalysisMeta):
-    '''
-    Class for providing an interface to easily extend and customize the behavior
+    ''' Class for providing an interface to easily extend and customize the behavior
     of the on-the-fly analysis functionality of gapy.
+
+    Attribute:
+
+        interval(:obj:`int`): The analysis interval in evolution iteration, default 
+                              value is 1 meaning analyze every step.
+
+        master_only(:obj:`bool`): Flag for if the analysis plugin is only effective 
+                                  in master process. Default is True.
     '''
     # Only used in master process?
     master_only = False
@@ -16,15 +23,14 @@ class OnTheFlyAnalysis(metaclass=AnalysisMeta):
     interval = 1
 
     def setup(self, ng, engine):
-        '''
-        Function called right before the start of genetic algorithm main iteration
+        ''' Function called right before the start of genetic algorithm main iteration
         to allow for custom setup of the analysis object.
 
         :param ng: The number of generation.
         :type ng: int
 
         :param engine: The current GAEngine where the analysis is running.
-        :type engine: GAEngine
+        :type engine: gaft.engine.GAEngine
         '''
         raise NotImplementedError
 
@@ -39,7 +45,7 @@ class OnTheFlyAnalysis(metaclass=AnalysisMeta):
         :type population: Population
 
         :param engine: The current GAEngine where the analysis is running.
-        :type engine: GAEngine
+        :type engine: gaft.engine.GAEngine
         '''
         raise NotImplementedError
 
@@ -52,7 +58,7 @@ class OnTheFlyAnalysis(metaclass=AnalysisMeta):
         :type population: Population
 
         :param engine: The current GAEngine where the analysis is running.
-        :type engine: GAEngine
+        :type engine: gaft.engine.GAEngine
         '''
         raise NotImplementedError
 

@@ -1,3 +1,8 @@
+## Version: 0.5.5
+### Date: 2018-10-25
+1. Make MPIUtil a singleton and remove in-module instantiation.
+2. Standardize docstring for Sphinx documentation
+
 ## Version: 0.5.4
 ### Date: 2018-01-30
 1. Fixed important bugs in individual clone.
