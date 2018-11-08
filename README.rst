@@ -24,8 +24,8 @@ A **G**\ enetic **A**\ lgorithm **F**\ ramework in py\ **T**\ hon
     :target: https://pypi.python.org/pypi/gaft/
     :alt: versions
 
-.. image:: https://readthedocs.org/projects/gaft-docs/badge/?version=latest
-    :target: https://gaft-docs.readthedocs.io/en/latest/?badge=latest
+.. image:: https://readthedocs.org/projects/gaft/badge/?version=latest
+    :target: https://gaft.readthedocs.io/en/latest/?badge=latest
     :alt: Documentation Status
 
 
