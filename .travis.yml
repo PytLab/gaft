@@ -8,10 +8,13 @@ notifications:
 install:
   - sudo apt-get update
   - sudo apt-get install mpich
+  - pip install coverage codecov
   - python setup.py install
 
 script:
-  - python setup.py test
+  - coverage run -m gaft.tests.test_all
   # Test parallel running.
-  #- mpirun -np 2 python tests/gaft_test.py
+  - mpirun -np 2 python -m gaft.tests.test_all
+  # Upload test coverage report
+  - codecov
 
