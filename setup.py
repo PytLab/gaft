@@ -58,15 +58,12 @@ See `INSTALL.md <https://github.com/PytLab/gaft/blob/master/INSTALL.md>`_ for mo
 
 '''
 install_requires = [
-    'mpi4py',
+    'mpi4py==2.0.0',
 ]
 
 license = 'LICENSE'
 
 name = 'gaft'
-packages = [
-    'gaft',
-]
 platforms = ['linux', 'windows', 'macos']
 url = 'https://github.com/PytLab/gaft'
 download_url = 'https://github.com/PytLab/gaft/releases'
@@ -74,7 +71,7 @@ download_url = 'https://github.com/PytLab/gaft/releases'
 classifiers = [
     'Development Status :: 3 - Alpha',
     'Topic :: Utilities',
-    'License :: OSI Approved :: MIT License',
+    'License :: OSI Approved :: GNU Lesser General Public License v3 (LGPLv3)'
     'Programming Language :: Python :: 3',
     'Programming Language :: Python :: 3.5',
 ]
