@@ -11,7 +11,7 @@ install:
   - python setup.py install
 
 script:
-  - python tests/gaft_test.py
+  - python setup.py test
   # Test parallel running.
-  - mpirun -np 2 python tests/gaft_test.py
+  #- mpirun -np 2 python tests/gaft_test.py
 

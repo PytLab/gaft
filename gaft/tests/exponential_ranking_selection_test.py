@@ -6,8 +6,8 @@
 
 import unittest
 
-from gaft.components import Population, BinaryIndividual
-from gaft.operators import ExponentialRankingSelection
+from ..components import Population, BinaryIndividual
+from ..operators import ExponentialRankingSelection
 
 class ExponentialRankingSelectionTest(unittest.TestCase):
 

@@ -1,6 +1,5 @@
 include *.md
 include *.rst
 recursive-include gaft *.py
-recursive-include tests *.py
 recursive-include example *.py
 

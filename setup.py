@@ -79,17 +79,22 @@ classifiers = [
     'Programming Language :: Python :: 3.5',
 ]
 
-setup(author=author,
-      author_email=author_email,
-      description=description,
-      license=license,
-      long_description=long_description,
-      install_requires=install_requires,
-      maintainer=maintainer,
-      name=name,
-      packages=find_packages(),
-      platforms=platforms,
-      url=url,
-      download_url=download_url,
-      version=version)
+test_suite = 'gaft.tests.test_all'
+
+setup(
+    author=author,
+    author_email=author_email,
+    description=description,
+    license=license,
+    long_description=long_description,
+    install_requires=install_requires,
+    maintainer=maintainer,
+    name=name,
+    packages=find_packages(),
+    platforms=platforms,
+    url=url,
+    download_url=download_url,
+    version=version,
+    test_suite=test_suite
+)
 

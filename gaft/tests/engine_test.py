@@ -7,12 +7,12 @@
 import unittest
 from math import sin, cos
 
-from gaft import GAEngine
-from gaft.components import BinaryIndividual, DecimalIndividual
-from gaft.components import Population
-from gaft.operators import RouletteWheelSelection
-from gaft.operators import UniformCrossover
-from gaft.operators import FlipBitMutation
+from .. import GAEngine
+from ..components import BinaryIndividual, DecimalIndividual
+from ..components import Population
+from ..operators import RouletteWheelSelection
+from ..operators import UniformCrossover
+from ..operators import FlipBitMutation
 
 
 class GAEngineTest(unittest.TestCase):

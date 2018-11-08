@@ -6,7 +6,7 @@
 
 import unittest
 
-from gaft.components import BinaryIndividual
+from ..components import BinaryIndividual
 
 class IndividualTest(unittest.TestCase):
 

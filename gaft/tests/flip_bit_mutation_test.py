@@ -6,8 +6,8 @@
 
 import unittest
 
-from gaft.components import BinaryIndividual, DecimalIndividual
-from gaft.operators.mutation.flip_bit_mutation import FlipBitMutation
+from ..components import BinaryIndividual, DecimalIndividual
+from ..operators.mutation.flip_bit_mutation import FlipBitMutation
 
 class FlipBitMutationTest(unittest.TestCase):
 
