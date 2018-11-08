@@ -20,8 +20,9 @@ A **G**\ enetic **A**\ lgorithm **F**\ ramework in py\ **T**\ hon
     :target: https://travis-ci.org/PytLab/gaft
     :alt: Build Status
 
-.. image:: https://codecov.io/gh/PytLab/gaft/branch/master/graph/badge.svg
-  :target: https://codecov.io/gh/PytLab/gaft
+.. image:: https://img.shields.io/codecov/c/github/PytLab/gaft/master.svg
+    :target: https://codecov.io/gh/PytLab/gaft
+    :alt: Codecov
 
 .. image:: https://landscape.io/github/PytLab/gaft/master/landscape.svg?style=flat
     :target: https://landscape.io/github/PytLab/gaft/master
@@ -31,20 +32,29 @@ A **G**\ enetic **A**\ lgorithm **F**\ ramework in py\ **T**\ hon
     :target: https://www.python.org/downloads/release/python-351/
     :alt: platform
 
-.. image:: https://img.shields.io/badge/pypi-v0.5.5-blue.svg
+.. image:: https://img.shields.io/badge/pypi-v0.5.6-blue.svg
     :target: https://pypi.python.org/pypi/gaft/
     :alt: versions
+
+.. image:: https://readthedocs.org/projects/gaft-docs/badge/?version=latest
+    :target: https://gaft-docs.readthedocs.io/en/latest/?badge=latest
+    :alt: Documentation Status
 
 
 Introduction
 ------------
 
-**gaft** is a Python Framework for genetic algorithm computation. It provide built-in genetic operators for genetic algorithm optimization and plugin interfaces for users to define your own genetic operators and on-the-fly analysis for algorithm testing.
+**GAFT** is a general Python Framework for genetic algorithm computation. It provides built-in genetic operators for target optimization and plugin interfaces for users to define your own genetic operators and on-the-fly analysis for algorithm testing.
 
-**gaft** is now accelerated using MPI parallelization interfaces. You can run it on your cluster in parallal with MPI environment.
+**GAFT** is now accelerated using MPI parallelization interfaces. You can run it on your cluster in parallel with MPI environment.
 
-Installation:
--------------
+Python Support
+--------------
+
+**GAFT** requires Python version 3.x (Python 2.x is not supported).
+
+Installation
+------------
 
 1. Via pip::
 
@@ -54,9 +64,22 @@ Installation:
 
     python setup.py install
 
+If you want GAFT to run in MPI env, please install mpi4py explicitly::
+
+    pip install mpi4py
+
 See `INSTALL.md <https://github.com/PytLab/gaft/blob/master/INSTALL.md>`_ for more installation details.
 
+Test
+----
+
+Run unit test::
+    
+    python setup.py test
+
+
 '''
+
 install_requires = [
 ]
 
