@@ -50,6 +50,13 @@ Installation
 
 See `INSTALL.md <https://github.com/PytLab/gaft/blob/master/INSTALL.md>`_ for more installation details.
 
+Test
+----
+
+Run unit test::
+    
+    python setup.py test
+
 Quick start
 -----------
 
