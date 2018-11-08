@@ -52,6 +52,10 @@ Installation
 
     python setup.py install
 
+If you want GAFT to run in MPI env, please install mpi4py explicitly::
+
+    pip install mpi4py
+
 See `INSTALL.md <https://github.com/PytLab/gaft/blob/master/INSTALL.md>`_ for more installation details.
 
 Test

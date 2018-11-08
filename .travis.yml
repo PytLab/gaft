@@ -8,7 +8,7 @@ notifications:
 install:
   - sudo apt-get update
   - sudo apt-get install mpich
-  - pip install coverage codecov
+  - pip install coverage codecov mpi4py
   - python setup.py install
 
 script:

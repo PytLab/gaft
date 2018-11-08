@@ -58,7 +58,6 @@ See `INSTALL.md <https://github.com/PytLab/gaft/blob/master/INSTALL.md>`_ for mo
 
 '''
 install_requires = [
-    'mpi4py==2.0.0',
 ]
 
 license = 'LICENSE'
