@@ -144,6 +144,7 @@ def master_only(func):
     '''
     @wraps(func)
     def _call_in_master_proc(*args, **kwargs):
+        mpi = MPIUtil()
         if mpi.is_master:
             return func(*args, **kwargs)
 
