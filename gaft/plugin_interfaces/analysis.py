@@ -6,7 +6,7 @@ from .metaclasses import AnalysisMeta
 
 class OnTheFlyAnalysis(metaclass=AnalysisMeta):
     ''' Class for providing an interface to easily extend and customize the behavior
-    of the on-the-fly analysis functionality of gapy.
+    of the on-the-fly analysis functionality of gaft.
 
     Attribute:
 
