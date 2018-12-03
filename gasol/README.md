@@ -2,10 +2,6 @@
 
 A general **G**enetic **A**lgorithm **Sol**ver in C++ 
 
-[![Build Status](https://api.travis-ci.org/PytLab/GASol.svg?branch=master)](https://travis-ci.org/PytLab/GASol)
-[![codecov](https://img.shields.io/codecov/c/github/PytLab/GASol/master.svg)](https://codecov.io/gh/PytLab/GASol)
-[![License](https://img.shields.io/badge/license-GPLv3-blue.svg)](https://github.com/PytLab/GASol/blob/master/LICENSE)
-
 ## Build
 
 #### Clone GASol
